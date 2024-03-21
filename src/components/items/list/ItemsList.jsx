@@ -26,6 +26,7 @@ export const ItemsList = () => {
         setItems(data.items);
         setTags(data.tags);
         setStats(data.stats);
+        console.log(stats)
         console.log(data);
       } else {
         console.error("Error getting items");
@@ -37,6 +38,7 @@ export const ItemsList = () => {
 
   useEffect(() => {
     fetchItems();
+    // eslint-disable-next-line
   }, []);
 
   /* Select multiple Tags */

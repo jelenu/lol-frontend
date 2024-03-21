@@ -1,6 +1,6 @@
 .container {
     height: 50vh;
-    width: 20vw; 
+    width: 15vw; 
     overflow-y: auto; 
     background-color: #010A13;
   }
@@ -18,7 +18,7 @@
   }
   
   .item img {
-    width: 70%; 
+    width: 80%; 
     height: auto; 
   }
 
