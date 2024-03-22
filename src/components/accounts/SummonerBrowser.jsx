@@ -1,18 +1,23 @@
 import React, { useState } from 'react';
 import { SummonerProfile } from './SummonerProfile';
+import "./summoner.css"
+import { SummonerHistory } from './SummonerHistory';
 
-export const BrowserAccount = () => {
+export const SummonerBrowser = () => {
   const [tagLine, setTagLine] = useState('');
   const [gameName, setGameName] = useState('');
   const [server, setServer] = useState('');
   
   const [searchResults, setSearchResults] = useState(null);
-  const [loading, setLoading] = useState(false);
+  const [loadingProfile, setloadingProfile] = useState(false);
+
+  const [matches, setMatches] = useState(null);
+  const [loadingMatches, setLoadingMatches] = useState(false);
 
   const servers = ["BR1", "EUN1", "EUW1", "JP1", "KR", "LA1", "LA2", "NA1", "OC1", "PH2", "RU", "SG2", "TH2", "TR1", "TW2", "VN2"];
 
   const fetchSearchAccount = async () => {
-    setLoading(true);
+    setloadingProfile(true);
 
     try {
       const response = await fetch(`http://localhost:8000/api/accounts/info/?gameName=${gameName}&tagLine=${tagLine}&tagLine=${tagLine}&server=${server}`, {
@@ -25,6 +30,9 @@ export const BrowserAccount = () => {
       if (response.ok) {
         const data = await response.json();
         setSearchResults(data);
+        console.log(data)
+
+        fetchMatches(data.puuid);
 
       } else {
         console.error("Error getting account");
@@ -32,7 +40,31 @@ export const BrowserAccount = () => {
     } catch (error) {
       console.error("Network error:", error);
     }
-    setLoading(false);
+    setloadingProfile(false);
+  };
+
+  const fetchMatches = async (puuid) => {
+    setLoadingMatches(true);
+
+    try {
+      const response = await fetch(`http://localhost:8000/api/accounts/matches/?puuid=${puuid}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        setMatches(data);
+        console.log(data);
+      } else {
+        console.error("Error getting matches");
+      }
+    } catch (error) {
+      console.error("Network error:", error);
+    }
+    setLoadingMatches(false);
   };
 
   return (
@@ -65,11 +97,14 @@ export const BrowserAccount = () => {
           ))}
         </select>
       </div>
-      <button onClick={fetchSearchAccount} disabled={loading}>
-        {loading ? 'Searching...' : 'Search'}
+      <button onClick={fetchSearchAccount} disabled={loadingProfile}>
+        {loadingProfile ? 'Searching...' : 'Search'}
       </button>
       {searchResults && (
-        <SummonerProfile searchResults={searchResults}/>
+        <SummonerProfile searchResults={searchResults} gameName={gameName} tagLine={tagLine}/>
+      )}
+      {matches && !loadingMatches &&(
+        <SummonerHistory matches={matches} summonerName={searchResults.name} />
       )}
     </div>
   );

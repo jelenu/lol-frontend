@@ -1,0 +1,37 @@
+.match{
+    display: flex;
+    margin-bottom: 60px;
+    padding: 20px;
+    width: 70vw;
+}
+
+.participants-container {
+    display: flex;
+    margin-left: 20px;
+}
+  
+  .single-participant-container {
+    display: flex;
+    align-items: center;
+    width: 200px;
+    height: 30px;
+  }
+  
+.champion-icon{
+    height: 20px;
+}
+
+.bold-name{
+    font-weight: bold;
+}
+.blue-background{
+    background-color: #5383e8;
+}
+
+.red-background{
+    background-color: #e84057;
+}
+
+.profileIcon{
+    width: 50px;
+}

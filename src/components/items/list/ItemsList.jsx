@@ -14,7 +14,7 @@ export const ItemsList = () => {
   /* API call Obtain items tags and stats */
   const fetchItems = async () => {
     try {
-      const response = await fetch("http://localhost:8000/items/all/", {
+      const response = await fetch("http://localhost:8000/api/items/all/", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
