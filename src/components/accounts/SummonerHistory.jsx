@@ -47,6 +47,30 @@ export const SummonerHistory = ({ matches, summonerName }) => {
             <div> {formatGameDuration(match.gameDuration)}</div>
           </div>
 
+          <div>
+            {match.participants.map((participant, index) => (
+              participant.summonerName === summonerName && (
+                <div key={index}>
+                  <img
+                    src={`http://localhost:8000/static/champion/icon/${participant.championName}.png`}
+                    alt={participant.championName}
+                    className="champion"
+                  />
+                  {[0, 1, 2, 3, 4, 5, 6].map((itemSlot) => (
+                    <img
+                      key={itemSlot}
+                      src={`http://localhost:8000/static/item/${participant[`item${itemSlot}`]}.png`}
+                      alt={participant.championName}
+                      className="items"
+                    />
+                  ))}
+                  <div>Riot ID: {participant.riotIdGameName}</div>
+                  <div>Win: {participant.win ? "Yes" : "No"}</div>
+                </div>
+              )
+            ))}
+          </div>
+
           <div className="participants-container">
             <div className="left-participants">
               {match.participants.slice(0, 5).map((participant, index) => (

@@ -4,12 +4,16 @@ import "./summoner.css"
 import { SummonerHistory } from './SummonerHistory';
 
 export const SummonerBrowser = () => {
-  const [tagLine, setTagLine] = useState('');
-  const [gameName, setGameName] = useState('');
-  const [server, setServer] = useState('');
+  const [searchParams, setSearchParams] = useState({
+    gameName: '',
+    tagLine: '',
+    server: ''
+  });
   
   const [searchResults, setSearchResults] = useState(null);
-  const [loadingProfile, setloadingProfile] = useState(false);
+  const [loadingProfile, setLoadingProfile] = useState(false);
+  const [searchParamsAfterFetch, setSearchParamsAfterFetch] = useState(null);
+
 
   const [matches, setMatches] = useState(null);
   const [loadingMatches, setLoadingMatches] = useState(false);
@@ -17,10 +21,10 @@ export const SummonerBrowser = () => {
   const servers = ["BR1", "EUN1", "EUW1", "JP1", "KR", "LA1", "LA2", "NA1", "OC1", "PH2", "RU", "SG2", "TH2", "TR1", "TW2", "VN2"];
 
   const fetchSearchAccount = async () => {
-    setloadingProfile(true);
+    setLoadingProfile(true);
 
     try {
-      const response = await fetch(`http://localhost:8000/api/accounts/info/?gameName=${gameName}&tagLine=${tagLine}&tagLine=${tagLine}&server=${server}`, {
+      const response = await fetch(`http://localhost:8000/api/accounts/info/?gameName=${searchParams.gameName}&tagLine=${searchParams.tagLine}&tagLine=${searchParams.tagLine}&server=${searchParams.server}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -30,9 +34,12 @@ export const SummonerBrowser = () => {
       if (response.ok) {
         const data = await response.json();
         setSearchResults(data);
+        setSearchParamsAfterFetch(searchParams); 
+
         console.log(data)
 
         fetchMatches(data.puuid);
+        
 
       } else {
         console.error("Error getting account");
@@ -40,7 +47,7 @@ export const SummonerBrowser = () => {
     } catch (error) {
       console.error("Network error:", error);
     }
-    setloadingProfile(false);
+    setLoadingProfile(false);
   };
 
   const fetchMatches = async (puuid) => {
@@ -67,29 +74,40 @@ export const SummonerBrowser = () => {
     setLoadingMatches(false);
   };
 
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setSearchParams({
+      ...searchParams,
+      [name]: value
+    });
+  };
+
   return (
     <div>
       <div>
         <label>Tag Line:</label>
         <input
           type="text"
-          value={tagLine}
-          onChange={(e) => setTagLine(e.target.value)}
+          name="tagLine"
+          value={searchParams.tagLine}
+          onChange={handleInputChange}
         />
       </div>
       <div>
         <label>Game Name:</label>
         <input
           type="text"
-          value={gameName}
-          onChange={(e) => setGameName(e.target.value)}
+          name="gameName"
+          value={searchParams.gameName}
+          onChange={handleInputChange}
         />
       </div>
       <div>
         <label>Server:</label>
         <select
-          value={server}
-          onChange={(e) => setServer(e.target.value)}
+          name="server"
+          value={searchParams.server}
+          onChange={handleInputChange}
         >
           <option value="">Select a server</option>
           {servers.map((serverOption, index) => (
@@ -101,7 +119,7 @@ export const SummonerBrowser = () => {
         {loadingProfile ? 'Searching...' : 'Search'}
       </button>
       {searchResults && (
-        <SummonerProfile searchResults={searchResults} gameName={gameName} tagLine={tagLine}/>
+        <SummonerProfile searchResults={searchResults} searchParams={searchParamsAfterFetch} />
       )}
       {matches && !loadingMatches &&(
         <SummonerHistory matches={matches} summonerName={searchResults.name} />
