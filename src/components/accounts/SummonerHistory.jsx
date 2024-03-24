@@ -59,18 +59,25 @@ export const SummonerHistory = ({ matches, summonerName }) => {
                   {[0, 1, 2, 3, 4, 5, 6].map((itemSlot) => (
                     <img
                       key={itemSlot}
-                      src={`http://localhost:8000/static/item/${participant[`item${itemSlot}`]}.png`}
-                      alt={participant.championName}
+                      src={participant[`item${itemSlot}`] ? 
+                          `http://localhost:8000/static/item/${participant[`item${itemSlot}`]}.png` 
+                          : 'http://localhost:8000/static/item/noItem.png'}
+                      alt={participant[`item${itemSlot}`] ? participant[`item${itemSlot}`] : 'noItem'}
                       className="items"
                     />
                   ))}
-                  <div>Riot ID: {participant.riotIdGameName}</div>
-                  <div>Win: {participant.win ? "Yes" : "No"}</div>
+                  {[1,2].map((spellSlot) => (
+                    <img
+                      key={spellSlot}
+                      src={`http://localhost:8000/static/summonerSpell/${participant[`summoner${spellSlot}Id`]}.png`}
+                      alt={participant.spellSlot}
+                      className="items"
+                    />
+                  ))}
                 </div>
               )
             ))}
           </div>
-
           <div className="participants-container">
             <div className="left-participants">
               {match.participants.slice(0, 5).map((participant, index) => (
@@ -117,5 +124,6 @@ export const SummonerHistory = ({ matches, summonerName }) => {
         </div>
       ))}
     </div>
+
   );
 };
