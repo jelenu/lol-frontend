@@ -115,13 +115,12 @@ export const SummonerHistory = () => {
   };
 
 
-  const handleParticipantClick = (participantName) => {
-    // Llamar a fetchSearchAccount con los datos del participante
+  const handleParticipantClick = (participant) => {
+    console.log(participant)
     fetchSearchAccount({
-      gameName: "", // Puedes establecer estos valores según lo que necesites
-      tagLine: "", // Puedes establecer estos valores según lo que necesites
-      server: "", // Puedes establecer estos valores según lo que necesites
-      summonerName: participantName // Nombre del participante al que se hizo clic
+      gameName: participant.riotIdGameName,
+      tagLine: participant.riotIdTagline,
+      server: loadedMatches[0].platformId,
     });
   };
 
@@ -219,7 +218,7 @@ export const SummonerHistory = () => {
                 <div 
                   className="single-participant-container" 
                   key={index} 
-                  onClick={() => handleParticipantClick(participant.riotIdGameName)}
+                  onClick={() => handleParticipantClick(participant)}
                 >
                   <img
                     src={`http://localhost:8000/static/champion/icon/${participant.championName}.png`}
@@ -245,7 +244,7 @@ export const SummonerHistory = () => {
                 <div 
                   className="single-participant-container" 
                   key={index}
-                  onClick={() => handleParticipantClick(participant.riotIdGameName)}
+                  onClick={() => handleParticipantClick(participant)}
                 >
                   <img
                     src={`http://localhost:8000/static/champion/icon/${participant.championName}.png`}

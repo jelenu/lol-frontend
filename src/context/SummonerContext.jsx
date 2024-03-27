@@ -58,7 +58,7 @@ export const SummonerProvider = ({ children }) => {
    * Handles network errors if any.
    * Sets loading state to false after completion.
    **/
-   const fetchSearchAccount = async () => {
+   const fetchSearchAccount = async (searchParams) => {
     setLoadingProfile(true);
 
     try {

@@ -68,7 +68,7 @@ export const SummonerBrowser = () => {
         />
   
         {/* Search button */}
-        <button onClick={fetchSearchAccount} disabled={loadingProfile}>
+        <button onClick={() => fetchSearchAccount(searchParams)} disabled={loadingProfile}>
           {loadingProfile ? "Searching..." : "Search"}
         </button>
       </div>
