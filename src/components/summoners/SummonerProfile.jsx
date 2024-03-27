@@ -1,12 +1,10 @@
 import React from 'react';
 import "./summoner.css";
+import { useSummonerContext } from '../../context/SummonerContext';
 
-/**
- * Component to display summoner profile information.
- * @param {Object} searchResults - The search results containing summoner information.
- * @param {Object} searchParams - The search parameters used to fetch the summoner information.
- */
-export const SummonerProfile = ({ searchResults, searchParams }) => {
+export const SummonerProfile = () => {
+  const { searchResults, searchParamsAfterFetch } = useSummonerContext();
+
   // Retrieve ranked solo data
   const rankedSoloData = searchResults.leagueData.find(data => data.queueType === 'RANKED_SOLO_5x5');
 
@@ -18,7 +16,7 @@ export const SummonerProfile = ({ searchResults, searchParams }) => {
       </div>
       <div className="profile-info-container">
         {/* Summoner name and tagline */}
-        <div>{`${searchParams.gameName} #${searchParams.tagLine}`}</div>
+        <div>{`${searchParamsAfterFetch.gameName} #${searchParamsAfterFetch.tagLine}`}</div>
         <div className="profile-info">
           {rankedSoloData ? (
             // Display ranked solo data if available

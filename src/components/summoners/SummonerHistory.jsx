@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from "react";
 import "./summoner.css";
+import { useSummonerContext } from '../../context/SummonerContext';
 
-/**
- * Component to display summoner's match history.
- * @param {Array} matchesIds - Array of match IDs associated with the summoner.
- * @param {string} summonerName - The summoner's name.
- */
-export const SummonerHistory = ({ matchesIds, summonerName }) => {
+
+export const SummonerHistory = () => {
+  const { matchesIds, summonerName, fetchSearchAccount } = useSummonerContext();
+
   // State to store loaded matches
   const [loadedMatches, setLoadedMatches] = useState([]);
 
@@ -74,6 +73,7 @@ export const SummonerHistory = ({ matchesIds, summonerName }) => {
         setLoading(false);
         setShowLoadMoreButton(true);
 
+
       } else {
         console.error('Error loading matches:', response.statusText);
       }
@@ -81,7 +81,6 @@ export const SummonerHistory = ({ matchesIds, summonerName }) => {
       console.error('Network error:', error);
     }
   };
-  console.log(loadedMatches)
 
 
   /**
@@ -114,6 +113,18 @@ export const SummonerHistory = ({ matchesIds, summonerName }) => {
     const seconds = durationInSeconds % 60;
     return `${minutes}m  ${seconds}s `;
   };
+
+
+  const handleParticipantClick = (participantName) => {
+    // Llamar a fetchSearchAccount con los datos del participante
+    fetchSearchAccount({
+      gameName: "", // Puedes establecer estos valores según lo que necesites
+      tagLine: "", // Puedes establecer estos valores según lo que necesites
+      server: "", // Puedes establecer estos valores según lo que necesites
+      summonerName: participantName // Nombre del participante al que se hizo clic
+    });
+  };
+
   return (
     <div className="history-container">
       {/* Display loaded matches */}
@@ -181,12 +192,17 @@ export const SummonerHistory = ({ matchesIds, summonerName }) => {
                       ))}
                     </div>
                     
-                    {/* Rune */}
+                    {/* Runes */}
                     <div className="runes-container">
                       <img
                         src={`https://ddragon.leagueoflegends.com/cdn/img/${participant.perks.styles[0].selections[0].icon}`}
                         alt={`Primary Rune`}
                         className="rune-icon"
+                      />
+                      <img
+                        src={`https://ddragon.leagueoflegends.com/cdn/img/${participant.perks.styles[1].selections[0].rune_path.icon}`}
+                        alt={`Primary Rune`}
+                        className="rune-path-icon"
                       />
 
                     </div>
@@ -200,7 +216,11 @@ export const SummonerHistory = ({ matchesIds, summonerName }) => {
             {/* Left side participants */}
             <div className="left-participants">
               {match.participants.slice(0, 5).map((participant, index) => (
-                <div className="single-participant-container" key={index}>
+                <div 
+                  className="single-participant-container" 
+                  key={index} 
+                  onClick={() => handleParticipantClick(participant.riotIdGameName)}
+                >
                   <img
                     src={`http://localhost:8000/static/champion/icon/${participant.championName}.png`}
                     alt={participant.championName}
@@ -222,7 +242,11 @@ export const SummonerHistory = ({ matchesIds, summonerName }) => {
             {/* Right side participants */}
             <div className="right-participants">
               {match.participants.slice(5).map((participant, index) => (
-                <div className="single-participant-container" key={index}>
+                <div 
+                  className="single-participant-container" 
+                  key={index}
+                  onClick={() => handleParticipantClick(participant.riotIdGameName)}
+                >
                   <img
                     src={`http://localhost:8000/static/champion/icon/${participant.championName}.png`}
                     alt={participant.championName}
