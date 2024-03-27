@@ -11,7 +11,15 @@ export const ItemsList = () => {
   const [selectedTags, setSelectedTags] = useState([]);
   const [selectedItem, setSelectedItem] = useState(null);
 
-  /* API call Obtain items tags and stats */
+  /**
+   * Function to fetch items data from the API.
+   * Makes a GET request to fetch items, tags, and stats.
+   * Checks if the response is successful.
+   * If the response is successful, set items, tags, and stats states with the received data.
+   * Log the received stats and data to the console.
+   * If the response is not successful, log an error to the console.
+   * Handles network errors if any.
+   **/
   const fetchItems = async () => {
     try {
       const response = await fetch("http://localhost:8000/api/builds/items/all/", {
@@ -26,7 +34,7 @@ export const ItemsList = () => {
         setItems(data.items);
         setTags(data.tags);
         setStats(data.stats);
-        console.log(stats)
+        console.log(stats);
         console.log(data);
       } else {
         console.error("Error getting items");
@@ -36,12 +44,21 @@ export const ItemsList = () => {
     }
   };
 
+
+  /**
+   * Effect hook to fetch items data when component mounts.
+   */
   useEffect(() => {
     fetchItems();
     // eslint-disable-next-line
   }, []);
 
-  /* Select multiple Tags */
+  /**
+   * Handles tag selection.
+   * If the tag is already selected, remove it from the selection.
+   * If the tag is not selected, add it to the selection.
+   * @param {string} tagId - The ID of the tag to be selected.
+   */
   const handleTagSelection = (tagId) => {
     if (selectedTags.includes(tagId)) {
       setSelectedTags(selectedTags.filter((id) => id !== tagId));
@@ -50,7 +67,12 @@ export const ItemsList = () => {
     }
   };
 
-  /* Return items filtered by selected Tags */
+  /**
+   * Filters items based on selected tags.
+   * If no tags are selected, returns all items.
+   * Otherwise, returns items that contain all selected tags.
+   * @returns {Array} - Filtered items based on selected tags.
+   */
   const filterItemsByTags = () => {
     if (selectedTags.length === 0) {
       return items;
@@ -61,17 +83,29 @@ export const ItemsList = () => {
   };
   const filteredItems = filterItemsByTags();
 
-  /* Select item on hover */
+  /**
+   * Handles item hover event.
+   * Sets the selected item ID.
+   * @param {string} itemId - The ID of the item being hovered over.
+   */
   const handleItemHover = (itemId) => {
     setSelectedItem(itemId);
   };
 
-  /* Deselect item on leave hover */
+  /**
+   * Handles item leave hover event.
+   * Resets the selected item ID.
+   */
   const handleItemLeave = () => {
     setSelectedItem(null);
   };
 
-  /* Transform plain text to html */
+  /**
+   * Sanitizes and renders HTML content.
+   * Cleans the HTML string based on allowed tags and attributes.
+   * @param {string} htmlString - The HTML string to be sanitized and rendered.
+   * @returns {Object} - Object containing sanitized HTML content.
+   */
   const sanitizeAndRenderHtml = (htmlString) => {
     const cleanHtml = sanitizeHtml(htmlString, {
       allowedTags: ["mainText", "stats", "attention", "br"],
@@ -82,11 +116,14 @@ export const ItemsList = () => {
     return { __html: cleanHtml };
   };
 
+
   return (
-    <>
+    <div>
+      {/* Main container */}
       <div className="container">
+        {/* Container for tags */}
         <div className="tags-container">
-          {/* TagButtons */}
+          {/* Render tag buttons */}
           {tags.map((tag) => (
             <button
               key={tag.id}
@@ -97,8 +134,9 @@ export const ItemsList = () => {
             </button>
           ))}
         </div>
+        {/* Container for filtered items */}
         <div className="items-container">
-          {/* Filtered Items */}
+          {/* Render filtered items */}
           {filteredItems.map((item, index) => (
             <div
               key={index}
@@ -106,6 +144,7 @@ export const ItemsList = () => {
               onMouseEnter={() => handleItemHover(item.id)}
               onMouseLeave={handleItemLeave}
             >
+              {/* Render item image */}
               <img
                 src={`http://localhost:8000/${item.image}`}
                 alt={item.name}
@@ -114,15 +153,17 @@ export const ItemsList = () => {
           ))}
         </div>
       </div>
-      {/* Hover item details */}
+      {/* Item details on hover */}
       {selectedItem && (
         <div
           className="item-details"
+          // Render item description safely
           dangerouslySetInnerHTML={sanitizeAndRenderHtml(
+            // Find description of the item
             filteredItems.find((item) => item.id === selectedItem).description
           )}
         />
       )}
-    </>
+    </div>
   );
 };

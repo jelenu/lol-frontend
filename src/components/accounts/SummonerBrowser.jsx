@@ -4,19 +4,29 @@ import "./summoner.css";
 import { SummonerHistory } from "./SummonerHistory";
 
 export const SummonerBrowser = () => {
+  /*Params for fetchSearchAccount*/
   const [searchParams, setSearchParams] = useState({
     gameName: "",
     tagLine: "",
     server: "",
   });
-
-  const [searchResults, setSearchResults] = useState(null);
-  const [loadingProfile, setLoadingProfile] = useState(false);
+  
+  /*Copy of searchParams for SummonerProfile*/
   const [searchParamsAfterFetch, setSearchParamsAfterFetch] = useState(null);
 
+  /*Data returned from fetchSearchAccount*/
+  const [searchResults, setSearchResults] = useState(null);
+
+  /* Loading state for profile search */
+  const [loadingProfile, setLoadingProfile] = useState(false);
+
+  /* Array to hold match IDs */
   const [matchesIds, setMatchesIds] = useState(null);
+
+  /* Loading state for match search */
   const [loadingMatches, setLoadingMatches] = useState(false);
 
+  /*Const of all servers*/
   const servers = [
     "BR1",
     "EUN1",
@@ -36,6 +46,16 @@ export const SummonerBrowser = () => {
     "VN2",
   ];
 
+  /**
+   * Function to fetch account information based on search parameters.
+   * Sets loading state to true while fetching.
+   * Upon successful response, sets search results and updates search parameters after fetch.
+   * Fetches match IDs associated with the account.
+   * Resets search parameters after fetch.
+   * Logs the retrieved data.
+   * Handles network errors if any.
+   * Sets loading state to false after completion.
+   **/
   const fetchSearchAccount = async () => {
     setLoadingProfile(true);
 
@@ -73,6 +93,15 @@ export const SummonerBrowser = () => {
     setLoadingProfile(false);
   };
 
+
+  /**
+   * Function to fetch match IDs associated with the provided account's PUUID.
+   * Sets loading state to true while fetching.
+   * Upon successful response, sets the retrieved match IDs.
+   * Handles errors if any during the fetch.
+   * Sets loading state to false after completion.
+   * @param {string} puuid - The PUUID of the account.
+   **/
   const fetchMatchesIds = async (puuid) => {
     setLoadingMatches(true);
 
@@ -101,6 +130,13 @@ export const SummonerBrowser = () => {
     setLoadingMatches(false);
   };
 
+
+  /**
+   * Event handler function to update search parameters when input values change.
+   * Retrieves the name and value from the event target.
+   * Updates search parameters using spread syntax to preserve existing values and update the changed one.
+   * @param {Object} e - The event object.
+   **/
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setSearchParams({
@@ -112,6 +148,7 @@ export const SummonerBrowser = () => {
   return (
     <div>
       <div className="search-bar">
+        {/* Server selection dropdown */}
         <select
           name="server"
           value={searchParams.server}
@@ -124,7 +161,8 @@ export const SummonerBrowser = () => {
             </option>
           ))}
         </select>
-
+  
+        {/* Tag line input */}
         <input
           type="text"
           name="tagLine"
@@ -132,7 +170,8 @@ export const SummonerBrowser = () => {
           onChange={handleInputChange}
           placeholder="Tag Line"
         />
-
+  
+        {/* Game name input */}
         <input
           type="text"
           name="gameName"
@@ -140,21 +179,26 @@ export const SummonerBrowser = () => {
           onChange={handleInputChange}
           placeholder="Game Name"
         />
-
+  
+        {/* Search button */}
         <button onClick={fetchSearchAccount} disabled={loadingProfile}>
           {loadingProfile ? "Searching..." : "Search"}
         </button>
       </div>
-
+  
+      {/* Render SummonerProfile component if search results exist */}
       {searchResults && (
         <SummonerProfile
           searchResults={searchResults}
           searchParams={searchParamsAfterFetch}
         />
       )}
+  
+      {/* Render SummonerHistory component if match IDs exist and not loading matches */}
       {matchesIds && !loadingMatches && (
         <SummonerHistory matchesIds={matchesIds} summonerName={searchResults.name} />
       )}
     </div>
   );
+  
 };
