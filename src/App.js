@@ -1,5 +1,5 @@
 import './App.css';
-import { SummonerBrowser } from './components/accounts/SummonerBrowser';
+import { SummonerBrowser } from './components/summoners/SummonerBrowser';
 import { ItemsList } from './components/items/list/ItemsList';
 import { Routes, Route } from "react-router-dom"
 

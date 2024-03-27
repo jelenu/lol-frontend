@@ -35,7 +35,7 @@ export const SummonerHistory = ({ matchesIds, summonerName }) => {
 
   // Effect hook to load matches when the component mounts
   useEffect(() => {
-    loadMatches();
+    fetchLoadMatches();
     // eslint-disable-next-line
   }, []);
 
@@ -53,7 +53,7 @@ export const SummonerHistory = ({ matchesIds, summonerName }) => {
    * If the response is not successful, log an error to the console.
    * If there's an error during the request, handle and log it to the console.
    **/
-  const loadMatches = async () => {
+  const fetchLoadMatches = async () => {
     try {
       setShowLoadMoreButton(false);
 
@@ -73,6 +73,7 @@ export const SummonerHistory = ({ matchesIds, summonerName }) => {
         setMatchesOffset(prevOffset => prevOffset + matchesPerLoad);
         setLoading(false);
         setShowLoadMoreButton(true);
+
       } else {
         console.error('Error loading matches:', response.statusText);
       }
@@ -80,7 +81,7 @@ export const SummonerHistory = ({ matchesIds, summonerName }) => {
       console.error('Network error:', error);
     }
   };
-
+  console.log(loadedMatches)
 
 
   /**
@@ -113,11 +114,8 @@ export const SummonerHistory = ({ matchesIds, summonerName }) => {
     const seconds = durationInSeconds % 60;
     return `${minutes}m  ${seconds}s `;
   };
-  
   return (
     <div className="history-container">
-      {/* Display loading message while loading */}
-      {loading && <div>Loading...</div>}
       {/* Display loaded matches */}
       {!loading && loadedMatches.map((match, index) => (
         <div
@@ -170,16 +168,29 @@ export const SummonerHistory = ({ matchesIds, summonerName }) => {
                       />
                     ))}
                     {/* Summoner spells */}
-                    {[1, 2].map((spellSlot) => (
+                    <div>
+                      {[1, 2].map((spellSlot) => (
+                        <img
+                          key={spellSlot}
+                          src={`http://localhost:8000/static/summonerSpell/${
+                            participant[`summoner${spellSlot}Id`]
+                          }.png`}
+                          alt={participant.spellSlot}
+                          className="items"
+                        />
+                      ))}
+                    </div>
+                    
+                    {/* Rune */}
+                    <div className="runes-container">
                       <img
-                        key={spellSlot}
-                        src={`http://localhost:8000/static/summonerSpell/${
-                          participant[`summoner${spellSlot}Id`]
-                        }.png`}
-                        alt={participant.spellSlot}
-                        className="items"
+                        src={`https://ddragon.leagueoflegends.com/cdn/img/${participant.perks.styles[0].selections[0].icon}`}
+                        alt={`Primary Rune`}
+                        className="rune-icon"
                       />
-                    ))}
+
+                    </div>
+                    
                   </div>
                 )
             )}
@@ -235,7 +246,7 @@ export const SummonerHistory = ({ matchesIds, summonerName }) => {
       ))}
       {/* Display load more button if there are more matches to load */}
       {showLoadMoreButton ? (
-        <button onClick={loadMatches}>Load more games</button>
+        <button onClick={fetchLoadMatches}>Load more games</button>
       ) : (
         // Display loading message while loading more matches
         <div>Loading...</div>
