@@ -1,6 +1,5 @@
 import React from "react";
 import { SummonerProfile } from "./SummonerProfile";
-import "./summoner.css";
 import { SummonerHistory } from "./SummonerHistory";
 import { useSummonerContext } from "../../context/SummonerContext";
 
@@ -34,12 +33,12 @@ export const SummonerBrowser = () => {
 
   return (
     <div>
-      <div className="search-bar">
-        {/* Server selection dropdown */}
+      <div className="flex items-center justify-center bg-gray-200 p-4 rounded-md shadow-md w-3/5 mx-auto">
         <select
           name="server"
           value={searchParams.server}
           onChange={handleInputChange}
+          className="p-2 mr-4 border border-gray-300 rounded-md"
         >
           <option value="">Server</option>
           {servers.map((serverOption, index) => (
@@ -48,37 +47,38 @@ export const SummonerBrowser = () => {
             </option>
           ))}
         </select>
-  
-        {/* Tag line input */}
+
         <input
           type="text"
           name="tagLine"
           value={searchParams.tagLine}
           onChange={handleInputChange}
           placeholder="Tag Line"
+          className="p-2 mr-4 border border-gray-300 rounded-md"
         />
-  
-        {/* Game name input */}
+
         <input
           type="text"
           name="gameName"
           value={searchParams.gameName}
           onChange={handleInputChange}
           placeholder="Game Name"
+          className="p-2 mr-4 border border-gray-300 rounded-md"
         />
-  
-        {/* Search button */}
-        <button onClick={() => fetchSearchAccount(searchParams)} disabled={loadingProfile}>
+
+        <button
+          onClick={() => fetchSearchAccount(searchParams)}
+          disabled={loadingProfile}
+          className="p-2 px-4 bg-blue-500 text-white rounded-md cursor-pointer transition-colors duration-300 hover:bg-blue-700"
+        >
           {loadingProfile ? "Searching..." : "Search"}
         </button>
       </div>
-  
-      {/* Render SummonerProfile component if search results exist */}
+
       {searchResults && (
         <SummonerProfile/>
       )}
-  
-      {/* Render SummonerHistory component if match IDs exist and not loading matches */}
+
       {matchesIds && !loadingMatches && (
         <SummonerHistory matchesIds={matchesIds} summonerName={searchResults.name} />
       )}

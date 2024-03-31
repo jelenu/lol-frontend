@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { useSummonerContext } from "../../../context/SummonerContext";
-import "./match.css";
 import { MatchParticipantList } from "./MatchParticipantList";
-import { MatchDropdown } from "./MatchDropdown";
+import { Dropdown } from "./dropdown/Dropdown";
+import { FaChevronUp, FaChevronDown } from "react-icons/fa";
 
 export const Match = ({ match }) => {
   const { summonerName } = useSummonerContext();
@@ -53,101 +53,114 @@ export const Match = ({ match }) => {
   };
 
   return (
-    <div className="match-container">
-      <div
-        className={`match ${
-          match.participants.some(
-            (participant) =>
-              participant.summonerName === summonerName && participant.win
-          )
-            ? 'blue-background'
-            : 'red-background'
-        }`}
-      >
-        {/* Match details */}
-        <div>
-          <div> {getGameModeName(match.queueId)}</div>
-          <div> {formatTimestamp(match.gameCreation)}</div>
-          <div> {formatGameDuration(match.gameDuration)}</div>
-        </div>
+    <div className="match-container mb-12">
+      <div className="flex bg-slate-100">
+        <div
+          className={`match flex justify-around p-5 w-full ${
+            match.participants.some(
+              (participant) =>
+                participant.summonerName === summonerName && participant.win
+            )
+              ? "bg-cyan-400"
+              : "bg-red-400"
+          }`}
+        >
+          {/* Match details */}
+          <div className="flex flex-col justify-center">
+            <div>{getGameModeName(match.queueId)}</div>
+            <div>{formatTimestamp(match.gameCreation)}</div>
+            <div>{formatGameDuration(match.gameDuration)}</div>
+          </div>
 
-        {/* Participants */}
-        <div>
-          {match.participants.map(
-            (participant, index) =>
-              participant.summonerName === summonerName && (
-                <div key={index}>
-                  {/* Champion icon */}
-                  <img
-                    src={`http://localhost:8000/static/champion/icon/${participant.championName}.png`}
-                    alt={participant.championName}
-                    className="champion"
-                  />
-                  {/* Items */}
-                  {[0, 1, 2, 3, 4, 5, 6].map((itemSlot) => (
-                    <img
-                      key={itemSlot}
-                      src={
-                        participant[`item${itemSlot}`]
-                          ? `http://localhost:8000/static/item/${
-                              participant[`item${itemSlot}`]
-                            }.png`
-                          : 'http://localhost:8000/static/item/noItem.png'
-                      }
-                      alt={
-                        participant[`item${itemSlot}`]
-                          ? participant[`item${itemSlot}`]
-                          : 'noItem'
-                      }
-                      className="items"
-                    />
-                  ))}
-                  {/* Summoner spells */}
-                  <div>
-                    {[1, 2].map((spellSlot) => (
+          {/* Participant */}
+          <div className="flex flex-col justify-center">
+            <div className="flex items-center">
+              {match.participants.map(
+                (participant, index) =>
+                  participant.summonerName === summonerName && (
+                    <div key={index} className="flex items-center ">
+                      {/* Champion icon */}
                       <img
-                        key={spellSlot}
-                        src={`http://localhost:8000/static/summonerSpell/${
-                          participant[`summoner${spellSlot}Id`]
-                        }.png`}
-                        alt={participant.spellSlot}
-                        className="items"
+                        src={`http://localhost:8000/static/champion/icon/${participant.championName}.png`}
+                        alt={participant.championName}
+                        className="champion h-16 rounded-full mr-4"
                       />
-                    ))}
-                  </div>
+                      {/* Summoner spells */}
+                      <div className="flex flex-col">
+                        {[1, 2].map((spellSlot) => (
+                          <img
+                            key={spellSlot}
+                            src={`http://localhost:8000/static/summonerSpell/${
+                              participant[`summoner${spellSlot}Id`]
+                            }.png`}
+                            alt={`Summoner Spell ${spellSlot}`}
+                            className="items h-7 rounded-md mb-1 mr-2"
+                          />
+                        ))}
+                      </div>
+                      {/* Runes */}
+                      <div className="flex flex-col items-center ">
+                        <img
+                          src={`https://ddragon.leagueoflegends.com/cdn/img/${participant.perks.styles[0].selections[0].icon}`}
+                          alt={`Primary Rune`}
+                          className="rune-icon h-10 "
+                        />
+                        <img
+                          src={`https://ddragon.leagueoflegends.com/cdn/img/${participant.perks.styles[1].selections[0].rune_path.icon}`}
+                          alt={`Primary Rune`}
+                          className="rune-path-icon h-6 w-6 mb-1"
+                        />
+                      </div>
+                      {/* KDA */}
+                      <div className="kda-container">
+                        {`${participant.kills} / ${participant.deaths} / ${participant.assists}`}
+                      </div>
+                    </div>
+                  )
+              )}
+            </div>
+            <div className="flex items-center mt-2">
+              {match.participants.map(
+                (participant, index) =>
+                  participant.summonerName === summonerName && (
+                    <div key={index} className="flex items-center">
+                      {/* Items */}
+                      {[0, 1, 2, 3, 4, 5, 6].map((itemSlot) => (
+                        <img
+                          key={itemSlot}
+                          src={
+                            participant[`item${itemSlot}`]
+                              ? `http://localhost:8000/static/item/${
+                                  participant[`item${itemSlot}`]
+                                }.png`
+                              : "http://localhost:8000/static/item/noItem.png"
+                          }
+                          alt={
+                            participant[`item${itemSlot}`]
+                              ? participant[`item${itemSlot}`]
+                              : "noItem"
+                          }
+                          className="items h-8 m-0.5 rounded-md"
+                        />
+                      ))}
+                    </div>
+                  )
+              )}
+            </div>
+          </div>
+          {/* Participants list */}
+          <MatchParticipantList match={match} />
 
-                  {/* Runes */}
-                  <div className="runes-container">
-                    <img
-                      src={`https://ddragon.leagueoflegends.com/cdn/img/${participant.perks.styles[0].selections[0].icon}`}
-                      alt={`Primary Rune`}
-                      className="rune-icon"
-                    />
-                    <img
-                      src={`https://ddragon.leagueoflegends.com/cdn/img/${participant.perks.styles[1].selections[0].rune_path.icon}`}
-                      alt={`Primary Rune`}
-                      className="rune-path-icon"
-                    />
-                  </div>
-                  {/* KDA */}
-                  <div className="kda-container">
-                    {`${participant.kills} / ${participant.deaths} / ${participant.assists}`}
-                  </div>
-                </div>
-              )
-          )}
+          
         </div>
-        {/* Participants list */}
-        <MatchParticipantList match={match} />
-
-        <button className="dropdown-button" onClick={toggleDropdown}>
-          {isDropdownOpen ? 'Close' : 'Open'}
-        </button>
+        <div className="w-10 flex flex-col justify-end items-center">
+          <button className="dropdown-button h-10" onClick={toggleDropdown}>
+            {isDropdownOpen ? <FaChevronUp />: <FaChevronDown />}
+          </button>
+        </div>
+        
       </div>
-      {isDropdownOpen && (
-        <MatchDropdown match={match} />
-      )}
+      {isDropdownOpen && <Dropdown match={match} />}
     </div>
-    
   );
 };

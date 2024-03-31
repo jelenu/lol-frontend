@@ -1,7 +1,6 @@
 import React from 'react'
 
-export const MatchDropdown = ({match}) => {
-    console.log(match)
+export const OverView = ({match}) => {
   return (
     <div>
       <table>
@@ -23,7 +22,6 @@ export const MatchDropdown = ({match}) => {
               <td>{participant.name}</td>
               <td>{`${participant.kills} / ${participant.deaths} / ${participant.assists}`}</td>
               <td>{participant.totalDamageDealtToChampions}</td>
-              <td>{participant.detectorWardsPlaced}</td>
               <td>{`${participant.detectorWardsPlaced} / ${participant.wardsPlaced} / ${participant.wardsKilled}`}</td>
             </tr>
           ))}
@@ -50,7 +48,6 @@ export const MatchDropdown = ({match}) => {
               <td>{participant.name}</td>
               <td>{`${participant.kills} / ${participant.deaths} / ${participant.assists}`}</td>
               <td>{participant.totalDamageDealtToChampions}</td>
-              <td>{participant.detectorWardsPlaced}</td>
               <td>{`${participant.detectorWardsPlaced} / ${participant.wardsPlaced} / ${participant.wardsKilled}`}</td>
 
             </tr>
