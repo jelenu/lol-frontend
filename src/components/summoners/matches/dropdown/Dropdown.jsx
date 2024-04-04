@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { OverView } from './overview/OverView';
-import { TeamAnalysis } from './TeamAnalysis';
+import { TeamAnalysis } from './teamAnalysis/TeamAnalysis';
 import { Build } from './Build';
 
 export const Dropdown = ({ match }) => {
@@ -12,10 +12,10 @@ export const Dropdown = ({ match }) => {
 
   return (
     <div className="">
-      <div className="flex justify-around py-2 bg-gray-200">
+      <div className="flex justify-around py-2">
         <button
           onClick={() => handleComponentChange('OverView')}
-          className={`px-4 py-2 rounded ${
+          className={`px-4 rounded ${
             selectedComponent === 'OverView' ? 'bg-gray-400 text-white' : 'bg-gray-200 text-gray-700'
           } mr-2 focus:outline-none`}
         >
@@ -39,7 +39,7 @@ export const Dropdown = ({ match }) => {
         </button>
       </div>
       {selectedComponent === 'OverView' && <OverView match={match} />}
-      {selectedComponent === 'TeamAnalysis' && <TeamAnalysis />}
+      {selectedComponent === 'TeamAnalysis' && <TeamAnalysis match={match} />}
       {selectedComponent === 'Build' && <Build />}
     </div>
   );

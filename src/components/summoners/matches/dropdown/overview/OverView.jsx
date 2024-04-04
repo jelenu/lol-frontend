@@ -9,7 +9,7 @@ export const OverView = ({ match }) => {
         participants={match.participants.slice(0, 5)}
         team={match.teams[0]}
       />
-      <div className="flex h-16">
+      <div className="flex my-2 h-16">
         <OverViewObjectives team={match.teams[0]}/>
         <OverViewGraphs match={match} />
         <OverViewObjectives team={match.teams[1]}/>

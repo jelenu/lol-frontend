@@ -8,7 +8,7 @@ export const OverViewTeam = ({ participants, team }) => {
   console.log(summonerName);
   return (
     <div className="flex justify-center">
-      <table className="w-full my-2 text-xs">
+      <table className="w-full  text-xs">
         <thead>
           <tr
             className={`uppercase text-sm leading-normal ${
