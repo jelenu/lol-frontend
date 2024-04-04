@@ -88,7 +88,7 @@ export const SummonerHistory = () => {
       {showLoadMoreButton ? (
         <button
           onClick={fetchLoadMatches}
-          className="py-2 px-4 mt-4 bg-blue-500 text-white rounded-md cursor-pointer transition-colors duration-300 hover:bg-blue-700"
+          className="py-2 px-4 my-2 bg-blue-500 text-white rounded-md cursor-pointer transition-colors duration-300 hover:bg-blue-700"
         >
           Load more games
         </button>

@@ -26,7 +26,6 @@ export const SummonerProvider = ({ children }) => {
     /* Loading state for match search */
     const [loadingMatches, setLoadingMatches] = useState(false);
 
-    /* Loading state for match search */
     const [summonerName, setSummonerName] = useState(false);
 
     const servers = [

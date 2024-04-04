@@ -53,7 +53,7 @@ export const Match = ({ match }) => {
   };
 
   return (
-    <div className="match-container mb-12">
+    <div className="match-container mb-10">
       <div className="flex bg-slate-100">
         <div
           className={`match flex justify-around p-5 w-full ${
@@ -61,7 +61,7 @@ export const Match = ({ match }) => {
               (participant) =>
                 participant.summonerName === summonerName && participant.win
             )
-              ? "bg-cyan-400"
+              ? "bg-blue-400"
               : "bg-red-400"
           }`}
         >
@@ -83,7 +83,7 @@ export const Match = ({ match }) => {
                       <img
                         src={`http://localhost:8000/static/champion/icon/${participant.championName}.png`}
                         alt={participant.championName}
-                        className="champion h-16 rounded-full mr-4"
+                        className="champion h-14 rounded-full mr-4"
                       />
                       {/* Summoner spells */}
                       <div className="flex flex-col">
@@ -140,7 +140,7 @@ export const Match = ({ match }) => {
                               ? participant[`item${itemSlot}`]
                               : "noItem"
                           }
-                          className="items h-8 m-0.5 rounded-md"
+                          className="items h-6 m-0.5 rounded-md"
                         />
                       ))}
                     </div>
