@@ -1,6 +1,5 @@
 import React from "react";
-import { MatchAnalysisChart } from "./MatchAnalysisDonutChart";
-import { MatchAnalysisBarChart } from "./MatchAnalysisBarChart";
+import { MatchAnalysisSection } from "./MatchAnalysisSection";
 
 export const MatchAnalysis = ({ match }) => {
   const participansData = (param) => {
@@ -26,126 +25,64 @@ export const MatchAnalysis = ({ match }) => {
   return (
     <div>
       <div className="flex">
-        <div className="w-1/2 text-center px-2">
-          <div className="mb-2">Damage Dealt to Champions</div>
-          <div className="flex">
-            <MatchAnalysisBarChart
-              max={calculateMax("totalDamageDealtToChampions")}
-              participantsData={participansData("totalDamageDealtToChampions").slice(0, 5)}
-              team={1}
-            />
-            <MatchAnalysisChart
-              blueTeamData={calculateSum("totalDamageDealtToChampions", 0, 5)}
-              redTeamData={calculateSum("totalDamageDealtToChampions", 5, 10)}
-            />
-            <MatchAnalysisBarChart
-              max={calculateMax("totalDamageDealtToChampions")}
-              participantsData={participansData("totalDamageDealtToChampions").slice(5)}
-              team={2}
-            />
-          </div>
-        </div>
-        <div className="w-1/2 text-center px-2">
-          <div className="mb-2">Damage Taken</div>
-          <div className="flex">
-            <MatchAnalysisBarChart
-              max={calculateMax("totalDamageTaken")}
-              participantsData={participansData("totalDamageTaken").slice(0, 5)}
-              team={1}
-            />
-            <MatchAnalysisChart
-              blueTeamData={calculateSum("totalDamageTaken", 0, 5)}
-              redTeamData={calculateSum("totalDamageTaken", 5, 10)}
-            />
-            <MatchAnalysisBarChart
-              max={calculateMax("totalDamageTaken")}
-              participantsData={participansData("totalDamageTaken").slice(5)}
-              team={2}
-            />
-          </div>
-        </div>
+        <MatchAnalysisSection
+          title="Damage Dealt to Champions"
+          param="totalDamageDealtToChampions"
+          startIndex={0}
+          endIndex={5}
+          calculateMax={calculateMax}
+          calculateSum={calculateSum}
+          participansData={participansData}
+        />
+        <MatchAnalysisSection
+          title="Damage Taken"
+          param="totalDamageTaken"
+          startIndex={0}
+          endIndex={5}
+          calculateMax={calculateMax}
+          calculateSum={calculateSum}
+          participansData={participansData}
+        />
       </div>
       <div className="flex">
-        
-        <div className="w-1/2 text-center px-2 ">
-          <div className="mb-2">Gold Earned</div>
-          <div className="flex">
-            <MatchAnalysisBarChart
-              max={calculateMax("goldEarned")}
-              participantsData={participansData("goldEarned").slice(0, 5)}
-              team={1}
-            />
-            <MatchAnalysisChart
-              blueTeamData={calculateSum("goldEarned", 0, 5)}
-              redTeamData={calculateSum("goldEarned", 0, 5)}
-            />
-            <MatchAnalysisBarChart
-              max={calculateMax("goldEarned")}
-              participantsData={participansData("goldEarned").slice(5)}
-              team={2}
-            />
-          </div>
-        </div>
-        <div className="w-1/2 text-center px-2">
-          <div className="mb-2">Vision Score</div>
-          <div className="flex">
-            <MatchAnalysisBarChart
-              max={calculateMax("visionScore")}
-              participantsData={participansData("visionScore").slice(0, 5)}
-              team={1}
-            />
-            <MatchAnalysisChart
-              blueTeamData={calculateSum("visionScore", 0, 5)}
-              redTeamData={calculateSum("visionScore", 5, 10)}
-            />
-            <MatchAnalysisBarChart
-              max={calculateMax("visionScore")}
-              participantsData={participansData("visionScore").slice(5)}
-              team={2}
-            />
-          </div>
-        </div>
+        <MatchAnalysisSection
+          title="Gold Earned"
+          param="goldEarned"
+          startIndex={0}
+          endIndex={5}
+          calculateMax={calculateMax}
+          calculateSum={calculateSum}
+          participansData={participansData}
+        />
+        <MatchAnalysisSection
+          title="Vision Score"
+          param="visionScore"
+          startIndex={0}
+          endIndex={5}
+          calculateMax={calculateMax}
+          calculateSum={calculateSum}
+          participansData={participansData}
+        />
       </div>
       <div className="flex">
-        <div className="w-1/2 text-center px-2">
-          <div className="mb-2">Champion Kill</div>
-          <div className="flex">
-            <MatchAnalysisBarChart
-              max={calculateMax("kills")}
-              participantsData={participansData("kills").slice(0, 5)}
-              team={1}
-            />
-            <MatchAnalysisChart
-              blueTeamData={calculateSum("kills", 0, 5)}
-              redTeamData={calculateSum("kills", 5, 10)}
-            />
-            <MatchAnalysisBarChart
-              max={calculateMax("kills")}
-              participantsData={participansData("kills").slice(5)}
-              team={2}
-            />
-          </div>
-        </div>
-        <div className="w-1/2 text-center px-2">
-          <div className="mb-2">Assists</div>
-          <div className="flex">
-            <MatchAnalysisBarChart
-              max={calculateMax("assists")}
-              participantsData={participansData("assists").slice(0, 5)}
-              team={1}
-            />
-            <MatchAnalysisChart
-              blueTeamData={calculateSum("assists", 0, 5)}
-              redTeamData={calculateSum("assists", 5, 10)}
-            />
-            <MatchAnalysisBarChart
-              max={calculateMax("assists")}
-              participantsData={participansData("assists").slice(5)}
-              team={2}
-            />
-          </div>
-        </div>
-        
+        <MatchAnalysisSection
+          title="Champion Kill"
+          param="kills"
+          startIndex={0}
+          endIndex={5}
+          calculateMax={calculateMax}
+          calculateSum={calculateSum}
+          participansData={participansData}
+        />
+        <MatchAnalysisSection
+          title="Assists"
+          param="assists"
+          startIndex={0}
+          endIndex={5}
+          calculateMax={calculateMax}
+          calculateSum={calculateSum}
+          participansData={participansData}
+        />
       </div>
     </div>
   );
