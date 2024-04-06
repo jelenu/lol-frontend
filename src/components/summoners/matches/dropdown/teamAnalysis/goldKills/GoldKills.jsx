@@ -32,46 +32,73 @@ export const GoldKills = ({ matchId, server }) => {
     // eslint-disable-next-line
   }, []);
 
-  const totalGoldPerFrame = [];
+  const calculatePerParticipantAndFrame = (property) => {
+    const result = [];
+    
+    timeLine.info.frames.forEach((frame, index) => {
+      const frameResult = { frame: index + 1 };
+      const participantIds = Object.keys(frame.participantFrames);
+  
+      participantIds.forEach((participantId) => {
+        if (!frameResult[`participant${participantId}`]) {
+          frameResult[`participant${participantId}`] = frame.participantFrames[participantId][property];
+        }
+      });
+  
+      result.push(frameResult);
+    });
+  
+    return result;
+  };
 
-  timeLine.info.frames.forEach((frame, index) => {
-    const participantIds = Object.keys(frame.participantFrames);
-  
-    let totalGoldTeam1Sum = 0;
-    let totalGoldTeam2Sum = 0;
-  
-    participantIds.slice(0, 5).forEach((participantId) => {
-      totalGoldTeam1Sum += frame.participantFrames[participantId].totalGold;
+  const calculatePerTeam = (perParticipantAndFrame) => {
+    const teamTotals = [];
+
+    perParticipantAndFrame.forEach((frame, index) =>{
+      const frameResult = { frame: index + 1 };
+      let blueTeamTotal = 0;
+      let redTeamTotal = 0;
+      
+      // Suma de los primeros 5 participantes (suponiendo que son los primeros 5 en el objeto frame)
+      for (let i = 1; i <= 5; i++) {
+        blueTeamTotal += frame[`participant${i}`];
+      }
+
+      // Suma de los siguientes 5 participantes
+      for (let i = 6; i <= 10; i++) {
+        redTeamTotal += frame[`participant${i}`];
+      }
+
+      frameResult.blueTeam = blueTeamTotal;
+      frameResult.redTeam = redTeamTotal;
+
+      teamTotals.push(frameResult);
     });
   
-    participantIds.slice(5).forEach((participantId) => {
-      totalGoldTeam2Sum += frame.participantFrames[participantId].totalGold;
-    });
-  
-    totalGoldPerFrame.push({ 
-      frame: index, 
-      blueTeam: totalGoldTeam1Sum, 
-      redTeam: totalGoldTeam2Sum 
-    });
-  });
+    return teamTotals;
+};
 
   const yAxisFormatter = (value) => {
     if (value >= 1000) {
-      return (value / 1000) + 'k';
+      return value / 1000 + "k";
     }
     return value;
   };
 
   const xAxisFormatter = (value) => {
-    return value + ' min';
+    return value + " min";
   };
 
   return (
-    <div style={{height:500}}>
-        {timeLine && (
-                  <TeamGold totalGoldPerFrame={totalGoldPerFrame} xAxisFormatter={xAxisFormatter} yAxisFormatter={yAxisFormatter}/>
-
-        )}
+    <div style={{ height: 500 }}>
+      {timeLine && (
+        <TeamGold
+          calculatePerTeam={calculatePerTeam}
+          calculatePerParticipantAndFrame={calculatePerParticipantAndFrame}
+          xAxisFormatter={xAxisFormatter}
+          yAxisFormatter={yAxisFormatter}
+        />
+      )}
     </div>
   );
 };
