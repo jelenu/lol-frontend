@@ -33,7 +33,7 @@ export const SummonerBrowser = () => {
 
   return (
     <div>
-      <div className="flex items-center justify-center bg-gray-200 p-4 rounded-md shadow-md w-3/5 mx-auto">
+      <div className="flex items-center justify-center bg-blue-400 p-4 rounded-b-md w-4/5 mx-auto">
         <select
           name="server"
           value={searchParams.server}
@@ -69,7 +69,7 @@ export const SummonerBrowser = () => {
         <button
           onClick={() => fetchSearchAccount(searchParams)}
           disabled={loadingProfile}
-          className="p-2 px-4 bg-blue-500 text-white rounded-md cursor-pointer transition-colors duration-300 hover:bg-blue-700"
+          className="p-2 px-4 bg-gray-400 text-white rounded-md cursor-pointer transition-colors duration-300 hover:bg-gray-600"
         >
           {loadingProfile ? "Searching..." : "Search"}
         </button>

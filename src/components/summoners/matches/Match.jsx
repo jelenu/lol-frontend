@@ -54,9 +54,9 @@ export const Match = ({ match }) => {
 
   return (
     <div className="match-container mb-10">
-      <div className="flex bg-slate-100">
+      <div className="flex bg-white rounded-md">
         <div
-          className={`match flex justify-around p-5 w-full ${
+          className={`match flex justify-around p-5 w-full rounded-s-md ${
             match.participants.some(
               (participant) =>
                 participant.summonerName === summonerName && participant.win

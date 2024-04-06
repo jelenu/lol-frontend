@@ -1,9 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { TeamGold } from "./TeamGold";
+import { TeamGoldAdvantage } from "./TeamGoldAdvantage";
 
 export const GoldKills = ({ matchId, server }) => {
   const [timeLine, setTimeLine] = useState(null);
+  const [selectedComponent, setSelectedComponent] = useState("TeamGold");
 
+  const handleComponentChange = (component) => {
+    setSelectedComponent(component);
+  };
   const fetchItems = async () => {
     try {
       const response = await fetch(
@@ -34,37 +39,36 @@ export const GoldKills = ({ matchId, server }) => {
 
   const calculatePerParticipantAndFrame = (property) => {
     const result = [];
-    
+
     timeLine.info.frames.forEach((frame, index) => {
       const frameResult = { frame: index + 1 };
       const participantIds = Object.keys(frame.participantFrames);
-  
+
       participantIds.forEach((participantId) => {
         if (!frameResult[`participant${participantId}`]) {
-          frameResult[`participant${participantId}`] = frame.participantFrames[participantId][property];
+          frameResult[`participant${participantId}`] =
+            frame.participantFrames[participantId][property];
         }
       });
-  
+
       result.push(frameResult);
     });
-  
+
     return result;
   };
 
   const calculatePerTeam = (perParticipantAndFrame) => {
     const teamTotals = [];
 
-    perParticipantAndFrame.forEach((frame, index) =>{
+    perParticipantAndFrame.forEach((frame, index) => {
       const frameResult = { frame: index + 1 };
       let blueTeamTotal = 0;
       let redTeamTotal = 0;
-      
-      // Suma de los primeros 5 participantes (suponiendo que son los primeros 5 en el objeto frame)
+
       for (let i = 1; i <= 5; i++) {
         blueTeamTotal += frame[`participant${i}`];
       }
 
-      // Suma de los siguientes 5 participantes
       for (let i = 6; i <= 10; i++) {
         redTeamTotal += frame[`participant${i}`];
       }
@@ -74,9 +78,9 @@ export const GoldKills = ({ matchId, server }) => {
 
       teamTotals.push(frameResult);
     });
-  
+
     return teamTotals;
-};
+  };
 
   const yAxisFormatter = (value) => {
     if (value >= 1000) {
@@ -88,16 +92,46 @@ export const GoldKills = ({ matchId, server }) => {
   const xAxisFormatter = (value) => {
     return value + " min";
   };
+  console.log(timeLine)
 
   return (
-    <div style={{ height: 500 }}>
-      {timeLine && (
+    <div style={{height:500}}>
+      <div className="flex justify-around ">
+        <button
+          onClick={() => handleComponentChange("TeamGold")}
+          className={`px-4 rounded ${
+            selectedComponent === "TeamGold"
+              ? "text-blue-500 border-b-2 border-blue-500"
+              : ""
+          } mr-2 focus:outline-none`}
+        >
+          Team Gold
+        </button>
+        <button
+          onClick={() => handleComponentChange("TeamGoldAdvantage")}
+          className={`px-4  rounded ${
+            selectedComponent === "TeamGoldAdvantage"
+              ? "text-blue-500 border-b-2 border-blue-500"
+              : ""
+          } mr-2 focus:outline-none`}
+        >
+          Team Gold Advantage
+        </button>
+      </div>
+
+      {timeLine && selectedComponent === "TeamGold" && (
         <TeamGold
           calculatePerTeam={calculatePerTeam}
           calculatePerParticipantAndFrame={calculatePerParticipantAndFrame}
           xAxisFormatter={xAxisFormatter}
           yAxisFormatter={yAxisFormatter}
         />
+      )}
+      {timeLine && selectedComponent === "TeamGoldAdvantage" && (
+        <TeamGoldAdvantage calculatePerTeam={calculatePerTeam}
+        calculatePerParticipantAndFrame={calculatePerParticipantAndFrame}
+        xAxisFormatter={xAxisFormatter}
+        yAxisFormatter={yAxisFormatter} />
       )}
     </div>
   );

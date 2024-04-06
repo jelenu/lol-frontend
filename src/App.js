@@ -7,7 +7,7 @@ import { SummonerProfile } from './components/summoners/SummonerProfile';
 
 function App() {
   return (
-    <div className="App">
+    <div className="bg-gray-200 min-h-screen">
       <SummonerProvider>
           <Routes>
             <Route path="/items" element={<ItemsList />} />

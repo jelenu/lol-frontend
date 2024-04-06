@@ -23,7 +23,7 @@ export const MatchAnalysis = ({ match }) => {
   };
 
   return (
-    <div>
+    <div className=" p-3 ">
       <div className="flex">
         <MatchAnalysisSection
           title="Damage Dealt to Champions"

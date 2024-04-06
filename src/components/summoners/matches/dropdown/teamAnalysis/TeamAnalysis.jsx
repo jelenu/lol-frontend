@@ -10,11 +10,11 @@ export const TeamAnalysis = ({ match }) => {
   };
 
   return (
-    <div>
-      <div className="flex justify-around py-2">
+    <div className='bg-gray-100 rounded-b-md'>
+      <div className="flex justify-around  rounded-t-md pt-1 bg-white">
         <button
           onClick={() => handleComponentChange('MatchAnalysis')}
-          className={`px-4 rounded ${
+          className={`px-4  ${
             selectedComponent === 'MatchAnalysis' ? '  text-blue-500 border-b-2 border-blue-500' : ''
           } mr-2 focus:outline-none`}
         >
@@ -22,7 +22,7 @@ export const TeamAnalysis = ({ match }) => {
         </button>
         <button
           onClick={() => handleComponentChange('GoldKills')}
-          className={`px-4 py-2 rounded ${
+          className={`px-4   ${
             selectedComponent === 'GoldKills' ? 'text-blue-500 border-b-2 border-blue-500' : ''
           } mr-2 focus:outline-none`}
         >
