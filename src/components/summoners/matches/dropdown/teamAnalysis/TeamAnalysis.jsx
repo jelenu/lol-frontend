@@ -1,13 +1,39 @@
-import React from "react";
+import React, { useState } from 'react';
 import { MatchAnalysis } from "./matchAnalysis/MatchAnalysis";
+import { GoldKills } from "./goldKills/GoldKills";
 
 export const TeamAnalysis = ({ match }) => {
+  const [selectedComponent, setSelectedComponent] = useState('MatchAnalysis');
 
-  
-  console.log( match.teams[1].objectives.champion)
+  const handleComponentChange = (component) => {
+    setSelectedComponent(component);
+  };
+
   return (
     <div>
-      <MatchAnalysis match={match}/>
+      <div className="flex justify-around py-2">
+        <button
+          onClick={() => handleComponentChange('MatchAnalysis')}
+          className={`px-4 rounded ${
+            selectedComponent === 'MatchAnalysis' ? '  text-blue-500 border-b-2 border-blue-500' : ''
+          } mr-2 focus:outline-none`}
+        >
+          Match Analysis
+        </button>
+        <button
+          onClick={() => handleComponentChange('GoldKills')}
+          className={`px-4 py-2 rounded ${
+            selectedComponent === 'GoldKills' ? 'text-blue-500 border-b-2 border-blue-500' : ''
+          } mr-2 focus:outline-none`}
+        >
+          Gold & Kills
+        </button>
+
+      </div>
+
+      {selectedComponent === 'MatchAnalysis' && <MatchAnalysis match={match} />}
+      {selectedComponent === 'GoldKills' && <GoldKills  matchId={match.gameId} server={match.platformId}/>}
+
     </div>
   );
 };

@@ -3,9 +3,9 @@ import { useSummonerContext } from "../../../../../context/SummonerContext";
 
 export const OverViewTeam = ({ participants, team }) => {
   const { summonerName } = useSummonerContext();
-
   const result = team.win;
-  console.log(summonerName);
+
+
   return (
     <div className="flex justify-center">
       <table className="w-full  text-xs">
@@ -31,12 +31,14 @@ export const OverViewTeam = ({ participants, team }) => {
               key={index}
               className={`text-gray-600 text-center ${
                 result
-                  ? " text-blue-600 bg-blue-200"
-                  : " text-red-600 bg-red-200"
+                  ? `${
+                    summonerName === participant.summonerName ? "bg-blue-300" : "text-blue-600 bg-blue-200"
+                  }  `
+                  : `${
+                    summonerName === participant.summonerName ? "bg-red-300" : "text-red-600 bg-red-200"
+                  }`
               }  
-              ${
-                summonerName === participant.summonerName ? "bg-blue-300" : ""
-              }  `}
+               `}
             >
               {/* Summoner */}
               <td>
