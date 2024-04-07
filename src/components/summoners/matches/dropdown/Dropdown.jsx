@@ -16,7 +16,7 @@ export const Dropdown = ({ match }) => {
         <button
           onClick={() => handleComponentChange('OverView')}
           className={`px-4 rounded ${
-            selectedComponent === 'OverView' ? 'bg-blue-400 text-white' : 'bg-gray-200 text-gray-700'
+            selectedComponent === 'OverView' ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700'
           } mr-2 focus:outline-none`}
         >
           OverView
@@ -24,7 +24,7 @@ export const Dropdown = ({ match }) => {
         <button
           onClick={() => handleComponentChange('TeamAnalysis')}
           className={`px-4 py-2 rounded ${
-            selectedComponent === 'TeamAnalysis' ? 'bg-blue-400 text-white' : 'bg-gray-200 text-gray-700'
+            selectedComponent === 'TeamAnalysis' ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700'
           } mr-2 focus:outline-none`}
         >
           Team Analysis
@@ -32,7 +32,7 @@ export const Dropdown = ({ match }) => {
         <button
           onClick={() => handleComponentChange('Build')}
           className={`px-4 py-2 rounded ${
-            selectedComponent === 'Build' ? 'bg-blue-400 text-white' : 'bg-gray-200 text-gray-700'
+            selectedComponent === 'Build' ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700'
           } focus:outline-none`}
         >
           Build

@@ -10,12 +10,12 @@ export const TeamAnalysis = ({ match }) => {
   };
 
   return (
-    <div className='bg-gray-100 rounded-b-md'>
-      <div className="flex justify-around  rounded-t-md pt-1 bg-white">
+    <div className='bg-gray-100 rounded-md'>
+      <div className="flex justify-around  rounded-t-md bg-white">
         <button
           onClick={() => handleComponentChange('MatchAnalysis')}
           className={`px-4  ${
-            selectedComponent === 'MatchAnalysis' ? '  text-blue-500 border-b-2 border-blue-500' : ''
+            selectedComponent === 'MatchAnalysis' ? ' p-1 text-blue-500 border-b-2 border-blue-500' : ''
           } mr-2 focus:outline-none`}
         >
           Match Analysis

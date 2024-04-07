@@ -61,7 +61,7 @@ export const GoldKills = ({ matchId, server }) => {
     const teamTotals = [];
 
     perParticipantAndFrame.forEach((frame, index) => {
-      const frameResult = { frame: index + 1 };
+      const frameResult = { frame: index };
       let blueTeamTotal = 0;
       let redTeamTotal = 0;
 
@@ -83,37 +83,39 @@ export const GoldKills = ({ matchId, server }) => {
   };
 
   const yAxisFormatter = (value) => {
-    if (value >= 1000) {
-      return value / 1000 + "k";
+    const absValue = Math.abs(value);
+
+    if (absValue >= 1000) {
+      return absValue / 1000 + "k";
     }
-    return value;
+    return absValue;
   };
 
   const xAxisFormatter = (value) => {
     return value + " min";
   };
-  console.log(timeLine)
+  console.log(timeLine);
 
   return (
-    <div style={{height:500}}>
-      <div className="flex justify-around ">
+    <div className="" style={{ height: 500 }}>
+      <div className="flex justify-center m-3">
         <button
           onClick={() => handleComponentChange("TeamGold")}
-          className={`px-4 rounded ${
+          className={`px-4 py-2  ${
             selectedComponent === "TeamGold"
-              ? "text-blue-500 border-b-2 border-blue-500"
-              : ""
-          } mr-2 focus:outline-none`}
+              ? "text-white bg-blue-500 "
+              : "bg-white"
+          }`}
         >
           Team Gold
         </button>
         <button
           onClick={() => handleComponentChange("TeamGoldAdvantage")}
-          className={`px-4  rounded ${
+          className={`px-4 py-2  ${
             selectedComponent === "TeamGoldAdvantage"
-              ? "text-blue-500 border-b-2 border-blue-500"
-              : ""
-          } mr-2 focus:outline-none`}
+              ? "text-white bg-blue-500"
+              : " bg-white"
+          } `}
         >
           Team Gold Advantage
         </button>
@@ -128,10 +130,12 @@ export const GoldKills = ({ matchId, server }) => {
         />
       )}
       {timeLine && selectedComponent === "TeamGoldAdvantage" && (
-        <TeamGoldAdvantage calculatePerTeam={calculatePerTeam}
-        calculatePerParticipantAndFrame={calculatePerParticipantAndFrame}
-        xAxisFormatter={xAxisFormatter}
-        yAxisFormatter={yAxisFormatter} />
+        <TeamGoldAdvantage
+          calculatePerTeam={calculatePerTeam}
+          calculatePerParticipantAndFrame={calculatePerParticipantAndFrame}
+          xAxisFormatter={xAxisFormatter}
+          yAxisFormatter={yAxisFormatter}
+        />
       )}
     </div>
   );

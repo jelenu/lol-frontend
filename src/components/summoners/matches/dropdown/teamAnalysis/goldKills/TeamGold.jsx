@@ -2,10 +2,7 @@ import React from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 
 export const TeamGold = ({ calculatePerTeam,calculatePerParticipantAndFrame, xAxisFormatter, yAxisFormatter }) => {
-  console.log(calculatePerParticipantAndFrame('totalGold'))
-
   console.log(calculatePerTeam(calculatePerParticipantAndFrame('totalGold')))
-
   
   return (
   <div className='text-xs'>
