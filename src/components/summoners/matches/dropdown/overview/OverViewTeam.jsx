@@ -46,7 +46,7 @@ export const OverViewTeam = ({ participants, team }) => {
                   <img
                     src={`http://localhost:8000/static/champion/icon/${participant.championName}.png`}
                     alt={participant.championName}
-                    className="champion h-9 rounded-full mr-2"
+                    className="h-9 rounded-full mr-2"
                   />
                   <div className="flex flex-col">
                     {[1, 2].map((spellSlot) => (
@@ -56,7 +56,7 @@ export const OverViewTeam = ({ participants, team }) => {
                           participant[`summoner${spellSlot}Id`]
                         }.png`}
                         alt={`Summoner Spell ${spellSlot}`}
-                        className="items h-4 rounded-md mb-1 mr-1"
+                        className="h-4 rounded-md mb-1 mr-1"
                       />
                     ))}
                   </div>

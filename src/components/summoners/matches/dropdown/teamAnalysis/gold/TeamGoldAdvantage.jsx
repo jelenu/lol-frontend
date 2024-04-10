@@ -4,19 +4,19 @@ import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContai
 export const TeamGoldAdvantage = ({ calculatePerTeam, calculatePerParticipantAndFrame, xAxisFormatter, yAxisFormatter }) => {
   
   const calculateGoldDiff = (data) => {
-    const newData = data.map((entry, index) => ({
+    const goldDiff = data.map((entry, index) => ({
       frame: entry.frame,
       diff: entry.blueTeam - entry.redTeam,
     }));
-    return newData;
+    return goldDiff;
   }
 
   const originalData = calculatePerTeam(calculatePerParticipantAndFrame('totalGold'));
-  const newData = calculateGoldDiff(originalData);
+  const goldDiff = calculateGoldDiff(originalData);
 
   const gradientOffset = () => {
-    const dataMax = Math.max(...newData.map((i) => i.diff));
-    const dataMin = Math.min(...newData.map((i) => i.diff));
+    const dataMax = Math.max(...goldDiff.map((i) => i.diff));
+    const dataMin = Math.min(...goldDiff.map((i) => i.diff));
   
     if (dataMax <= 0) {
       return 0;
@@ -28,11 +28,9 @@ export const TeamGoldAdvantage = ({ calculatePerTeam, calculatePerParticipantAnd
     return dataMax / (dataMax - dataMin);
   };
   
-  const off = gradientOffset();
-
   const CustomTooltip = ({ active, payload, label }) => {
     if (active && payload && payload.length) {
-      const value = Math.abs(payload[0].value); // Obtener el valor absoluto
+      const value = Math.abs(payload[0].value);
   
       let teamLabel = '';
       if (payload[0].value >= 0) {
@@ -53,9 +51,9 @@ export const TeamGoldAdvantage = ({ calculatePerTeam, calculatePerParticipantAnd
   return (
     <div className='text-xs'>
       
-      <ResponsiveContainer width="100%" height={450}>
+      <ResponsiveContainer width="100%" height={430}>
         <AreaChart
-          data={newData}
+          data={goldDiff}
           margin={{ right: 20 }}
 
         >
@@ -65,8 +63,8 @@ export const TeamGoldAdvantage = ({ calculatePerTeam, calculatePerParticipantAnd
         <Tooltip content={<CustomTooltip />}  />
           <defs>
           <linearGradient id="splitColor" x1="0" y1="0" x2="0" y2="1">
-              <stop offset={off} stopColor="#60A5FA" stopOpacity={1} />
-              <stop offset={off} stopColor="#F87171" stopOpacity={1} />
+              <stop offset={gradientOffset()} stopColor="#60A5FA" stopOpacity={1} />
+              <stop offset={gradientOffset()} stopColor="#F87171" stopOpacity={1} />
             </linearGradient>
           </defs>
             

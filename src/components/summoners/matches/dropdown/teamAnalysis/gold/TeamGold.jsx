@@ -6,7 +6,7 @@ export const TeamGold = ({ calculatePerTeam,calculatePerParticipantAndFrame, xAx
   
   return (
   <div className='text-xs'>
-    <ResponsiveContainer width="100%" height={450}>
+    <ResponsiveContainer width="100%" height={430}>
       <LineChart
         data={calculatePerTeam(calculatePerParticipantAndFrame('totalGold'))}
         margin={{ right: 20 }}

@@ -1,38 +1,85 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { MatchAnalysis } from "./matchAnalysis/MatchAnalysis";
-import { GoldKills } from "./goldKills/GoldKills";
+import { Gold } from "./gold/Gold";
+import { Map } from "./map/Map";
+import { TimeLine } from './timeLine/TimeLine';
 
 export const TeamAnalysis = ({ match }) => {
   const [selectedComponent, setSelectedComponent] = useState('MatchAnalysis');
+  const [timeLine, setTimeLine] = useState(null);
 
   const handleComponentChange = (component) => {
     setSelectedComponent(component);
   };
 
+  useEffect(() => {
+    const fetchTimeline = async () => {
+      try {
+        const response = await fetch(
+          `http://localhost:8000/api/summoners/matches/timeline?server=${match.platformId}&matchId=${match.gameId}`,
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+
+        if (response.ok) {
+          const data = await response.json();
+          setTimeLine(data);
+        } else {
+          console.error("Error getting timeline");
+        }
+      } catch (error) {
+        console.error("Network error:", error);
+      }
+    };
+
+    fetchTimeline();
+  }, [match.platformId, match.gameId]);
+
   return (
-    <div className='bg-gray-100 rounded-md'>
+    <div className='bg-gray-100 rounded-md '>
       <div className="flex justify-around  rounded-t-md bg-white">
         <button
           onClick={() => handleComponentChange('MatchAnalysis')}
           className={`px-4  ${
             selectedComponent === 'MatchAnalysis' ? ' p-1 text-blue-500 border-b-2 border-blue-500' : ''
-          } mr-2 focus:outline-none`}
+          } mr-2 `}
         >
           Match Analysis
         </button>
         <button
-          onClick={() => handleComponentChange('GoldKills')}
+          onClick={() => handleComponentChange('Gold')}
           className={`px-4   ${
-            selectedComponent === 'GoldKills' ? 'text-blue-500 border-b-2 border-blue-500' : ''
-          } mr-2 focus:outline-none`}
+            selectedComponent === 'Gold' ? 'p-1 text-blue-500 border-b-2 border-blue-500' : ''
+          } mr-2`}
         >
-          Gold & Kills
+          Gold
         </button>
-
+        <button
+          onClick={() => handleComponentChange('Map')}
+          className={`px-4   ${
+            selectedComponent === 'Map' ? 'p-1 text-blue-500 border-b-2 border-blue-500' : ''
+          } mr-2`}
+        >
+          Map
+        </button>
+        <button
+          onClick={() => handleComponentChange('TimeLine')}
+          className={`px-4   ${
+            selectedComponent === 'TimeLine' ? 'p-1 text-blue-500 border-b-2 border-blue-500' : ''
+          } mr-2`}
+        >
+          TimeLine
+        </button>
       </div>
 
-      {selectedComponent === 'MatchAnalysis' && <MatchAnalysis match={match} />}
-      {selectedComponent === 'GoldKills' && <GoldKills  matchId={match.gameId} server={match.platformId}/>}
+      {match && selectedComponent === 'MatchAnalysis' && <MatchAnalysis match={match} />}
+      {timeLine &&  selectedComponent === 'Gold' && <Gold timeLine={timeLine} />}
+      {timeLine && selectedComponent === 'Map' && <Map timeLine={timeLine} />}
+      {timeLine && match && selectedComponent === 'TimeLine' && <TimeLine timeLine={timeLine} match={match} />}
 
     </div>
   );

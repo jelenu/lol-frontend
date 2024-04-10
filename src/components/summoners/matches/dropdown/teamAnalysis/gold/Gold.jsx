@@ -1,41 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { TeamGold } from "./TeamGold";
 import { TeamGoldAdvantage } from "./TeamGoldAdvantage";
 
-export const GoldKills = ({ matchId, server }) => {
-  const [timeLine, setTimeLine] = useState(null);
+export const Gold = ({ timeLine }) => {
   const [selectedComponent, setSelectedComponent] = useState("TeamGold");
 
   const handleComponentChange = (component) => {
     setSelectedComponent(component);
   };
-  const fetchItems = async () => {
-    try {
-      const response = await fetch(
-        `http://localhost:8000/api/summoners/matches/timeline?server=${server}&matchId=${matchId}`,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
 
-      if (response.ok) {
-        const data = await response.json();
-        setTimeLine(data);
-      } else {
-        console.error("Error getting timeline");
-      }
-    } catch (error) {
-      console.error("Network error:", error);
-    }
-  };
-
-  useEffect(() => {
-    fetchItems();
-    // eslint-disable-next-line
-  }, []);
 
   const calculatePerParticipantAndFrame = (property) => {
     const result = [];
@@ -97,7 +70,7 @@ export const GoldKills = ({ matchId, server }) => {
   console.log(timeLine);
 
   return (
-    <div className="" style={{ height: 500 }}>
+    <div style={{ height: 530 }}>
       <div className="flex justify-center m-3">
         <button
           onClick={() => handleComponentChange("TeamGold")}
@@ -119,6 +92,13 @@ export const GoldKills = ({ matchId, server }) => {
         >
           Team Gold Advantage
         </button>
+      </div>
+
+      <div className="flex justify-center items-center m-3">
+        <div className="h-2 w-2 bg-blue-500 rounded-full mr-1"></div>
+        <div className="mr-4">Blue Team</div>
+        <div className="h-2 w-2 bg-red-500 rounded-full mr-1"></div>
+        <div>Red Team</div>
       </div>
 
       {timeLine && selectedComponent === "TeamGold" && (

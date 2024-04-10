@@ -1,26 +1,15 @@
 import React from "react";
-import { ResponsiveContainer, PieChart, Pie, Cell } from "recharts";
+import { ResponsiveContainer, PieChart, Pie, Cell, Tooltip } from "recharts";
 
 export const MatchAnalysisChart = ({ blueTeamData, redTeamData }) => {
   const data = [
-    { name: "Red side", value: redTeamData },
     { name: "Blue side", value: blueTeamData },
+    { name: "Red side", value: redTeamData },
   ];
 
   const COLORS = ["#60A5FA", "#F87171"];
 
-  const renderCustomizedLabel = () => {
-    return (
-      <React.Fragment>
-        <text x={78} y={60} textAnchor="middle" fill={COLORS[0]}>
-          {data[0].value}
-        </text>
-        <text x={78} y={90} textAnchor="middle" fill={COLORS[1]}>
-          {data[1].value}
-        </text>
-      </React.Fragment>
-    );
-  };
+ 
 
   return (
     <div className="w-1/3">
@@ -35,7 +24,6 @@ export const MatchAnalysisChart = ({ blueTeamData, redTeamData }) => {
             startAngle={90}
             endAngle={450}
             labelLine={false}
-            label={renderCustomizedLabel}
           >
             {data.map((entry, index) => (
               <Cell
@@ -44,6 +32,7 @@ export const MatchAnalysisChart = ({ blueTeamData, redTeamData }) => {
               />
             ))}
           </Pie>
+          <Tooltip/>
         </PieChart>
       </ResponsiveContainer>
     </div>

@@ -74,7 +74,6 @@ export const SummonerHistory = () => {
     }
   };
 
-  console.log(loadedMatches);
   return (
     <div className="flex flex-col items-center ">
       {/* Display loaded matches */}
