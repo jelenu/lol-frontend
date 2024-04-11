@@ -34,7 +34,7 @@ export const MatchParticipantList = ({ match }) => {
                 participant.summonerId === summonerId ? "font-bold" : ""
                 
               }`}
-            >{console.log(participant.summonerId, summonerId)}
+            >
               {participant.riotIdGameName}
             </div>
           </div>

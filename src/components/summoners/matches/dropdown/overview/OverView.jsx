@@ -4,7 +4,7 @@ import { OverViewGraphs } from "./OverViewGraphs";
 import { OverViewObjectives } from "./OverViewObjectives";
 export const OverView = ({ match }) => {
   return (
-    <div>
+    <div className="bg-gray-100 p-5 rounded-md">
       <OverViewTeam
         participants={match.participants.slice(0, 5)}
         team={match.teams[0]}

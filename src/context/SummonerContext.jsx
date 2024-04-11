@@ -76,9 +76,6 @@ export const SummonerProvider = ({ children }) => {
         setSearchResults(data);
         setSummonerId(data.id)
         setSearchParamsAfterFetch(searchParams);
-
-        console.log(data);
-
         fetchMatchesIds(data.puuid);
 
         setSearchParams({

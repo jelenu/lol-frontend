@@ -1,12 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
+import { FaCheck } from "react-icons/fa";
 
 export const TimeLine = ({ timeLine, match }) => {
-  console.log(timeLine);
-  console.log(match);
-
-  const millisecondsToMinutes = (milliseconds) => {
-    return Math.floor(milliseconds / 60000);
-  };
+  const baseURL = "http://localhost:8000/static/";
 
   const wardImages = {
     YELLOW_TRINKET: "3340.png",
@@ -25,9 +21,25 @@ export const TimeLine = ({ timeLine, match }) => {
     TOWER_BUILDING: ["tower-100.png", "tower-200.png"],
   };
 
+  const [objectivesActive, setObjectivesActive] = useState(true);
+  const [killsActive, setkillsActive] = useState(true);
+  const [wardsActive, setWardsActive] = useState(true);
+
+  const millisecondsToMinutes = (milliseconds) => {
+    return Math.floor(milliseconds / 60000);
+  };
+
   const renderObjectiveImage = (objectiveType, killerId) => {
     const index = killerId - 1 >= 5 ? 1 : 0;
-    return `http://localhost:8000/static/objectives/${objectivesImages[objectiveType][index]}`;
+    return `${baseURL}objectives/${objectivesImages[objectiveType][index]}`;
+  };
+
+  const renderChampionImage = (championName) => {
+    return `http://localhost:8000/static/champion/icon/${championName}.png`;
+  };
+
+  const renderWardImage = (wardType) => {
+    return `http://localhost:8000/static/item/${wardImages[wardType]}`;
   };
 
   const getParticipantName = (participant) => {
@@ -45,6 +57,8 @@ export const TimeLine = ({ timeLine, match }) => {
 
     switch (event.type) {
       case "CHAMPION_KILL":
+        if (!killsActive) return null;
+
         return (
           <div className="flex w-full">
             <div className="w-1/12 p-2">
@@ -55,7 +69,7 @@ export const TimeLine = ({ timeLine, match }) => {
               className={`flex w-11/12 p-2  my-0.5 ${
                 killer
                   ? getColorTeam(event.killerId)
-                    : getColorTeam(event.victimId)
+                  : getColorTeam(event.victimId)
               }`}
             >
               <div className="w-1/2 flex">
@@ -63,10 +77,10 @@ export const TimeLine = ({ timeLine, match }) => {
                   alt="killer"
                   src={
                     killer
-                      ? `http://localhost:8000/static/champion/icon/${killer.championName}.png`
+                      ? renderChampionImage(killer.championName)
                       : event.killerId <= 4
-                      ? "http://localhost:8000/static/champion/icon/RedMinion.png"
-                      : "http://localhost:8000/static/champion/icon/BlueMinion.png"
+                      ? renderChampionImage("RedMinion")
+                      : renderChampionImage("BlueMinion")
                   }
                   className="h-7 mr-2 rounded"
                 />
@@ -82,7 +96,7 @@ export const TimeLine = ({ timeLine, match }) => {
                 <div>Killed</div>
                 <img
                   alt="victim"
-                  src={`http://localhost:8000/static/champion/icon/${victim.championName}.png`}
+                  src={renderChampionImage(victim.championName)}
                   className="h-7 ml-2"
                 />
               </div>
@@ -90,6 +104,8 @@ export const TimeLine = ({ timeLine, match }) => {
           </div>
         );
       case "WARD_PLACED":
+        if (!wardsActive) return null;
+
         if (event.wardType === "UNDEFINED") {
           return null;
         } else {
@@ -107,7 +123,7 @@ export const TimeLine = ({ timeLine, match }) => {
                 <div className=" w-1/2 flex">
                   <img
                     alt="champ"
-                    src={`http://localhost:8000/static/champion/icon/${creator.championName}.png`}
+                    src={renderChampionImage(creator.championName)}
                     className="h-7 mr-2 rounded"
                   />
                   <div className="mr-2">{getParticipantName(creator)}</div>
@@ -117,9 +133,7 @@ export const TimeLine = ({ timeLine, match }) => {
                   <div> Placed</div>
                   <img
                     alt="ward"
-                    src={`http://localhost:8000/static/item/${
-                      wardImages[event.wardType]
-                    }`}
+                    src={renderWardImage(event.wardType)}
                     className="h-7 ml-2"
                   />
                 </div>
@@ -129,6 +143,8 @@ export const TimeLine = ({ timeLine, match }) => {
         }
 
       case "WARD_KILL":
+        if (!wardsActive) return null;
+
         return (
           <div className="flex w-full">
             <div className="w-1/12 p-2">
@@ -143,7 +159,7 @@ export const TimeLine = ({ timeLine, match }) => {
               <div className=" w-1/2 flex">
                 <img
                   alt="champ"
-                  src={`http://localhost:8000/static/champion/icon/${killer.championName}.png`}
+                  src={renderChampionImage(killer.championName)}
                   className="h-7 mr-2 rounded"
                 />
                 <div className="mr-2">{getParticipantName(killer)}</div>
@@ -153,9 +169,7 @@ export const TimeLine = ({ timeLine, match }) => {
                 <div> Killed</div>
                 <img
                   alt="ward"
-                  src={`http://localhost:8000/static/item/${
-                    wardImages[event.wardType]
-                  }`}
+                  src={renderWardImage(event.wardType)}
                   className="h-7 ml-2"
                 />
               </div>
@@ -164,6 +178,8 @@ export const TimeLine = ({ timeLine, match }) => {
         );
 
       case "ELITE_MONSTER_KILL":
+        if (!objectivesActive) return null;
+
         return (
           <div className="flex w-full">
             <div className="w-1/12 p-2">
@@ -178,7 +194,7 @@ export const TimeLine = ({ timeLine, match }) => {
               <div className="w-1/2 flex">
                 <img
                   alt="killer"
-                  src={`http://localhost:8000/static/champion/icon/${killer.championName}.png`}
+                  src={renderChampionImage(killer.championName)}
                   className="h-7 mr-2 rounded"
                 />
                 <div className="mr-2">{getParticipantName(killer)}</div>
@@ -195,6 +211,8 @@ export const TimeLine = ({ timeLine, match }) => {
           </div>
         );
       case "BUILDING_KILL":
+        if (!objectivesActive) return null;
+
         return (
           <div className="flex w-full">
             <div className="w-1/12 p-2">
@@ -212,9 +230,9 @@ export const TimeLine = ({ timeLine, match }) => {
                   src={
                     event.killerId === 0
                       ? event.killerId <= 4
-                        ? "http://localhost:8000/static/champion/icon/RedMinion.png"
-                        : "http://localhost:8000/static/champion/icon/BlueMinion.png"
-                      : `http://localhost:8000/static/champion/icon/${killer.championName}.png`
+                        ? renderChampionImage("RedMinion")
+                        : renderChampionImage("BlueMinion")
+                      : renderChampionImage(killer.championName)
                   }
                   className="h-7 mr-2 rounded"
                 />
@@ -244,14 +262,57 @@ export const TimeLine = ({ timeLine, match }) => {
   };
 
   return (
-    <div className="overflow-y-auto" style={{ height: 530 }}>
-      {timeLine.info.frames.slice(1).map((frame, frameIndex) => (
-        <div key={frameIndex}>
-          {frame.events.map((event, eventIndex) => (
-            <div key={eventIndex}>{renderEvent(event, eventIndex)}</div>
-          ))}
-        </div>
-      ))}
+    <div className=" py-4">
+      <div className="flex justify-center">
+        <button
+          onClick={() => setObjectivesActive(!objectivesActive)}
+          className="flex items-center"
+        >
+          <div className="flex items-center justify-center p-2 mr-2 bg-blue-300">
+            {objectivesActive ? (
+              <FaCheck className="w-5 h-5 text-white" />
+            ) : (
+              <div className="w-5 h-5"></div>
+            )}
+          </div>
+          Objectives
+        </button>
+        <button
+          onClick={() => setkillsActive(!killsActive)}
+          className="flex items-center mx-4"
+        >
+          <div className="flex items-center justify-center p-2 mr-2 bg-blue-300">
+            {killsActive ? (
+              <FaCheck className="w-5 h-5 text-white" />
+            ) : (
+              <div className="w-5 h-5"></div>
+            )}
+          </div>
+          Kills
+        </button>
+        <button
+          onClick={() => setWardsActive(!wardsActive)}
+          className="flex items-center"
+        >
+        <div className="flex items-center justify-center p-2 mr-2 bg-blue-300">
+        {wardsActive ? (
+          <FaCheck className="w-5 h-5 text-white" />
+        ) : (
+          <div className="w-5 h-5"></div>
+        )}
+      </div>
+      Vision
+        </button>
+      </div>
+      <div className="overflow-y-auto m-4 px-2" style={{ height:480 }}>
+        {timeLine.info.frames.slice(1).map((frame, frameIndex) => (
+          <div key={frameIndex}>
+            {frame.events.map((event, eventIndex) => (
+              <div key={eventIndex}>{renderEvent(event, eventIndex)}</div>
+            ))}
+          </div>
+        ))}
+      </div>
     </div>
   );
 };

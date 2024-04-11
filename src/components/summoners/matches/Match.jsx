@@ -6,7 +6,6 @@ import { FaChevronUp, FaChevronDown } from "react-icons/fa";
 
 export const Match = ({ match }) => {
   const { summonerId } = useSummonerContext();
-  console.log(match)
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   const gameModes = [
