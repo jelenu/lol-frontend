@@ -26,7 +26,7 @@ export const SummonerProvider = ({ children }) => {
     /* Loading state for match search */
     const [loadingMatches, setLoadingMatches] = useState(false);
 
-    const [summonerName, setSummonerName] = useState(false);
+    const [summonerId, setSummonerId] = useState(false);
 
     const servers = [
         "BR1",
@@ -74,7 +74,7 @@ export const SummonerProvider = ({ children }) => {
       if (response.ok) {
         const data = await response.json();
         setSearchResults(data);
-        setSummonerName(data.name)
+        setSummonerId(data.id)
         setSearchParamsAfterFetch(searchParams);
 
         console.log(data);
@@ -132,7 +132,7 @@ export const SummonerProvider = ({ children }) => {
   };
 
   return (
-    <SummonerContext.Provider value={{ searchResults, fetchSearchAccount, searchParamsAfterFetch, loadingProfile, matchesIds, loadingMatches, servers, searchParams, setSearchParams, summonerName  }}>
+    <SummonerContext.Provider value={{ searchResults, fetchSearchAccount, searchParamsAfterFetch, loadingProfile, matchesIds, loadingMatches, servers, searchParams, setSearchParams, summonerId  }}>
       {children}
     </SummonerContext.Provider>
   );

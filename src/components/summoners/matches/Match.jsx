@@ -5,7 +5,8 @@ import { Dropdown } from "./dropdown/Dropdown";
 import { FaChevronUp, FaChevronDown } from "react-icons/fa";
 
 export const Match = ({ match }) => {
-  const { summonerName } = useSummonerContext();
+  const { summonerId } = useSummonerContext();
+  console.log(match)
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   const gameModes = [
@@ -59,7 +60,7 @@ export const Match = ({ match }) => {
           className={`match flex justify-around p-5 w-full rounded-s-md ${
             match.participants.some(
               (participant) =>
-                participant.summonerName === summonerName && participant.win
+                participant.summonerId === summonerId && participant.win
             )
               ? "bg-blue-400"
               : "bg-red-400"
@@ -77,7 +78,7 @@ export const Match = ({ match }) => {
             <div className="flex items-center">
               {match.participants.map(
                 (participant, index) =>
-                  participant.summonerName === summonerName && (
+                  participant.summonerId === summonerId && (
                     <div key={index} className="flex items-center ">
                       {/* Champion icon */}
                       <img
@@ -122,7 +123,7 @@ export const Match = ({ match }) => {
             <div className="flex items-center mt-2">
               {match.participants.map(
                 (participant, index) =>
-                  participant.summonerName === summonerName && (
+                  participant.summonerId === summonerId && (
                     <div key={index} className="flex items-center">
                       {/* Items */}
                       {[0, 1, 2, 3, 4, 5, 6].map((itemSlot) => (

@@ -2,7 +2,7 @@ import React from "react";
 import { useSummonerContext } from "../../../context/SummonerContext";
 
 export const MatchParticipantList = ({ match }) => {
-  const { summonerName, fetchSearchAccount } = useSummonerContext();
+  const { summonerId, fetchSearchAccount } = useSummonerContext();
 
   const handleParticipantClick = (participant) => {
     console.log(participant);
@@ -31,9 +31,10 @@ export const MatchParticipantList = ({ match }) => {
             <div
               onClick={() => handleParticipantClick(participant)}
               className={` text-sm ${
-                participant.summonerName === summonerName ? "font-bold" : ""
+                participant.summonerId === summonerId ? "font-bold" : ""
+                
               }`}
-            >
+            >{console.log(participant.summonerId, summonerId)}
               {participant.riotIdGameName}
             </div>
           </div>
@@ -55,7 +56,7 @@ export const MatchParticipantList = ({ match }) => {
             <div
               onClick={() => handleParticipantClick(participant)}
               className={` text-sm ${
-                participant.summonerName === summonerName ? "font-bold" : ""
+                participant.summonerId === summonerId ? "font-bold" : ""
               }`}
             >
               {participant.riotIdGameName}

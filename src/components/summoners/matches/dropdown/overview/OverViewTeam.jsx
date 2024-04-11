@@ -2,7 +2,7 @@ import React from "react";
 import { useSummonerContext } from "../../../../../context/SummonerContext";
 
 export const OverViewTeam = ({ participants, team }) => {
-  const { summonerName } = useSummonerContext();
+  const { summonerId } = useSummonerContext();
   const result = team.win;
 
 
@@ -32,10 +32,10 @@ export const OverViewTeam = ({ participants, team }) => {
               className={`text-gray-600 text-center ${
                 result
                   ? `${
-                    summonerName === participant.summonerName ? "bg-blue-300" : "text-blue-600 bg-blue-200"
+                    summonerId === participant.summonerId ? "bg-blue-300" : "text-blue-600 bg-blue-200"
                   }  `
                   : `${
-                    summonerName === participant.summonerName ? "bg-red-300" : "text-red-600 bg-red-200"
+                    summonerId === participant.summonerId ? "bg-red-300" : "text-red-600 bg-red-200"
                   }`
               }  
                `}
