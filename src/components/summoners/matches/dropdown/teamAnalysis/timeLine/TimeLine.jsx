@@ -55,6 +55,7 @@ export const TimeLine = ({ timeLine, match }) => {
     const victim = match.participants[event.victimId - 1];
     const creator = match.participants[event.creatorId - 1];
 
+
     switch (event.type) {
       case "CHAMPION_KILL":
         if (!killsActive) return null;
@@ -179,37 +180,40 @@ export const TimeLine = ({ timeLine, match }) => {
 
       case "ELITE_MONSTER_KILL":
         if (!objectivesActive) return null;
-
-        return (
-          <div className="flex w-full">
-            <div className="w-1/12 p-2">
-              {millisecondsToMinutes(event.timestamp)} min
-            </div>
-
-            <div
-              className={`flex w-11/12 p-2  my-0.5 ${
-                event.killerId - 1 >= 5 ? "bg-red-300" : "bg-blue-300"
-              }`}
-            >
-              <div className="w-1/2 flex">
-                <img
-                  alt="killer"
-                  src={renderChampionImage(killer.championName)}
-                  className="h-7 mr-2 rounded"
-                />
-                <div className="mr-2">{getParticipantName(killer)}</div>
+        
+        if (killer && killer.championName) {
+          return (
+            <div className="flex w-full">
+              <div className="w-1/12 p-2">
+                {millisecondsToMinutes(event.timestamp)} min
               </div>
-              <div className="w-1/2 justify-end flex">
-                <div>Killed</div>
-                <img
-                  alt="objective"
-                  src={renderObjectiveImage(event.monsterType, event.killerId)}
-                  className="h-7 ml-2"
-                />
+              <div
+                className={`flex w-11/12 p-2  my-0.5 ${
+                  event.killerId - 1 >= 5 ? "bg-red-300" : "bg-blue-300"
+                }`}
+              >
+                <div className="w-1/2 flex">
+                  <img
+                    alt="killer"
+                    src={renderChampionImage(killer.championName)}
+                    className="h-7 mr-2 rounded"
+                  />
+                  <div className="mr-2">{getParticipantName(killer)}</div>
+                </div>
+                <div className="w-1/2 justify-end flex">
+                  <div>Killed</div>
+                  <img
+                    alt="objective"
+                    src={renderObjectiveImage(event.monsterType, event.killerId)}
+                    className="h-7 ml-2"
+                  />
+                </div>
               </div>
             </div>
-          </div>
-        );
+          );
+        } else {
+          return null;
+        }
       case "BUILDING_KILL":
         if (!objectivesActive) return null;
 
@@ -308,7 +312,7 @@ export const TimeLine = ({ timeLine, match }) => {
         {timeLine.info.frames.slice(1).map((frame, frameIndex) => (
           <div key={frameIndex}>
             {frame.events.map((event, eventIndex) => (
-              <div key={eventIndex}>{renderEvent(event, eventIndex)}</div>
+              <div key={eventIndex}>{renderEvent(event, eventIndex)} </div>
             ))}
           </div>
         ))}
