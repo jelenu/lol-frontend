@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { FaCheck } from "react-icons/fa";
 
 export const TimeLine = ({ timeLine, match }) => {
-  const baseURL = "http://localhost:8000/static/";
+  const baseURL = "http://192.168.1.133:8000/static/";
 
   const wardImages = {
     YELLOW_TRINKET: "3340.png",
@@ -35,11 +35,11 @@ export const TimeLine = ({ timeLine, match }) => {
   };
 
   const renderChampionImage = (championName) => {
-    return `http://localhost:8000/static/champion/icon/${championName}.png`;
+    return `http://192.168.1.133:8000/static/champion/icon/${championName}.png`;
   };
 
   const renderWardImage = (wardType) => {
-    return `http://localhost:8000/static/item/${wardImages[wardType]}`;
+    return `http://192.168.1.133:8000/static/item/${wardImages[wardType]}`;
   };
 
   const getParticipantName = (participant) => {
@@ -298,7 +298,7 @@ export const TimeLine = ({ timeLine, match }) => {
           onClick={() => setWardsActive(!wardsActive)}
           className="flex items-center"
         >
-        <div className="flex items-center justify-center p-2 mr-2 bg-blue-300">
+        <div className="flex items-center justify-center p-2 mr-2 bg-blue-300"> 
         {wardsActive ? (
           <FaCheck className="w-5 h-5 text-white" />
         ) : (

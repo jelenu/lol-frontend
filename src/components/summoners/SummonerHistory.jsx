@@ -50,7 +50,7 @@ export const SummonerHistory = () => {
       );
 
       const response = await fetch(
-        "http://localhost:8000/api/summoners/matches/info/",
+        "http://192.168.1.133:8000/api/summoners/matches/info/",
         {
           method: "POST",
           headers: {

@@ -16,7 +16,7 @@ export const TeamAnalysis = ({ match }) => {
     const fetchTimeline = async () => {
       try {
         const response = await fetch(
-          `http://localhost:8000/api/summoners/matches/timeline?server=${match.platformId}&matchId=${match.gameId}`,
+          `http://192.168.1.133:8000/api/summoners/matches/timeline?server=${match.platformId}&matchId=${match.gameId}`,
           {
             method: "GET",
             headers: {
@@ -78,7 +78,7 @@ export const TeamAnalysis = ({ match }) => {
 
       {match && selectedComponent === 'MatchAnalysis' && <MatchAnalysis match={match} />}
       {timeLine &&  selectedComponent === 'Gold' && <Gold timeLine={timeLine} />}
-      {timeLine && selectedComponent === 'Map' && <Map timeLine={timeLine} />}
+      {timeLine && match && selectedComponent === 'Map' && <Map timeLine={timeLine}   match={match}/>}
       {timeLine && match && selectedComponent === 'TimeLine' && <TimeLine timeLine={timeLine} match={match} />}
 
     </div>

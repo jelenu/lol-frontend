@@ -23,7 +23,7 @@ export const MatchParticipantList = ({ match }) => {
             key={index}
           >
             <img
-              src={`http://localhost:8000/static/champion/icon/${participant.championName}.png`}
+              src={`http://192.168.1.133:8000/static/champion/icon/${participant.championName}.png`}
               alt={participant.championName}
               className="h-5 rounded-full mr-2"
             />
@@ -48,7 +48,7 @@ export const MatchParticipantList = ({ match }) => {
             key={index}
           >
             <img
-              src={`http://localhost:8000/static/champion/icon/${participant.championName}.png`}
+              src={`http://192.168.1.133:8000/static/champion/icon/${participant.championName}.png`}
               alt={participant.championName}
               className="h-5 rounded-full mr-2"
             />

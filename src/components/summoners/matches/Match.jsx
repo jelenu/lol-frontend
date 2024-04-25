@@ -81,7 +81,7 @@ export const Match = ({ match }) => {
                     <div key={index} className="flex items-center ">
                       {/* Champion icon */}
                       <img
-                        src={`http://localhost:8000/static/champion/icon/${participant.championName}.png`}
+                        src={`http://192.168.1.133:8000/static/champion/icon/${participant.championName}.png`}
                         alt={participant.championName}
                         className="champion h-14 rounded-full mr-4"
                       />
@@ -90,7 +90,7 @@ export const Match = ({ match }) => {
                         {[1, 2].map((spellSlot) => (
                           <img
                             key={spellSlot}
-                            src={`http://localhost:8000/static/summonerSpell/${
+                            src={`http://192.168.1.133:8000/static/summonerSpell/${
                               participant[`summoner${spellSlot}Id`]
                             }.png`}
                             alt={`Summoner Spell ${spellSlot}`}
@@ -130,10 +130,10 @@ export const Match = ({ match }) => {
                           key={itemSlot}
                           src={
                             participant[`item${itemSlot}`]
-                              ? `http://localhost:8000/static/item/${
+                              ? `http://192.168.1.133:8000/static/item/${
                                   participant[`item${itemSlot}`]
                                 }.png`
-                              : "http://localhost:8000/static/item/noItem.png"
+                              : "http://192.168.1.133:8000/static/item/noItem.png"
                           }
                           alt={
                             participant[`item${itemSlot}`]

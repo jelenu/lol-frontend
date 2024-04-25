@@ -7,7 +7,7 @@ export const MatchAnalysisBarChart = ({ max, participantsData, team }) => {
         <div key={index} className="flex mb-2">
           <div className="mr-2">
             <img
-              src={`http://localhost:8000/static/champion/icon/${participant.championName}.png`}
+              src={`http://192.168.1.133:8000/static/champion/icon/${participant.championName}.png`}
               alt={participant.championName}
               className="w-6 h-auto"
             />

@@ -62,7 +62,7 @@ export const SummonerProvider = ({ children }) => {
 
     try {
       const response = await fetch(
-        `http://localhost:8000/api/summoners/info/?gameName=${searchParams.gameName}&tagLine=${searchParams.tagLine}&server=${searchParams.server}`,
+        `http://192.168.1.133:8000/api/summoners/info/?gameName=${searchParams.gameName}&tagLine=${searchParams.tagLine}&server=${searchParams.server}`,
         {
           method: "GET",
           headers: {
@@ -105,7 +105,7 @@ export const SummonerProvider = ({ children }) => {
 
     try {
       const response = await fetch(
-        `http://localhost:8000/api/summoners/matches/id/?puuid=${puuid}`,
+        `http://192.168.1.133:8000/api/summoners/matches/id/?puuid=${puuid}`,
         {
           method: "GET",
           headers: {

@@ -22,7 +22,7 @@ export const ItemsList = () => {
    **/
   const fetchItems = async () => {
     try {
-      const response = await fetch("http://localhost:8000/api/builds/items/all/", {
+      const response = await fetch("http://192.168.1.133:8000/api/builds/items/all/", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -146,7 +146,7 @@ export const ItemsList = () => {
             >
               {/* Render item image */}
               <img
-                src={`http://localhost:8000/${item.image}`}
+                src={`http://192.168.1.133:8000/${item.image}`}
                 alt={item.name}
               />
             </div>
