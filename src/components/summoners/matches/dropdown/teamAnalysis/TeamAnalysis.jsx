@@ -1,43 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { MatchAnalysis } from "./matchAnalysis/MatchAnalysis";
 import { Gold } from "./gold/Gold";
 import { Map } from "./map/Map";
 import { TimeLine } from './timeLine/TimeLine';
 
-export const TeamAnalysis = ({ match }) => {
+export const TeamAnalysis = ({ match, timeLine}) => {
   const [selectedComponent, setSelectedComponent] = useState('MatchAnalysis');
-  const [timeLine, setTimeLine] = useState(null);
 
   const handleComponentChange = (component) => {
     setSelectedComponent(component);
   };
 
-  useEffect(() => {
-    const fetchTimeline = async () => {
-      try {
-        const response = await fetch(
-          `http://192.168.1.133:8000/api/summoners/matches/timeline?server=${match.platformId}&matchId=${match.gameId}`,
-          {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
-        );
-
-        if (response.ok) {
-          const data = await response.json();
-          setTimeLine(data);
-        } else {
-          console.error("Error getting timeline");
-        }
-      } catch (error) {
-        console.error("Network error:", error);
-      }
-    };
-
-    fetchTimeline();
-  }, [match.platformId, match.gameId]);
 
   return (
     <div className='bg-gray-100 rounded-md '>

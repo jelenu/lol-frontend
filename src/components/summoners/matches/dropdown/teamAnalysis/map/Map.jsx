@@ -69,7 +69,7 @@ export const Map = ({ timeLine, match }) => {
         {match.participants.slice(0, 5).map((participant, index) => (
           <div className="flex my-2 items-center" key={index}>
             <div
-              className={`${colors[index]} w-8 h-8 rounded-md mr-2 flex-shrink-0`}
+              className={`${colors[index] } w-8 h-8 rounded-md mr-2 flex-shrink-0`}
             ></div>
 
             <div
@@ -112,7 +112,7 @@ export const Map = ({ timeLine, match }) => {
                 <div
                   key={index}
                   className={`w-3 h-3 absolute rounded-full ${
-                    colors[killEvent.killerId]
+                    colors[killEvent.killerId -1]
                   }`}
                   style={{ bottom: `${porcentajeY}%`, left: `${porcentajeX}%` }}
                   onMouseEnter={() => handleMouseEnter(killEvent)}

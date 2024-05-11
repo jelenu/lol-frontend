@@ -27,6 +27,12 @@ export const Match = ({ match }) => {
     return mode ? mode.name : "Unknown";
   };
 
+  // Check if the match's queueId exists in gameModes
+  if (!gameModes.some(mode => mode.queueId === match.queueId)) {
+    // If not, return null
+    return null;
+  }
+
   /**
    * Function to format timestamp into a readable date string.
    * @param {number} timestamp - The timestamp of the match.
@@ -83,7 +89,7 @@ export const Match = ({ match }) => {
                       <img
                         src={`http://192.168.1.133:8000/static/champion/icon/${participant.championName}.png`}
                         alt={participant.championName}
-                        className="champion h-14 rounded-full mr-4"
+                        className="h-14 rounded-full mr-4"
                       />
                       {/* Summoner spells */}
                       <div className="flex flex-col">

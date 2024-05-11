@@ -1,14 +1,42 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { OverView } from './overview/OverView';
 import { TeamAnalysis } from './teamAnalysis/TeamAnalysis';
-import { Build } from './Build';
+import { Build } from './builds/Build';
 
 export const Dropdown = ({ match }) => {
   const [selectedComponent, setSelectedComponent] = useState('OverView');
+  const [timeLine, setTimeLine] = useState(null);
 
   const handleComponentChange = (component) => {
     setSelectedComponent(component);
   };
+
+  useEffect(() => {
+    const fetchTimeline = async () => {
+      try {
+        const response = await fetch(
+          `http://192.168.1.133:8000/api/summoners/matches/timeline?server=${match.platformId}&matchId=${match.gameId}`,
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+
+        if (response.ok) {
+          const data = await response.json();
+          setTimeLine(data);
+        } else {
+          console.error("Error getting timeline");
+        }
+      } catch (error) {
+        console.error("Network error:", error);
+      }
+    };
+
+    fetchTimeline();
+  }, [match.platformId, match.gameId]);
 
   return (
     <div className="">
@@ -39,8 +67,8 @@ export const Dropdown = ({ match }) => {
         </button>
       </div>
       {selectedComponent === 'OverView' && <OverView match={match} />}
-      {selectedComponent === 'TeamAnalysis' && <TeamAnalysis match={match} />}
-      {selectedComponent === 'Build' && <Build />}
+      {selectedComponent === 'TeamAnalysis' && <TeamAnalysis match={match} timeLine={timeLine}/>}
+      {selectedComponent === 'Build' && <Build  match={match} timeLine={timeLine}/>}
     </div>
   );
 };
