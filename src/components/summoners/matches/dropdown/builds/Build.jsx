@@ -5,6 +5,13 @@ export const Build = ({ match, timeLine }) => {
   const [selectedChampion, setSelectedChampion] = useState(null);
   const { summonerId } = useSummonerContext();
 
+  const skillSlots = [
+    { slot: 1, skill: "Q", color: "blue" },
+    { slot: 2, skill: "W", color: "green" },
+    { slot: 3, skill: "E", color: "orange" },
+    { slot: 4, skill: "R", color: "white" },
+  ];
+
   useEffect(() => {
     const participantIndex = match.participants.findIndex(
       (participant) => participant.summonerId === summonerId
@@ -30,10 +37,11 @@ export const Build = ({ match, timeLine }) => {
     });
   }
 
-
   const handleSelectedChampion = (index) => {
     setSelectedChampion(index);
   };
+
+  console.log(match.participants);
 
   return (
     <div className="bg-white p-4 rounded-md">
@@ -55,14 +63,80 @@ export const Build = ({ match, timeLine }) => {
         ))}
       </div>
 
-      <div className="flex justify-center mt-4">
-        {skillLevelUpEvents
-          .filter((levelUp) => levelUp.participantId -1 === selectedChampion)
-          .map((levelUp, index) => (
-            <div key={index} className="mx-1">
-              {levelUp.skillSlot}
-            </div>
-          ))}
+      <div className="mt-4">
+        <div>
+          <span> Skill Order</span>
+        </div>
+        <div className="flex">
+          {skillLevelUpEvents
+            .filter((levelUp) => levelUp.participantId - 1 === selectedChampion)
+            .map((levelUp, index) => {
+              const skill = skillSlots.find(
+                (slot) => slot.slot === levelUp.skillSlot
+              );
+              return (
+                <div
+                  key={index}
+                  className="mx-1 h-7 w-7 bg-gray-800 rounded-md flex items-center justify-center"
+                >
+                  <span
+                    className={`text-${skill.color} text-${skill.color}-500 `}
+                  >
+                    {skill.skill}
+                  </span>
+                </div>
+              );
+            })}
+        </div>
+      </div>
+      <div className="mt-4">
+        <div>
+          <span>Runes</span>
+        </div>
+        <div>
+          <div className="flex items-center">
+            <img
+              src={`https://ddragon.leagueoflegends.com/cdn/img/${match.participants[selectedChampion].perks.styles[0].selections[0].icon}`}
+              alt={`Primary Rune`}
+              className=" h-12"
+            />
+            <img
+              src={`https://ddragon.leagueoflegends.com/cdn/img/${match.participants[selectedChampion].perks.styles[0].selections[1].icon}`}
+              alt={`Primary Rune`}
+              className=" h-7 "
+            />
+            <img
+              src={`https://ddragon.leagueoflegends.com/cdn/img/${match.participants[selectedChampion].perks.styles[0].selections[2].icon}`}
+              alt={`Primary Rune`}
+              className=" h-7 "
+            />
+            <img
+              src={`https://ddragon.leagueoflegends.com/cdn/img/${match.participants[selectedChampion].perks.styles[0].selections[3].icon}`}
+              alt={`Primary Rune`}
+              className=" h-7 "
+            />
+          </div>
+            
+          
+          <div className="flex items-center">
+          <img
+            src={`https://ddragon.leagueoflegends.com/cdn/img/${match.participants[selectedChampion].perks.styles[1].selections[0].rune_path.icon}`}
+            alt={`Secondary Rune`}
+            className=" h-8 mb-1"
+          />
+            <img
+              src={`https://ddragon.leagueoflegends.com/cdn/img/${match.participants[selectedChampion].perks.styles[1].selections[0].icon}`}
+              alt={`Primary Rune`}
+              className=" h-7 "
+            />
+            <img
+              src={`https://ddragon.leagueoflegends.com/cdn/img/${match.participants[selectedChampion].perks.styles[1].selections[1].icon}`}
+              alt={`Primary Rune`}
+              className=" h-7 "
+            />
+            
+          </div>
+        </div>
       </div>
     </div>
   );
