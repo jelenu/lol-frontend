@@ -17,7 +17,7 @@ export const SummonerBrowser = () => {
     loadingMatches,
     servers,
     searchParams,
-    setSearchParams
+    setSearchParams,
   } = useSummonerContext();
 
   /**
@@ -35,43 +35,44 @@ export const SummonerBrowser = () => {
   };
 
   return (
-    <div>
+    <div className="">
       {/* Search bar */}
-      <div className="flex items-center justify-center bg-blue-400 p-4 rounded-b-md w-4/5 mx-auto">
-        {/* Server select */}
-        <select
-          name="server"
-          value={searchParams.server}
-          onChange={handleInputChange}
-          className="p-2 mr-4 border border-gray-300 rounded-md"
-        >
-          <option value="">Server</option>
-          {servers.map((serverOption, index) => (
-            <option key={index} value={serverOption}>
-              {serverOption}
-            </option>
-          ))}
-        </select>
+      <div className="flex items-center justify-center w-full py-4 bg-blue-400 mx-auto max-sm:flex-col">
+        <div>
+          {/* Server select */}
+          <select
+            name="server"
+            value={searchParams.server}
+            onChange={handleInputChange}
+            className="p-2 mr-2 mb-2 border border-gray-300 rounded-md"
+          >
+            <option value="">Server</option>
+            {servers.map((serverOption, index) => (
+              <option key={index} value={serverOption}>
+                {serverOption}
+              </option>
+            ))}
+          </select>
+          {/* Tag Line input */}
+          <input
+            type="text"
+            name="tagLine"
+            value={searchParams.tagLine}
+            onChange={handleInputChange}
+            placeholder="Tag Line"
+            className="p-2 mr-2 mb-2 border border-gray-300 rounded-md max-sm:w-20 "
+          />
 
-        {/* Tag Line input */}
-        <input
-          type="text"
-          name="tagLine"
-          value={searchParams.tagLine}
-          onChange={handleInputChange}
-          placeholder="Tag Line"
-          className="p-2 mr-4 border border-gray-300 rounded-md"
-        />
-
-        {/* Game Name input */}
-        <input
-          type="text"
-          name="gameName"
-          value={searchParams.gameName}
-          onChange={handleInputChange}
-          placeholder="Game Name"
-          className="p-2 mr-4 border border-gray-300 rounded-md"
-        />
+          {/* Game Name input */}
+          <input
+            type="text"
+            name="gameName"
+            value={searchParams.gameName}
+            onChange={handleInputChange}
+            placeholder="Game Name"
+            className="p-2 mr-2 mb-2 border border-gray-300 rounded-md max-sm:w-40"
+          />
+        </div>
 
         {/* Search button */}
         <button
@@ -84,13 +85,14 @@ export const SummonerBrowser = () => {
       </div>
 
       {/* Render SummonerProfile component if search results exist */}
-      {searchResults && (
-        <SummonerProfile/>
-      )}
+      {searchResults && <SummonerProfile />}
 
       {/* Render SummonerHistory component if matches exist and not loading */}
       {matchesIds && !loadingMatches && (
-        <SummonerHistory matchesIds={matchesIds} summonerName={searchResults.name} />
+        <SummonerHistory
+          matchesIds={matchesIds}
+          summonerName={searchResults.name}
+        />
       )}
     </div>
   );

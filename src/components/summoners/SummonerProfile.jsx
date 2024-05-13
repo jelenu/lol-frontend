@@ -15,7 +15,7 @@ export const SummonerProfile = () => {
   );
 
   return (
-    <div className="flex items-center justify-center  p-4 w-3/5 mx-auto">
+    <div className="flex items-center justify-center  p-4 mx-auto">
       <div>
         {/* Summoner profile icon */}
         <img
