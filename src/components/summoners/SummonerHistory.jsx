@@ -84,7 +84,7 @@ export const SummonerHistory = () => {
       {/* Display loaded matches */}
       {!loading &&
         loadedMatches.map((match, index) => (
-          <div key={index} className="w-3/5">
+          <div className=" w-full max-w-5xl" key={index}>
             <Match match={match} />
           </div>
         ))}

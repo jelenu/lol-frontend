@@ -5,7 +5,7 @@ import { SummonerProvider } from './context/SummonerContext';
 
 function App() {
   return (
-    <div className="bg-gray-200 w-full min-h-screen">
+    <div className="bg-gray-200 w-full min-h-screen overflow-x-hidden">
       <SummonerProvider>
           <Routes>
             <Route path="/" element={<SummonerBrowser />} />

@@ -2,6 +2,7 @@ import React from "react";
 import { SummonerProfile } from "./SummonerProfile";
 import { SummonerHistory } from "./SummonerHistory";
 import { useSummonerContext } from "../../context/SummonerContext";
+import { FaSearch } from "react-icons/fa";
 
 /**
  * Component to browse summoner profiles and history.
@@ -35,52 +36,50 @@ export const SummonerBrowser = () => {
   };
 
   return (
-    <div className="">
+    <div>
       {/* Search bar */}
-      <div className="flex items-center justify-center w-full py-4 bg-blue-400 mx-auto max-sm:flex-col">
-        <div>
-          {/* Server select */}
-          <select
-            name="server"
-            value={searchParams.server}
-            onChange={handleInputChange}
-            className="p-2 mr-2 mb-2 border border-gray-300 rounded-md"
-          >
-            <option value="">Server</option>
-            {servers.map((serverOption, index) => (
-              <option key={index} value={serverOption}>
-                {serverOption}
-              </option>
-            ))}
-          </select>
-          {/* Tag Line input */}
-          <input
-            type="text"
-            name="tagLine"
-            value={searchParams.tagLine}
-            onChange={handleInputChange}
-            placeholder="Tag Line"
-            className="p-2 mr-2 mb-2 border border-gray-300 rounded-md max-sm:w-20 "
-          />
+      <div className="flex items-center justify-center w-full py-4 bg-blue-400 mx-auto ">
+        {/* Server select */}
+        <select
+          name="server"
+          value={searchParams.server}
+          onChange={handleInputChange}
+          className="p-2 max-sm:p-1 mr-2 max-sm:mr-1  border border-gray-300 rounded-md max-sm:text-xs"
+        >
+          <option value="">Server</option>
+          {servers.map((serverOption, index) => (
+            <option key={index} value={serverOption}>
+              {serverOption}
+            </option>
+          ))}
+        </select>
+        {/* Tag Line input */}
+        <input
+          type="text"
+          name="tagLine"
+          value={searchParams.tagLine}
+          onChange={handleInputChange}
+          placeholder="Tag Line"
+          className="p-2 mr-2  border border-gray-300 rounded-md max-sm:w-16  max-sm:text-xs"
+        />
 
-          {/* Game Name input */}
-          <input
-            type="text"
-            name="gameName"
-            value={searchParams.gameName}
-            onChange={handleInputChange}
-            placeholder="Game Name"
-            className="p-2 mr-2 mb-2 border border-gray-300 rounded-md max-sm:w-40"
-          />
-        </div>
+        {/* Game Name input */}
+        <input
+          type="text"
+          name="gameName"
+          value={searchParams.gameName}
+          onChange={handleInputChange}
+          placeholder="Game Name"
+          className="p-2 mr-2  border border-gray-300 rounded-md max-sm:w-28 max-sm:text-xs"
+        />
 
         {/* Search button */}
         <button
           onClick={() => fetchSearchAccount(searchParams)}
           disabled={loadingProfile}
-          className="p-2 px-4 bg-gray-400 text-white rounded-md cursor-pointer transition-colors duration-300 hover:bg-gray-600"
+          className=" h-8 w-8 bg-gray-400 text-white rounded-md cursor-pointer transition-colors duration-300 hover:bg-gray-600 max-sm:p-2"
         >
-          {loadingProfile ? "Searching..." : "Search"}
+          {loadingProfile ? "..." : <FaSearch />}
         </button>
       </div>
 

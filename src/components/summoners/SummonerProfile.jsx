@@ -19,20 +19,20 @@ export const SummonerProfile = () => {
       <div>
         {/* Summoner profile icon */}
         <img
-          className="w-24 h-24 rounded-full"
+          className="w-24 max-sm:w-20 rounded-full"
           src={`http://192.168.1.133:8000/${searchResults.profileIconUrl}`}
           alt={searchResults.profileIconId}
         />
       </div>
-      <div className="ml-4">
+      <div className="ml-4 max-sm:ml-2">
         {/* Summoner name and tagline */}
-        <div className="text-3xl font-bold">{`${searchParamsAfterFetch.gameName} #${searchParamsAfterFetch.tagLine}`}</div>
+        <div className="text-3xl max-sm:text-2xl font-bold">{`${searchParamsAfterFetch.gameName} #${searchParamsAfterFetch.tagLine}`}</div>
         <div className="">
           {rankedSoloData ? (
             // Display ranked solo data if available
-            <div className="flex items-center">
+            <div className="flex items-center max-sm:text-xs">
               {/* Display tier, rank, league points, win rate, wins, and losses */}
-              <div className="mr-4">{`${rankedSoloData.tier} ${rankedSoloData.rank} ${rankedSoloData.leaguePoints}LP`}</div>
+              <div className="mr-4 max-sm:mr-2">{`${rankedSoloData.tier} ${rankedSoloData.rank} ${rankedSoloData.leaguePoints}LP`}</div>
               <div>{`${(
                 (rankedSoloData.wins /
                   (rankedSoloData.wins + rankedSoloData.losses)) *

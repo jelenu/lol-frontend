@@ -26,7 +26,7 @@ export const MatchParticipantList = ({ match }) => {
   };
 
   return (
-    <div className="flex w-96">
+    <div className="flex w-96 max-lg:w-80">
       {/* Left side participants */}
       <div className="flex flex-col mr-5 w-2/4">
         {match.participants.slice(0, 5).map((participant, index) => (
@@ -42,7 +42,7 @@ export const MatchParticipantList = ({ match }) => {
             {/* Participant name */}
             <div
               onClick={() => handleParticipantClick(participant)}
-              className={`text-sm ${
+              className={`text-sm truncate ${
                 participant.summonerId === summonerId ? "font-bold" : ""
               }`}
             >
@@ -66,7 +66,7 @@ export const MatchParticipantList = ({ match }) => {
             {/* Participant name */}
             <div
               onClick={() => handleParticipantClick(participant)}
-              className={`text-sm ${
+              className={`text-sm truncate ${
                 participant.summonerId === summonerId ? "font-bold" : ""
               }`}
             >
