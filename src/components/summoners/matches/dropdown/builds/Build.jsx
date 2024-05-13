@@ -7,9 +7,9 @@ export const Build = ({ match, timeLine }) => {
 
   const skillSlots = [
     { slot: 1, skill: "Q", color: "blue" },
-    { slot: 2, skill: "W", color: "green" },
+    { slot: 2, skill: "W", color: "emerald" },
     { slot: 3, skill: "E", color: "orange" },
-    { slot: 4, skill: "R", color: "white" },
+    { slot: 4, skill: "R", color: "red" },
   ];
 
   useEffect(() => {
@@ -41,7 +41,19 @@ export const Build = ({ match, timeLine }) => {
     setSelectedChampion(index);
   };
 
-  console.log(match.participants);
+  let itemPurchasedEvents = [];
+
+  if (timeLine && timeLine.info && timeLine.info.frames) {
+    timeLine.info.frames.forEach((frame) => {
+      const events = frame.events;
+      const itemEventsInFrame = events.filter(
+        (event) =>
+          event.type === "ITEM_PURCHASED" &&
+          event.participantId === selectedChampion + 1
+      );
+      itemPurchasedEvents.push(itemEventsInFrame);
+    });
+  }
 
   return (
     <div className="bg-white p-4 rounded-md">
@@ -62,6 +74,32 @@ export const Build = ({ match, timeLine }) => {
           </div>
         ))}
       </div>
+      <div className="mt-4">
+        <div>
+          <span> Build</span>
+        </div>
+        <div className=" flex flex-wrap">
+          {itemPurchasedEvents.map(
+            (frame, index) =>
+              frame.length > 0 && (
+                <div key={index} className=" mx-2">
+                  <div  className="flex">
+                    {frame.map((item, itemIndex) => (
+                      <div key={itemIndex} className="bg-gray-200 p-2">
+                        <img
+                          src={`http://192.168.1.133:8000/static/item/${item.itemId}.png`}
+                          alt={`${item.itemId}`}
+                          className=" h-10"
+                        />
+                      </div>
+                    ))}
+                  </div>
+                  <p> min {index}</p>
+                </div>
+              )
+          )}
+        </div>
+      </div>
 
       <div className="mt-4">
         <div>
@@ -77,13 +115,9 @@ export const Build = ({ match, timeLine }) => {
               return (
                 <div
                   key={index}
-                  className="mx-1 h-7 w-7 bg-gray-800 rounded-md flex items-center justify-center"
+                  className={`mx-1 h-7 w-7 bg-${skill.color}-500 rounded-md flex items-center justify-center`}
                 >
-                  <span
-                    className={`text-${skill.color} text-${skill.color}-500 `}
-                  >
-                    {skill.skill}
-                  </span>
+                  <span className="">{skill.skill}</span>
                 </div>
               );
             })}
@@ -93,50 +127,50 @@ export const Build = ({ match, timeLine }) => {
         <div>
           <span>Runes</span>
         </div>
-        <div>
-          <div className="flex items-center">
-            <img
-              src={`https://ddragon.leagueoflegends.com/cdn/img/${match.participants[selectedChampion].perks.styles[0].selections[0].icon}`}
-              alt={`Primary Rune`}
-              className=" h-12"
-            />
-            <img
-              src={`https://ddragon.leagueoflegends.com/cdn/img/${match.participants[selectedChampion].perks.styles[0].selections[1].icon}`}
-              alt={`Primary Rune`}
-              className=" h-7 "
-            />
-            <img
-              src={`https://ddragon.leagueoflegends.com/cdn/img/${match.participants[selectedChampion].perks.styles[0].selections[2].icon}`}
-              alt={`Primary Rune`}
-              className=" h-7 "
-            />
-            <img
-              src={`https://ddragon.leagueoflegends.com/cdn/img/${match.participants[selectedChampion].perks.styles[0].selections[3].icon}`}
-              alt={`Primary Rune`}
-              className=" h-7 "
-            />
+        {selectedChampion !== null && (
+          <div>
+            <div className="flex items-center">
+              <img
+                src={`https://ddragon.leagueoflegends.com/cdn/img/${match.participants[selectedChampion].perks.styles[0].selections[0].icon}`}
+                alt={`Primary Rune`}
+                className=" h-12"
+              />
+              <img
+                src={`https://ddragon.leagueoflegends.com/cdn/img/${match.participants[selectedChampion].perks.styles[0].selections[1].icon}`}
+                alt={`Primary Rune`}
+                className=" h-7 "
+              />
+              <img
+                src={`https://ddragon.leagueoflegends.com/cdn/img/${match.participants[selectedChampion].perks.styles[0].selections[2].icon}`}
+                alt={`Primary Rune`}
+                className=" h-7 "
+              />
+              <img
+                src={`https://ddragon.leagueoflegends.com/cdn/img/${match.participants[selectedChampion].perks.styles[0].selections[3].icon}`}
+                alt={`Primary Rune`}
+                className=" h-7 "
+              />
+            </div>
+
+            <div className="flex items-center">
+              <img
+                src={`https://ddragon.leagueoflegends.com/cdn/img/${match.participants[selectedChampion].perks.styles[1].selections[0].rune_path.icon}`}
+                alt={`Secondary Rune`}
+                className=" h-8 mb-1"
+              />
+              <img
+                src={`https://ddragon.leagueoflegends.com/cdn/img/${match.participants[selectedChampion].perks.styles[1].selections[0].icon}`}
+                alt={`Primary Rune`}
+                className=" h-7 "
+              />
+              <img
+                src={`https://ddragon.leagueoflegends.com/cdn/img/${match.participants[selectedChampion].perks.styles[1].selections[1].icon}`}
+                alt={`Primary Rune`}
+                className=" h-7 "
+              />
+            </div>
           </div>
-            
-          
-          <div className="flex items-center">
-          <img
-            src={`https://ddragon.leagueoflegends.com/cdn/img/${match.participants[selectedChampion].perks.styles[1].selections[0].rune_path.icon}`}
-            alt={`Secondary Rune`}
-            className=" h-8 mb-1"
-          />
-            <img
-              src={`https://ddragon.leagueoflegends.com/cdn/img/${match.participants[selectedChampion].perks.styles[1].selections[0].icon}`}
-              alt={`Primary Rune`}
-              className=" h-7 "
-            />
-            <img
-              src={`https://ddragon.leagueoflegends.com/cdn/img/${match.participants[selectedChampion].perks.styles[1].selections[1].icon}`}
-              alt={`Primary Rune`}
-              className=" h-7 "
-            />
-            
-          </div>
-        </div>
+        )}
       </div>
     </div>
   );
