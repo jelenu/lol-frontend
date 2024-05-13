@@ -1,7 +1,15 @@
 import React, { useState } from "react";
 import map from "../../../../../../assets/map/map.svg";
 
+/**
+ * Component to display a match map with champion kill events.
+ * @param {Object} props - Props passed to the component.
+ * @param {Object[]} props.timeLine - Timeline data of the match.
+ * @param {Object} props.match - Information about the match.
+ * @returns {JSX.Element} - Map component JSX.
+ */
 export const Map = ({ timeLine, match }) => {
+  // Array of CSS classes representing team colors
   const colors = [
     "bg-blue-500",
     "bg-lime-500",
@@ -15,6 +23,7 @@ export const Map = ({ timeLine, match }) => {
     "bg-amber-500",
   ];
 
+  // Extract champion kill events from the timeline data
   const championKillEvents = timeLine.info.frames.flatMap((frame) =>
     frame.events
       .filter((event) => event.type === "CHAMPION_KILL")
@@ -26,11 +35,15 @@ export const Map = ({ timeLine, match }) => {
       }))
   );
 
+  // Maximum value for X and Y coordinates on the map
   const maxXY = 15100;
+
+  // State variables to manage selected kill event and info box visibility
   const [selectedKillEvent, setSelectedKillEvent] = useState(null);
   const [showInfoBox, setShowInfoBox] = useState(false);
   let timer;
 
+  // Function to handle mouse enter event on a kill event marker
   const handleMouseEnter = (killEvent) => {
     setSelectedKillEvent(killEvent);
     timer = setTimeout(() => {
@@ -38,14 +51,17 @@ export const Map = ({ timeLine, match }) => {
     }, 500);
   };
 
+  // Function to handle mouse leave event on a kill event marker
   const handleMouseLeave = () => {
     clearTimeout(timer);
     setShowInfoBox(false);
     setSelectedKillEvent(null);
   };
 
+  // State variable to manage active participant (clicked participant)
   const [activeParticipant, setActiveParticipant] = useState("");
 
+  // Function to handle participant click event
   const handleParticipantClick = (index) => {
     const isActive = activeParticipant.includes(index);
 
@@ -56,6 +72,7 @@ export const Map = ({ timeLine, match }) => {
     }
   };
 
+  // Function to format time from milliseconds to minutes
   const formatTime = (milliseconds) => {
     const totalSeconds = Math.floor(milliseconds / 1000);
     const minutes = Math.floor(totalSeconds / 60);
@@ -64,16 +81,17 @@ export const Map = ({ timeLine, match }) => {
 
   return (
     <div className="flex " style={{ height: 530 }}>
+      {/* Blue Team */}
       <div className="w-1/4 m-2 flex flex-col justify-center">
         <div className="text-blue-400">Blue Team</div>
+        {/* Render participant info for Blue Team */}
         {match.participants.slice(0, 5).map((participant, index) => (
           <div className="flex my-2 items-center" key={index}>
             <div
-              className={`${colors[index] } w-8 h-8 rounded-md mr-2 flex-shrink-0`}
+              className={`${colors[index]} w-8 h-8 rounded-md mr-2 flex-shrink-0`}
             ></div>
-
             <div
-              className={`flex-grow  p-2 rounded-md border-gray-400 border flex items-center cursor-pointer ${
+              className={`flex-grow p-2 rounded-md border-gray-400 border flex items-center cursor-pointer ${
                 activeParticipant.includes(index) ? "bg-gray-400" : ""
               }`}
               onClick={() => handleParticipantClick(index)}
@@ -91,14 +109,17 @@ export const Map = ({ timeLine, match }) => {
         ))}
       </div>
 
+      {/* Match Map */}
       <div className="w-2/4 flex justify-center items-center">
         <div className="relative ">
+          {/* Render the map image */}
           <img
             className="rounded-2xl"
             src={map}
             alt={"map"}
             style={{ width: "400px", height: "400px" }}
           />
+          {/* Render champion kill events on the map */}
           {championKillEvents.map((killEvent, index) => {
             const porcentajeX = (killEvent.position.x / maxXY) * 100;
             const porcentajeY = (killEvent.position.y / maxXY) * 100;
@@ -112,7 +133,7 @@ export const Map = ({ timeLine, match }) => {
                 <div
                   key={index}
                   className={`w-3 h-3 absolute rounded-full ${
-                    colors[killEvent.killerId -1]
+                    colors[killEvent.killerId - 1]
                   }`}
                   style={{ bottom: `${porcentajeY}%`, left: `${porcentajeX}%` }}
                   onMouseEnter={() => handleMouseEnter(killEvent)}
@@ -124,12 +145,17 @@ export const Map = ({ timeLine, match }) => {
             }
           })}
 
+          {/* Render info box for selected kill event */}
           {selectedKillEvent && showInfoBox && (
             <div
               className="absolute bg-black text-white p-2 rounded-lg shadow"
               style={{
-                bottom: `${(selectedKillEvent.position.y / maxXY) * 100 + 5}%`,
-                left: `${(selectedKillEvent.position.x / maxXY) * 100 - 5}%`,
+                bottom: `${
+                  (selectedKillEvent.position.y / maxXY) * 100 + 5
+                }%`,
+                left: `${
+                  (selectedKillEvent.position.x / maxXY) * 100 - 5
+                }%`,
               }}
             >
               <div>
@@ -151,13 +177,14 @@ export const Map = ({ timeLine, match }) => {
         </div>
       </div>
 
+      {/* Red Team */}
       <div className="w-1/4 m-2 flex flex-col justify-center">
         <div className="text-red-400">RedTeam</div>
-
+        {/* Render participant info for Red Team */}
         {match.participants.slice(5).map((participant, index) => (
           <div className="flex my-2 items-center" key={index + 5}>
             <div
-              className={`flex-grow  p-2 rounded-md border-gray-400 border flex items-center cursor-pointer ${
+              className={`flex-grow p-2 rounded-md border-gray-400 border flex items-center cursor-pointer ${
                 activeParticipant.includes(index + 5) ? "bg-gray-400" : ""
               }`}
               onClick={() => handleParticipantClick(index + 5)}

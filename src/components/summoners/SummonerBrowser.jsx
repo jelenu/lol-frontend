@@ -3,8 +3,12 @@ import { SummonerProfile } from "./SummonerProfile";
 import { SummonerHistory } from "./SummonerHistory";
 import { useSummonerContext } from "../../context/SummonerContext";
 
+/**
+ * Component to browse summoner profiles and history.
+ * @returns {JSX.Element} - SummonerBrowser component JSX.
+ */
 export const SummonerBrowser = () => {
-
+  // Destructure required variables and functions from SummonerContext
   const {
     searchResults,
     fetchSearchAccount,
@@ -15,7 +19,6 @@ export const SummonerBrowser = () => {
     searchParams,
     setSearchParams
   } = useSummonerContext();
-   
 
   /**
    * Event handler function to update search parameters when input values change.
@@ -33,7 +36,9 @@ export const SummonerBrowser = () => {
 
   return (
     <div>
+      {/* Search bar */}
       <div className="flex items-center justify-center bg-blue-400 p-4 rounded-b-md w-4/5 mx-auto">
+        {/* Server select */}
         <select
           name="server"
           value={searchParams.server}
@@ -48,6 +53,7 @@ export const SummonerBrowser = () => {
           ))}
         </select>
 
+        {/* Tag Line input */}
         <input
           type="text"
           name="tagLine"
@@ -57,6 +63,7 @@ export const SummonerBrowser = () => {
           className="p-2 mr-4 border border-gray-300 rounded-md"
         />
 
+        {/* Game Name input */}
         <input
           type="text"
           name="gameName"
@@ -66,6 +73,7 @@ export const SummonerBrowser = () => {
           className="p-2 mr-4 border border-gray-300 rounded-md"
         />
 
+        {/* Search button */}
         <button
           onClick={() => fetchSearchAccount(searchParams)}
           disabled={loadingProfile}
@@ -75,14 +83,15 @@ export const SummonerBrowser = () => {
         </button>
       </div>
 
+      {/* Render SummonerProfile component if search results exist */}
       {searchResults && (
         <SummonerProfile/>
       )}
 
+      {/* Render SummonerHistory component if matches exist and not loading */}
       {matchesIds && !loadingMatches && (
         <SummonerHistory matchesIds={matchesIds} summonerName={searchResults.name} />
       )}
     </div>
   );
-  
 };

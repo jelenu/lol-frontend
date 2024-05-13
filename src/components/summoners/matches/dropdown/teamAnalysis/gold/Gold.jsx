@@ -2,14 +2,21 @@ import React, { useState } from "react";
 import { TeamGold } from "./TeamGold";
 import { TeamGoldAdvantage } from "./TeamGoldAdvantage";
 
+/**
+ * Component to display gold analysis including team gold and team gold advantage.
+ * @param {Object} timeLine - Timeline object containing match timeline data.
+ * @returns {JSX.Element} - Gold component JSX.
+ */
 export const Gold = ({ timeLine }) => {
+  // State to track the selected component
   const [selectedComponent, setSelectedComponent] = useState("TeamGold");
 
+  // Function to handle component change
   const handleComponentChange = (component) => {
     setSelectedComponent(component);
   };
 
-
+  // Function to calculate gold per participant and per frame
   const calculatePerParticipantAndFrame = (property) => {
     const result = [];
 
@@ -30,6 +37,7 @@ export const Gold = ({ timeLine }) => {
     return result;
   };
 
+  // Function to calculate gold per team
   const calculatePerTeam = (perParticipantAndFrame) => {
     const teamTotals = [];
 
@@ -55,6 +63,7 @@ export const Gold = ({ timeLine }) => {
     return teamTotals;
   };
 
+  // Function to format Y-axis labels
   const yAxisFormatter = (value) => {
     const absValue = Math.abs(value);
 
@@ -64,19 +73,20 @@ export const Gold = ({ timeLine }) => {
     return absValue;
   };
 
+  // Function to format X-axis labels
   const xAxisFormatter = (value) => {
     return value + " min";
   };
-  console.log(timeLine);
 
   return (
     <div style={{ height: 530 }}>
+      {/* Navigation buttons */}
       <div className="flex justify-center m-3">
         <button
           onClick={() => handleComponentChange("TeamGold")}
-          className={`px-4 py-2  ${
+          className={`px-4 py-2 ${
             selectedComponent === "TeamGold"
-              ? "text-white bg-blue-500 "
+              ? "text-white bg-blue-500"
               : "bg-white"
           }`}
         >
@@ -84,16 +94,17 @@ export const Gold = ({ timeLine }) => {
         </button>
         <button
           onClick={() => handleComponentChange("TeamGoldAdvantage")}
-          className={`px-4 py-2  ${
+          className={`px-4 py-2 ${
             selectedComponent === "TeamGoldAdvantage"
               ? "text-white bg-blue-500"
-              : " bg-white"
+              : "bg-white"
           } `}
         >
           Team Gold Advantage
         </button>
       </div>
 
+      {/* Legend */}
       <div className="flex justify-center items-center m-3">
         <div className="h-2 w-2 bg-blue-500 rounded-full mr-1"></div>
         <div className="mr-4">Blue Team</div>
@@ -101,6 +112,7 @@ export const Gold = ({ timeLine }) => {
         <div>Red Team</div>
       </div>
 
+      {/* Render the selected component */}
       {timeLine && selectedComponent === "TeamGold" && (
         <TeamGold
           calculatePerTeam={calculatePerTeam}

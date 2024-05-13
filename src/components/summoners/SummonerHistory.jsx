@@ -2,7 +2,12 @@ import React, { useState, useEffect } from "react";
 import { useSummonerContext } from "../../context/SummonerContext";
 import { Match } from "./matches/Match";
 
+/**
+ * Component to display summoner's match history.
+ * @returns {JSX.Element} - SummonerHistory component JSX.
+ */
 export const SummonerHistory = () => {
+  // Access matchesIds from SummonerContext
   const { matchesIds } = useSummonerContext();
 
   // State to store loaded matches

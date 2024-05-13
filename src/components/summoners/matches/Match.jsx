@@ -4,9 +4,18 @@ import { MatchParticipantList } from "./MatchParticipantList";
 import { Dropdown } from "./dropdown/Dropdown";
 import { FaChevronUp, FaChevronDown } from "react-icons/fa";
 
+/**
+ * Component to display match details including participants and game information.
+ * @param {Object} props - Props containing match details.
+ * @returns {JSX.Element} - Match component JSX.
+ */
 export const Match = ({ match }) => {
+  // Access summonerId from SummonerContext
   const { summonerId } = useSummonerContext();
+  // State to manage dropdown visibility
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
+  // List of game modes with queue IDs
 
   const gameModes = [
     { queueId: 400, name: "5v5 Draft Pick" },
@@ -28,7 +37,7 @@ export const Match = ({ match }) => {
   };
 
   // Check if the match's queueId exists in gameModes
-  if (!gameModes.some(mode => mode.queueId === match.queueId)) {
+  if (!gameModes.some((mode) => mode.queueId === match.queueId)) {
     // If not, return null
     return null;
   }
@@ -156,15 +165,12 @@ export const Match = ({ match }) => {
           </div>
           {/* Participants list */}
           <MatchParticipantList match={match} />
-
-          
         </div>
         <div className="w-10 flex flex-col justify-end items-center">
           <button className="dropdown-button h-10" onClick={toggleDropdown}>
-            {isDropdownOpen ? <FaChevronUp />: <FaChevronDown />}
+            {isDropdownOpen ? <FaChevronUp /> : <FaChevronDown />}
           </button>
         </div>
-        
       </div>
       {isDropdownOpen && <Dropdown match={match} />}
     </div>

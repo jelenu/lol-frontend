@@ -1,7 +1,12 @@
 import React from "react";
 import { useSummonerContext } from "../../context/SummonerContext";
 
+/**
+ * Component to display summoner's profile information.
+ * @returns {JSX.Element} - SummonerProfile component JSX.
+ */
 export const SummonerProfile = () => {
+  // Access searchResults and searchParamsAfterFetch from SummonerContext
   const { searchResults, searchParamsAfterFetch } = useSummonerContext();
 
   // Retrieve ranked solo data

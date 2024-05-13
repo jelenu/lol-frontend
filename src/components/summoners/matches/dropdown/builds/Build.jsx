@@ -1,10 +1,19 @@
 import React, { useState, useEffect } from "react";
 import { useSummonerContext } from "../../../../../context/SummonerContext";
 
+/**
+ * Component to display the build information of a selected champion.
+ * @param {Object} match - Match object containing match details.
+ * @param {Object} timeLine - Timeline object containing match timeline data.
+ * @returns {JSX.Element} - Build component JSX.
+ */
 export const Build = ({ match, timeLine }) => {
+  // State to track the selected champion
   const [selectedChampion, setSelectedChampion] = useState(null);
+  // Accessing summonerId from context
   const { summonerId } = useSummonerContext();
 
+  // Array containing skill slots information
   const skillSlots = [
     { slot: 1, skill: "Q", color: "blue" },
     { slot: 2, skill: "W", color: "emerald" },
@@ -12,18 +21,23 @@ export const Build = ({ match, timeLine }) => {
     { slot: 4, skill: "R", color: "red" },
   ];
 
+  // Effect hook to set the selected champion when the component mounts
   useEffect(() => {
+    // Finding the index of the participant that matches the summonerId
     const participantIndex = match.participants.findIndex(
       (participant) => participant.summonerId === summonerId
     );
+    // Setting the selected champion if found
     if (participantIndex !== -1) {
       setSelectedChampion(participantIndex);
     }
-    // eslint-disable-next-line
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // Array to store skill level up events
   let skillLevelUpEvents = [];
 
+  // Populating skillLevelUpEvents array if timeLine data is available
   if (timeLine && timeLine.info && timeLine.info.frames) {
     timeLine.info.frames.forEach((frame) => {
       const events = frame.events;
@@ -37,12 +51,15 @@ export const Build = ({ match, timeLine }) => {
     });
   }
 
+  // Function to handle click on a champion avatar
   const handleSelectedChampion = (index) => {
     setSelectedChampion(index);
   };
 
+  // Array to store item purchased events
   let itemPurchasedEvents = [];
 
+  // Populating itemPurchasedEvents array if timeLine data is available
   if (timeLine && timeLine.info && timeLine.info.frames) {
     timeLine.info.frames.forEach((frame) => {
       const events = frame.events;
@@ -58,6 +75,7 @@ export const Build = ({ match, timeLine }) => {
   return (
     <div className="bg-white p-4 rounded-md">
       <div className="flex justify-center ">
+        {/* Render champion avatars */}
         {match.participants.map((participant, index) => (
           <div
             key={index}
@@ -79,11 +97,12 @@ export const Build = ({ match, timeLine }) => {
           <span> Build</span>
         </div>
         <div className=" flex flex-wrap">
+          {/* Render item build */}
           {itemPurchasedEvents.map(
             (frame, index) =>
               frame.length > 0 && (
                 <div key={index} className=" mx-2">
-                  <div  className="flex">
+                  <div className="flex">
                     {frame.map((item, itemIndex) => (
                       <div key={itemIndex} className="bg-gray-200 p-2">
                         <img
@@ -106,6 +125,7 @@ export const Build = ({ match, timeLine }) => {
           <span> Skill Order</span>
         </div>
         <div className="flex">
+          {/* Render skill order */}
           {skillLevelUpEvents
             .filter((levelUp) => levelUp.participantId - 1 === selectedChampion)
             .map((levelUp, index) => {
@@ -127,6 +147,7 @@ export const Build = ({ match, timeLine }) => {
         <div>
           <span>Runes</span>
         </div>
+        {/* Render runes */}
         {selectedChampion !== null && (
           <div>
             <div className="flex items-center">
