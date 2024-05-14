@@ -1,6 +1,6 @@
 import React from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
-
+import WindowSizeHook from '../../../../../../hooks/WindowSizeHook';
 /**
  * Component to display team gold over time using a line chart.
  * @param {Function} calculatePerTeam - Function to calculate gold per team.
@@ -10,12 +10,30 @@ import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContai
  * @returns {JSX.Element} - TeamGold component JSX.
  */
 export const TeamGold = ({ calculatePerTeam, calculatePerParticipantAndFrame, xAxisFormatter, yAxisFormatter }) => {
-  // Log calculated team gold data
-  console.log(calculatePerTeam(calculatePerParticipantAndFrame('totalGold')));
+  const size = WindowSizeHook();
+
+  const getInterval = () => {
+    if (size.width < 640) {
+      return 4;
+    } else if (size.width < 1024) {
+      return 2;
+    } else { 
+      return 1;
+    }
+  };
+  const getHeight = () => {
+    if (size.width < 640) {
+      return 300;
+    } else if (size.width < 1024) {
+      return 350;
+    } else { 
+      return 430;
+    }
+  };
 
   return (
     <div className='text-xs'>
-      <ResponsiveContainer width="100%" height={430}>
+      <ResponsiveContainer width="100%" height={getHeight()}>
         {/* Line chart */}
         <LineChart
           data={calculatePerTeam(calculatePerParticipantAndFrame('totalGold'))}
@@ -23,7 +41,7 @@ export const TeamGold = ({ calculatePerTeam, calculatePerParticipantAndFrame, xA
         >
           <CartesianGrid vertical={false} />
           {/* X-axis */}
-          <XAxis dataKey="frame" interval={1} tickFormatter={xAxisFormatter} />
+          <XAxis dataKey="frame" interval={getInterval()} tickFormatter={xAxisFormatter} />
           {/* Y-axis */}
           <YAxis tickFormatter={yAxisFormatter} />
           <Tooltip />

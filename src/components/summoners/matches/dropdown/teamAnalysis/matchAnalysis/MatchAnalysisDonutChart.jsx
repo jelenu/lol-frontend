@@ -8,7 +8,7 @@ import { ResponsiveContainer, PieChart, Pie, Cell, Tooltip } from "recharts";
  * @param {number} props.redTeamData - Data for the Red team.
  * @returns {JSX.Element} - MatchAnalysisChart component JSX.
  */
-export const MatchAnalysisChart = ({ blueTeamData, redTeamData }) => {
+export const MatchAnalysisDonutChart = ({ blueTeamData, redTeamData }) => {
   // Prepare data for the pie chart
   const data = [
     { name: "Blue side", value: blueTeamData },
@@ -19,7 +19,7 @@ export const MatchAnalysisChart = ({ blueTeamData, redTeamData }) => {
   const COLORS = ["#60A5FA", "#F87171"];
 
   return (
-    <div className="w-1/3">
+    <div className="w-1/3 max-md:hidden">
       {/* ResponsiveContainer to make the chart responsive */}
       <ResponsiveContainer width="100%" height="100%">
         {/* PieChart component */}

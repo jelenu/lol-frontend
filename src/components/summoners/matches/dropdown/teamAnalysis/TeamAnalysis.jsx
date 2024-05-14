@@ -20,7 +20,7 @@ export const TeamAnalysis = ({ match, timeLine }) => {
   };
 
   return (
-    <div className='bg-gray-100 rounded-md '>
+    <div className='bg-gray-100 rounded-md max-sm:text-xs '>
       {/* Navigation buttons */}
       <div className="flex justify-around rounded-t-md bg-white">
         <button

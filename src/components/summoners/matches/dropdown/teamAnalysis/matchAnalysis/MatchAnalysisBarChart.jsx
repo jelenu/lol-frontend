@@ -10,7 +10,7 @@ import React from "react";
  */
 export const MatchAnalysisBarChart = ({ max, participantsData, team }) => {
   return (
-    <div className="w-1/3">
+    <div className="w-1/3 max-md:w-1/2 ">
       {participantsData.map((participant, index) => (
         <div key={index} className="flex mb-2">
           <div className="mr-2">
@@ -29,7 +29,7 @@ export const MatchAnalysisBarChart = ({ max, participantsData, team }) => {
             <div style={{ width: `${(participant.value / max) * 100}%` }}>
               {/* Render bar with dynamic width based on value */}
               <div
-                className={`h-full ${team === 1 ? "bg-blue-400" : "bg-red-400"}`}
+                className={`h-full mr-1 ${team === 1 ? "bg-blue-400" : "bg-red-400"}`}
               ></div>
             </div>
           </div>

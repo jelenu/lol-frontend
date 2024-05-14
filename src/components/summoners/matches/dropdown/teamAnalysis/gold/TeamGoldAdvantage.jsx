@@ -1,5 +1,6 @@
 import React from 'react';
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+import WindowSizeHook from '../../../../../../hooks/WindowSizeHook';
 
 /**
  * Component to display team gold advantage over time using an area chart.
@@ -60,9 +61,31 @@ export const TeamGoldAdvantage = ({ calculatePerTeam, calculatePerParticipantAnd
     }
   };
 
+
+  const size = WindowSizeHook();
+
+  const getInterval = () => {
+    if (size.width < 640) {
+      return 4;
+    } else if (size.width < 1024) {
+      return 2;
+    } else { 
+      return 1;
+    }
+  };
+  const getHeight = () => {
+    if (size.width < 640) {
+      return 300;
+    } else if (size.width < 1024) {
+      return 350;
+    } else { 
+      return 430;
+    }
+  };
+
   return (
     <div className='text-xs'>
-      <ResponsiveContainer width="100%" height={430}>
+      <ResponsiveContainer width="100%" height={getHeight()}>
         {/* Area chart */}
         <AreaChart
           data={goldDiff}
@@ -70,7 +93,7 @@ export const TeamGoldAdvantage = ({ calculatePerTeam, calculatePerParticipantAnd
         >
           <CartesianGrid vertical={false} />
           {/* X-axis */}
-          <XAxis dataKey="frame" interval={1} tickFormatter={xAxisFormatter} />
+          <XAxis dataKey="frame" interval={getInterval()} tickFormatter={xAxisFormatter} />
           {/* Y-axis */}
           <YAxis tickFormatter={yAxisFormatter} />
           <Tooltip content={<CustomTooltip />} />

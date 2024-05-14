@@ -1,5 +1,5 @@
 import React from "react";
-import { MatchAnalysisChart } from "./MatchAnalysisDonutChart"; // Assuming this is the correct import
+import { MatchAnalysisDonutChart } from "./MatchAnalysisDonutChart";
 import { MatchAnalysisBarChart } from "./MatchAnalysisBarChart";
 
 /**
@@ -23,7 +23,7 @@ export const MatchAnalysisSection = ({
   calculateSum,
   participansData,
 }) => (
-  <div className="w-1/2 text-center px-2">
+  <div className="w-1/2 text-center px-2 ">
     <div className="mb-2">{title}</div>
     <div className="flex">
       {/* Display bar chart for the first team */}
@@ -33,10 +33,11 @@ export const MatchAnalysisSection = ({
         team={1}
       />
       {/* Display donut chart */}
-      <MatchAnalysisChart
-        blueTeamData={calculateSum(param, 0, 5)}
-        redTeamData={calculateSum(param, 5, 10)}
-      />
+        <MatchAnalysisDonutChart
+          blueTeamData={calculateSum(param, 0, 5)}
+          redTeamData={calculateSum(param, 5, 10)}
+        />
+
       {/* Display bar chart for the second team */}
       <MatchAnalysisBarChart
         max={calculateMax(param)}

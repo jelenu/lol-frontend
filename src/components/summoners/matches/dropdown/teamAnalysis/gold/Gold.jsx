@@ -79,7 +79,7 @@ export const Gold = ({ timeLine }) => {
   };
 
   return (
-    <div style={{ height: 530 }}>
+    <div style={{}}>
       {/* Navigation buttons */}
       <div className="flex justify-center m-3">
         <button
