@@ -77,7 +77,7 @@ export const SummonerBrowser = () => {
         <button
           onClick={() => fetchSearchAccount(searchParams)}
           disabled={loadingProfile}
-          className=" h-8 w-8 bg-gray-400 text-white rounded-md cursor-pointer transition-colors duration-300 hover:bg-gray-600 max-sm:p-2"
+          className=" h-8 w-8 bg-gray-400 items-center justify-center flex text-white rounded-md cursor-pointer transition-colors duration-300 hover:bg-gray-600 max-sm:p-2"
         >
           {loadingProfile ? "..." : <FaSearch />}
         </button>

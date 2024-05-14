@@ -87,9 +87,9 @@ export const Match = ({ match }) => {
               <div>{formatTimestamp(match.gameCreation)}</div>
               <div>{formatGameDuration(match.gameDuration)}</div>
             </div>
-            <div className="flex mx-4 justify-between">
+            <div className="flex md:mx-4 justify-between">
               {/* Participant */}
-              <div className=" max-md:flex max-md:w-full justify-center max-md:justify-around mx-4 ">
+              <div className=" max-md:flex max-md:w-full justify-center max-md:justify-around md:mx-4 ">
                 <div className=" items-center">
                   {match.participants.map(
                     (participant, index) =>
@@ -99,7 +99,7 @@ export const Match = ({ match }) => {
                           <img
                             src={`http://192.168.1.133:8000/static/champion/icon/${participant.championName}.png`}
                             alt={participant.championName}
-                            className="h-14 rounded-full mr-4"
+                            className="h-14 max-sm:h-8 rounded-full mr-4 max-sm:mr-1"
                           />
                           {/* Summoner spells */}
                           <div className="flex flex-col">
@@ -110,7 +110,7 @@ export const Match = ({ match }) => {
                                   participant[`summoner${spellSlot}Id`]
                                 }.png`}
                                 alt={`Summoner Spell ${spellSlot}`}
-                                className="items h-7 rounded-md mb-1 mr-2"
+                                className="items h-7 rounded-md mb-1 mr-2 max-sm:mr-0 max-sm:h-5"
                               />
                             ))}
                           </div>
@@ -119,16 +119,16 @@ export const Match = ({ match }) => {
                             <img
                               src={`https://ddragon.leagueoflegends.com/cdn/img/${participant.perks.styles[0].selections[0].icon}`}
                               alt={`Primary Rune`}
-                              className="rune-icon h-10 "
+                              className=" h-8 "
                             />
                             <img
                               src={`https://ddragon.leagueoflegends.com/cdn/img/${participant.perks.styles[1].selections[0].rune_path.icon}`}
                               alt={`Primary Rune`}
-                              className="rune-path-icon h-6 w-6 mb-1"
+                              className=" h-4 w-4 mb-1"
                             />
                           </div>
                           {/* KDA */}
-                          <div className="kda-container">
+                          <div className=" text-sm">
                             {`${participant.kills} / ${participant.deaths} / ${participant.assists}`}
                           </div>
                         </div>
@@ -169,9 +169,14 @@ export const Match = ({ match }) => {
                 <MatchParticipantList match={match} />
               </div>
             </div>
+            <div className="justify-end items-end flex sm:hidden">
+              <button className="dropdown-button h-1" onClick={toggleDropdown}>
+                {isDropdownOpen ? <FaChevronUp /> : <FaChevronDown />}
+              </button>
+            </div>
           </div>
         </div>
-        <div className="w-10 flex flex-col justify-end items-center">
+        <div className="w-10 flex flex-col justify-end items-center max-sm:hidden">
           <button className="dropdown-button h-10" onClick={toggleDropdown}>
             {isDropdownOpen ? <FaChevronUp /> : <FaChevronDown />}
           </button>
