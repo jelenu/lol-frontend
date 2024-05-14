@@ -40,9 +40,9 @@ export const OverViewGraphs = ({ match }) => {
     (totalGoldTeam2 / (totalGoldTeam1 + totalGoldTeam2)) * 100;
 
   return (      
-      <div className="w-3/5  flex flex-col justify-around items-center text-sm ">
+      <div className="w-3/5 max-md:w-2/4 max-sm:w-full  flex flex-col justify-around items-center text-sm my-2">
         {/* Total Kills Graph */}
-        <div className=" flex relative w-full ">
+        <div className=" flex relative w-full mb-2 ">
           <div className="absolute inset-0 flex justify-center items-center">
             <span className="text-white">Total Kill</span>
           </div>

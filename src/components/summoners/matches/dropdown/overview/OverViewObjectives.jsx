@@ -10,12 +10,12 @@ export const OverViewObjectives = ({ team }) => {
   const result = team.win;
 
   return (
-    <div className="w-1/5">
+    <div className=" lg:w-1/5 max-lg:w-1/5 max-md:w-1/4 max-sm:w-full max-sm:flex max-sm:justify-center">
       {/* Objectives: Baron, Dragon, Herald */}
-      <div className="flex justify-center items-center h-1/2">
+      <div className="flex justify-center items-center h-1/2 ">
         <img
           src={result ? "http://192.168.1.133:8000/static/objectives/baron-100.png" : "http://192.168.1.133:8000/static/objectives/baron-200.png"}
-          className="w-5 mr-1"
+          className="w-5 ml-4 mr-1"
           alt="baron"
         />
         <span>{team.objectives.baron.kills}</span>
@@ -39,7 +39,7 @@ export const OverViewObjectives = ({ team }) => {
       <div className="flex justify-center items-center h-1/2 ">
         <img
           src={result ? "http://192.168.1.133:8000/static/objectives/inhibitor-100.png" : "http://192.168.1.133:8000/static/objectives/inhibitor-200.png"}
-          className="w-5 mr-1"
+          className="w-5 ml-4 mr-1"
           alt="inhibitor"
         />
         <span>{team.objectives.inhibitor.kills}</span>

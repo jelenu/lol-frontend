@@ -10,13 +10,13 @@ import { OverViewObjectives } from "./OverViewObjectives";
  */
 export const OverView = ({ match }) => {
   return (
-    <div className="bg-gray-100 p-5 rounded-md">
+    <div className="bg-gray-100 p-5 max-md:p-0 rounded-md">
       {/* Display team information for the first team */}
       <OverViewTeam
         participants={match.participants.slice(0, 5)}
         team={match.teams[0]}
       />
-      <div className="flex my-2 h-16">
+      <div className="sm:flex my-2 ">
         {/* Display objectives and graphs for the first team */}
         <OverViewObjectives team={match.teams[0]} />
         <OverViewGraphs match={match} />
