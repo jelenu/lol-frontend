@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import map from "../../../../../../assets/map/map.svg";
+import WindowSizeHook from "../../../../../../hooks/WindowSizeHook";
 
 /**
  * Component to display a match map with champion kill events.
@@ -9,6 +10,8 @@ import map from "../../../../../../assets/map/map.svg";
  * @returns {JSX.Element} - Map component JSX.
  */
 export const Map = ({ timeLine, match }) => {
+  const size = WindowSizeHook();
+
   // Array of CSS classes representing team colors
   const colors = [
     "bg-blue-500",
@@ -79,20 +82,29 @@ export const Map = ({ timeLine, match }) => {
     return `${minutes} min`;
   };
 
+  const getHeight = () => {
+    if (size.width < 500) {
+      return 200;
+    } else if (size.width < 640) {
+      return 250;
+    } else if (size.width < 1024) {
+      return 300;
+    } else {
+      return 400;
+    }
+  };
+
   return (
-    <div className="flex " style={{ height: 530 }}>
+    <div className="flex justify-between ">
       {/* Blue Team */}
-      <div className="w-1/4 m-2 flex flex-col justify-center">
+      <div className="md:w-1/4 m-3 flex flex-col justify-center">
         <div className="text-blue-400">Blue Team</div>
         {/* Render participant info for Blue Team */}
         {match.participants.slice(0, 5).map((participant, index) => (
           <div className="flex my-2 items-center" key={index}>
             <div
-              className={`${colors[index]} w-8 h-8 rounded-md mr-2 flex-shrink-0`}
-            ></div>
-            <div
-              className={`flex-grow p-2 rounded-md border-gray-400 border flex items-center cursor-pointer ${
-                activeParticipant.includes(index) ? "bg-gray-400" : ""
+              className={`md:flex-grow  p-2 max-md:p-1 rounded-md border-gray-400  border flex items-center cursor-pointer ${
+                activeParticipant.includes(index) ? "bg-white" : colors[index]
               }`}
               onClick={() => handleParticipantClick(index)}
             >
@@ -100,24 +112,26 @@ export const Map = ({ timeLine, match }) => {
                 <img
                   src={`http://192.168.1.133:8000/static/champion/icon/${participant.championName}.png`}
                   alt={participant.championName}
-                  className="w-10 h-auto rounded-md mr-2"
+                  className="w-10 max-lg:w-8 max-sm:w-6 h-auto rounded-md mr-2 max-md:mr-0 "
                 />
               </div>
-              <div className="truncate">{participant.riotIdGameName}</div>
+              <div className="truncate max-md:hidden">
+                {participant.riotIdGameName}
+              </div>
             </div>
           </div>
         ))}
       </div>
 
       {/* Match Map */}
-      <div className="w-2/4 flex justify-center items-center">
+      <div className=" flex justify-center items-center">
         <div className="relative ">
           {/* Render the map image */}
           <img
             className="rounded-2xl"
             src={map}
             alt={"map"}
-            style={{ width: "400px", height: "400px" }}
+            style={{ width: getHeight(), height: getHeight() }}
           />
           {/* Render champion kill events on the map */}
           {championKillEvents.map((killEvent, index) => {
@@ -132,7 +146,7 @@ export const Map = ({ timeLine, match }) => {
               return (
                 <div
                   key={index}
-                  className={`w-3 h-3 absolute rounded-full ${
+                  className={`w-3 h-3 max-md:w-2 max-md:h-2 absolute rounded-full ${
                     colors[killEvent.killerId - 1]
                   }`}
                   style={{ bottom: `${porcentajeY}%`, left: `${porcentajeX}%` }}
@@ -150,12 +164,8 @@ export const Map = ({ timeLine, match }) => {
             <div
               className="absolute bg-black text-white p-2 rounded-lg shadow"
               style={{
-                bottom: `${
-                  (selectedKillEvent.position.y / maxXY) * 100 + 5
-                }%`,
-                left: `${
-                  (selectedKillEvent.position.x / maxXY) * 100 - 5
-                }%`,
+                bottom: `${(selectedKillEvent.position.y / maxXY) * 100 + 5}%`,
+                left: `${(selectedKillEvent.position.x / maxXY) * 100 - 5}%`,
               }}
             >
               <div>
@@ -178,14 +188,14 @@ export const Map = ({ timeLine, match }) => {
       </div>
 
       {/* Red Team */}
-      <div className="w-1/4 m-2 flex flex-col justify-center">
-        <div className="text-red-400">RedTeam</div>
+      <div className=" m-3 md:w-1/4 flex flex-col justify-center">
+        <div className="text-red-400">Red Team</div>
         {/* Render participant info for Red Team */}
         {match.participants.slice(5).map((participant, index) => (
           <div className="flex my-2 items-center" key={index + 5}>
             <div
-              className={`flex-grow p-2 rounded-md border-gray-400 border flex items-center cursor-pointer ${
-                activeParticipant.includes(index + 5) ? "bg-gray-400" : ""
+              className={`md:flex-grow p-2 max-md:p-1 rounded-md border-gray-400  border flex items-center cursor-pointer ${
+                activeParticipant.includes(index + 5) ? "bg-white" : colors[index + 5]
               }`}
               onClick={() => handleParticipantClick(index + 5)}
             >
@@ -193,16 +203,14 @@ export const Map = ({ timeLine, match }) => {
                 <img
                   src={`http://192.168.1.133:8000/static/champion/icon/${participant.championName}.png`}
                   alt={participant.championName}
-                  className="w-10 h-auto rounded-md mr-2"
+                  className="w-10 max-lg:w-8 max-sm:w-6 h-auto rounded-md mr-2 max-md:mr-0"
                 />
               </div>
-              <div className="truncate">{participant.riotIdGameName}</div>
+              <div className="truncate max-md:hidden">
+                {participant.riotIdGameName}
+              </div>
             </div>
-            <div
-              className={`${
-                colors[index + 5]
-              } w-8 h-8 rounded-md ml-2 flex-shrink-0`}
-            ></div>
+            
           </div>
         ))}
       </div>
