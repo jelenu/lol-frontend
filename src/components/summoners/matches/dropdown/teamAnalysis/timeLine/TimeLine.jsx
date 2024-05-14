@@ -294,7 +294,7 @@ export const TimeLine = ({ timeLine, match }) => {
   };
 
   return (
-    <div className="py-4">
+    <div className="py-4 max-md:py-2">
       {/* Toggle buttons for event types */}
       <div className="flex justify-center">
         <button
@@ -304,9 +304,9 @@ export const TimeLine = ({ timeLine, match }) => {
           {/* Toggle button for objectives */}
           <div className="flex items-center justify-center p-2 mr-2 bg-blue-300">
             {objectivesActive ? (
-              <FaCheck className="w-5 h-5 text-white" />
+              <FaCheck className="w-5 h-5 max-md:w-3 max-md:h-3 text-white" />
             ) : (
-              <div className="w-5 h-5"></div>
+              <div className="w-5 h-5 max-md:w-3 max-md:h-3"></div>
             )}
           </div>
           Objectives
@@ -318,9 +318,9 @@ export const TimeLine = ({ timeLine, match }) => {
           {/* Toggle button for kills */}
           <div className="flex items-center justify-center p-2 mr-2 bg-blue-300">
             {killsActive ? (
-              <FaCheck className="w-5 h-5 text-white" />
+              <FaCheck className="w-5 h-5 max-md:w-3 max-md:h-3 text-white" />
             ) : (
-              <div className="w-5 h-5"></div>
+              <div className="w-5 h-5 max-md:w-3 max-md:h-3"></div>
             )}
           </div>
           Kills
@@ -332,16 +332,16 @@ export const TimeLine = ({ timeLine, match }) => {
           {/* Toggle button for wards */}
           <div className="flex items-center justify-center p-2 mr-2 bg-blue-300">
             {wardsActive ? (
-              <FaCheck className="w-5 h-5 text-white" />
+              <FaCheck className="w-5 h-5 max-md:w-3 max-md:h-3 text-white" />
             ) : (
-              <div className="w-5 h-5"></div>
+              <div className="w-5 h-5 max-md:w-3 max-md:h-3"></div>
             )}
           </div>
           Vision
         </button>
       </div>
       {/* Event timeline */}
-      <div className="overflow-y-auto m-4 px-2" style={{ height: 480 }}>
+      <div className="overflow-y-auto m-4 max-md:m-1 px-2 " style={{ height: 480 }}>
         {timeLine.info.frames.slice(1).map((frame, frameIndex) => (
           <div key={frameIndex}>
             {frame.events.map((event, eventIndex) => (
