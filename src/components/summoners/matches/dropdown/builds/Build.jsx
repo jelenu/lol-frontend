@@ -73,13 +73,13 @@ export const Build = ({ match, timeLine }) => {
   }
 
   return (
-    <div className="bg-white p-4 rounded-md">
+    <div className="bg-white p-4 max-md:p-1 rounded-md">
       <div className="flex justify-center ">
         {/* Render champion avatars */}
         {match.participants.map((participant, index) => (
           <div
             key={index}
-            className={`p-2 mx-1 cursor-pointer ${
+            className={`p-2 max-md:p-1 mx-1 cursor-pointer ${
               selectedChampion === index ? "bg-gray-600" : "bg-gray-400"
             }`}
             onClick={() => handleSelectedChampion(index)}
@@ -101,14 +101,14 @@ export const Build = ({ match, timeLine }) => {
           {itemPurchasedEvents.map(
             (frame, index) =>
               frame.length > 0 && (
-                <div key={index} className=" mx-2">
+                <div key={index} className=" m-2">
                   <div className="flex">
                     {frame.map((item, itemIndex) => (
-                      <div key={itemIndex} className="bg-gray-200 p-2">
+                      <div key={itemIndex} className="bg-gray-200 p-2 max-md:p-1">
                         <img
                           src={`http://192.168.1.133:8000/static/item/${item.itemId}.png`}
                           alt={`${item.itemId}`}
-                          className=" h-10"
+                          className=" h-10 max-lg:h-9 max-md:h-7 max-sm:h-6"
                         />
                       </div>
                     ))}
@@ -135,7 +135,7 @@ export const Build = ({ match, timeLine }) => {
               return (
                 <div
                   key={index}
-                  className={`mx-1 h-7 w-7 bg-${skill.color}-500 rounded-md flex items-center justify-center`}
+                  className={`mx-1 h-7 w-7 max-md:h-5 max-md:w-5 max-sm:h-4  max-sm:w-4 max-sm:text-xs bg-${skill.color}-500 rounded-md flex items-center justify-center`}
                 >
                   <span className="">{skill.skill}</span>
                 </div>
