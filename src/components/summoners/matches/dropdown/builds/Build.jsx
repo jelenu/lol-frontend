@@ -104,7 +104,10 @@ export const Build = ({ match, timeLine }) => {
                 <div key={index} className=" m-2">
                   <div className="flex">
                     {frame.map((item, itemIndex) => (
-                      <div key={itemIndex} className="bg-gray-200 p-2 max-md:p-1">
+                      <div
+                        key={itemIndex}
+                        className="bg-gray-200 p-2 max-md:p-1"
+                      >
                         <img
                           src={`http://192.168.1.133:8000/static/item/${item.itemId}.png`}
                           alt={`${item.itemId}`}
@@ -152,22 +155,38 @@ export const Build = ({ match, timeLine }) => {
           <div>
             <div className="flex items-center">
               <img
-                src={`https://ddragon.leagueoflegends.com/cdn/img/${match.participants[selectedChampion].perks.styles[0].selections[0].icon}`}
+                src={`http://localhost:8000/static/perks/${match.participants[
+                  selectedChampion
+                ].perks.styles[0].selections[0].icon
+                  .split("/")
+                  .pop()}`}
                 alt={`Primary Rune`}
                 className=" h-12"
               />
               <img
-                src={`https://ddragon.leagueoflegends.com/cdn/img/${match.participants[selectedChampion].perks.styles[0].selections[1].icon}`}
+                src={`http://localhost:8000/static/perks/${match.participants[
+                  selectedChampion
+                ].perks.styles[0].selections[1].icon
+                  .split("/")
+                  .pop()}`}
                 alt={`Primary Rune`}
                 className=" h-7 "
               />
               <img
-                src={`https://ddragon.leagueoflegends.com/cdn/img/${match.participants[selectedChampion].perks.styles[0].selections[2].icon}`}
+                src={`http://localhost:8000/static/perks/${match.participants[
+                  selectedChampion
+                ].perks.styles[0].selections[2].icon
+                  .split("/")
+                  .pop()}`}
                 alt={`Primary Rune`}
                 className=" h-7 "
               />
               <img
-                src={`https://ddragon.leagueoflegends.com/cdn/img/${match.participants[selectedChampion].perks.styles[0].selections[3].icon}`}
+                src={`http://localhost:8000/static/perks/${match.participants[
+                  selectedChampion
+                ].perks.styles[0].selections[3].icon
+                  .split("/")
+                  .pop()}`}
                 alt={`Primary Rune`}
                 className=" h-7 "
               />
@@ -175,17 +194,29 @@ export const Build = ({ match, timeLine }) => {
 
             <div className="flex items-center">
               <img
-                src={`https://ddragon.leagueoflegends.com/cdn/img/${match.participants[selectedChampion].perks.styles[1].selections[0].rune_path.icon}`}
+                src={`http://localhost:8000/static/perks/${match.participants[
+                  selectedChampion
+                ].perks.styles[1].selections[0].rune_path.icon
+                  .split("/")
+                  .pop()}`}
                 alt={`Secondary Rune`}
                 className=" h-8 mb-1"
               />
               <img
-                src={`https://ddragon.leagueoflegends.com/cdn/img/${match.participants[selectedChampion].perks.styles[1].selections[0].icon}`}
+                src={`http://localhost:8000/static/perks/${match.participants[
+                  selectedChampion
+                ].perks.styles[1].selections[0].icon
+                  .split("/")
+                  .pop()}`}
                 alt={`Primary Rune`}
                 className=" h-7 "
               />
               <img
-                src={`https://ddragon.leagueoflegends.com/cdn/img/${match.participants[selectedChampion].perks.styles[1].selections[1].icon}`}
+                src={`http://localhost:8000/static/perks/${match.participants[
+                  selectedChampion
+                ].perks.styles[1].selections[1].icon
+                  .split("/")
+                  .pop()}`}
                 alt={`Primary Rune`}
                 className=" h-7 "
               />

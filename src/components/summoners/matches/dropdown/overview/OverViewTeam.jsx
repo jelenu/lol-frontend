@@ -73,12 +73,16 @@ export const OverViewTeam = ({ participants, team }) => {
                   </div>
                   <div className="flex flex-col items-center">
                     <img
-                      src={`https://ddragon.leagueoflegends.com/cdn/img/${participant.perks.styles[0].selections[0].icon}`}
+                      src={`http://localhost:8000/static/perks/${participant.perks.styles[0].selections[0].icon
+                        .split("/")
+                        .pop()}`}
                       alt={`Primary Rune`}
                       className="h-5"
                     />
                     <img
-                      src={`https://ddragon.leagueoflegends.com/cdn/img/${participant.perks.styles[1].selections[0].rune_path.icon}`}
+                      src={`http://localhost:8000/static/perks/${participant.perks.styles[1].selections[0].rune_path.icon
+                        .split("/")
+                        .pop()}`}
                       alt={`Primary Rune`}
                       className="h-4 w-4 mb-1"
                     />
@@ -86,23 +90,19 @@ export const OverViewTeam = ({ participants, team }) => {
                   <div className="ml-3 max-md:ml-1 truncate">
                     {participant.riotIdGameName}
                     {/* KDA Mobile */}
-                <div className="flex justify-center sm:hidden">
-                  <div className="mx-3 max-md:mx-1">
-                    {`${participant.kills} / ${participant.deaths} / ${
-                      participant.assists
-                    }`}
-                  </div>
-                  <div className="font-bold">
-                    {`${(
-                      (participant.kills + participant.assists) /
-                      (participant.deaths === 0 ? 1 : participant.deaths)
-                    ).toFixed(2)}/1`}
-                  </div>
-                </div>
+                    <div className="flex justify-center sm:hidden">
+                      <div className="mx-3 max-md:mx-1">
+                        {`${participant.kills} / ${participant.deaths} / ${participant.assists}`}
+                      </div>
+                      <div className="font-bold">
+                        {`${(
+                          (participant.kills + participant.assists) /
+                          (participant.deaths === 0 ? 1 : participant.deaths)
+                        ).toFixed(2)}/1`}
+                      </div>
+                    </div>
                   </div>
                 </div>
-
-                
               </td>
               {/* KDA */}
               <td className="max-sm:hidden">

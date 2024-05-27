@@ -117,12 +117,18 @@ export const Match = ({ match }) => {
                           {/* Runes */}
                           <div className="flex flex-col items-center ">
                             <img
-                              src={`https://ddragon.leagueoflegends.com/cdn/img/${participant.perks.styles[0].selections[0].icon}`}
+                              src={`http://localhost:8000/static/perks/${participant.perks.styles[0].selections[0].icon
+                                .split("/")
+                                .pop()}`}
                               alt={`Primary Rune`}
                               className=" h-8 "
                             />
+                            {console.log(
+                              participant.perks.styles[0].selections[0].icon
+                            )}
                             <img
-                              src={`https://ddragon.leagueoflegends.com/cdn/img/${participant.perks.styles[1].selections[0].rune_path.icon}`}
+                              src={`http://localhost:8000/static/perks/${participant.perks.styles[1].selections[0].rune_path.icon.split("/")
+                              .pop()}`}
                               alt={`Primary Rune`}
                               className=" h-4 w-4 mb-1"
                             />

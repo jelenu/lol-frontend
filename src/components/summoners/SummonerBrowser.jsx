@@ -1,14 +1,19 @@
-import React from "react";
+import React, {useState} from "react";
 import { SummonerProfile } from "./SummonerProfile";
 import { SummonerHistory } from "./SummonerHistory";
 import { useSummonerContext } from "../../context/SummonerContext";
 import { FaSearch } from "react-icons/fa";
+import { LoginRegister } from "../auth/LoginRegister";
 
 /**
  * Component to browse summoner profiles and history.
  * @returns {JSX.Element} - SummonerBrowser component JSX.
  */
 export const SummonerBrowser = () => {
+
+// State to toggle loginRegister active
+const [activeLoginRegister, setActiveLoginRegister] = useState(false);  
+
   // Destructure required variables and functions from SummonerContext
   const {
     searchResults,
@@ -81,6 +86,14 @@ export const SummonerBrowser = () => {
         >
           {loadingProfile ? "..." : <FaSearch />}
         </button>
+
+        {/* LoginRegister button */}
+        <button
+          onClick={() => setActiveLoginRegister(true)}
+          className=" h-8 w-8 bg-gray-400 items-center justify-center flex text-white rounded-md cursor-pointer transition-colors duration-300 hover:bg-gray-600 max-sm:p-2"
+        >
+          Login
+        </button>
       </div>
 
       {/* Render SummonerProfile component if search results exist */}
@@ -93,6 +106,8 @@ export const SummonerBrowser = () => {
           summonerName={searchResults.name}
         />
       )}
+      {activeLoginRegister && <LoginRegister setActiveLoginRegister={setActiveLoginRegister} />}
+
     </div>
   );
 };
