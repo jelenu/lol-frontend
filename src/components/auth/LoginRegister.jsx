@@ -3,14 +3,21 @@ import { IoMdCloseCircleOutline } from "react-icons/io";
 import { Login } from "./Login";
 import { Register } from "./Register";
 
+/**
+ * Component for login and registration modal.
+ * @param {Object} props - Component props.
+ * @param {Function} props.setActiveLoginRegister - Function to set the active state of login/register.
+ * @returns {JSX.Element} - JSX of the LoginRegister component.
+ */
 export const LoginRegister = ({ setActiveLoginRegister }) => {
   // State to toggle login/register form
   const [isLoginActive, setIsLoginActive] = useState(true);
 
-  //Toggle login/regster form
+  // Toggle login/register form
   const handleToggleForm = () => {
     setIsLoginActive(!isLoginActive);
   };
+
   useEffect(() => {
     // Remove scroll when mounting component
     document.body.style.overflow = "hidden";
@@ -19,16 +26,26 @@ export const LoginRegister = ({ setActiveLoginRegister }) => {
       document.body.style.overflow = "auto";
     };
   }, []);
+
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-      <div className="w-1/4 h-2/3 bg-white rounded-lg p-4">
-        <div className="justify-end flex">
+      <div className=" w-2/5 bg-white rounded-lg p-8">
+        <div className="justify-end items-start  flex  ">
+          {/* Close button */}
           <button onClick={() => setActiveLoginRegister(false)} className="">
             <IoMdCloseCircleOutline className="text-blue-600 text-3xl" />
           </button>
         </div>
-        <div className="">{isLoginActive ? <Login /> : <Register />}</div>
-        <div>
+        <div className="">
+          {/* Render Login or Register component based on isLoginActive state */}
+          {isLoginActive ? (
+            <Login setActiveLoginRegister={setActiveLoginRegister} />
+          ) : (
+            <Register setActiveLoginRegister={setActiveLoginRegister} />
+          )}
+        </div>
+        <div className=" pt-4 ">
+          {/* Display message and toggle button for switching between login and registration */}
           {isLoginActive ? (
             <span>Don't have an account? </span>
           ) : (

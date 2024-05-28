@@ -4,7 +4,7 @@ import { SummonerHistory } from "./SummonerHistory";
 import { useSummonerContext } from "../../context/SummonerContext";
 import { FaSearch } from "react-icons/fa";
 import { LoginRegister } from "../auth/LoginRegister";
-
+import { useUserContext } from "../../context/UserContext";
 /**
  * Component to browse summoner profiles and history.
  * @returns {JSX.Element} - SummonerBrowser component JSX.
@@ -13,6 +13,9 @@ export const SummonerBrowser = () => {
 
 // State to toggle loginRegister active
 const [activeLoginRegister, setActiveLoginRegister] = useState(false);  
+
+// Destructure "isLogged" from UserContext
+const {isLogged, logout} = useUserContext();
 
   // Destructure required variables and functions from SummonerContext
   const {
@@ -88,12 +91,21 @@ const [activeLoginRegister, setActiveLoginRegister] = useState(false);
         </button>
 
         {/* LoginRegister button */}
+        {isLogged ? (
+        <button
+          onClick={logout}
+          className="ml-2 p-2 bg-gray-400 items-center justify-center flex text-white rounded-md cursor-pointer transition-colors duration-300 hover:bg-gray-600 max-sm:p-2"
+        >
+          Logout
+        </button>
+      ) : (
         <button
           onClick={() => setActiveLoginRegister(true)}
-          className=" h-8 w-8 bg-gray-400 items-center justify-center flex text-white rounded-md cursor-pointer transition-colors duration-300 hover:bg-gray-600 max-sm:p-2"
+          className="ml-2 p-2 bg-gray-400 items-center justify-center flex text-white rounded-md cursor-pointer transition-colors duration-300 hover:bg-gray-600 max-sm:p-2"
         >
-          Login
+          Login/Register
         </button>
+      )}
       </div>
 
       {/* Render SummonerProfile component if search results exist */}

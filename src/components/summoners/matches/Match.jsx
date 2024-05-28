@@ -123,9 +123,6 @@ export const Match = ({ match }) => {
                               alt={`Primary Rune`}
                               className=" h-8 "
                             />
-                            {console.log(
-                              participant.perks.styles[0].selections[0].icon
-                            )}
                             <img
                               src={`http://localhost:8000/static/perks/${participant.perks.styles[1].selections[0].rune_path.icon.split("/")
                               .pop()}`}
