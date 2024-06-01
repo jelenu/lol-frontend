@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { OverView } from './overview/OverView';
 import { TeamAnalysis } from './teamAnalysis/TeamAnalysis';
 import { Build } from './builds/Build';
+import { useSummonerContext } from '../../../../context/SummonerContext';
 
 /**
  * Component to display a dropdown menu for selecting different match components.
@@ -11,6 +12,9 @@ import { Build } from './builds/Build';
 export const Dropdown = ({ match }) => {
   const [selectedComponent, setSelectedComponent] = useState('OverView');
   const [timeLine, setTimeLine] = useState(null);
+
+  const { mainServerAfterFetch } = useSummonerContext();
+
 
   /**
    * Function to handle component change when dropdown button is clicked.
@@ -30,7 +34,7 @@ export const Dropdown = ({ match }) => {
     const fetchTimeline = async () => {
       try {
         const response = await fetch(
-          `http://192.168.1.133:8000/api/summoners/matches/timeline?server=${match.platformId}&matchId=${match.gameId}`,
+          `http://192.168.1.133:8000/api/summoners/matches/timeline/?server=${match.platformId}&matchId=${match.gameId}&mainServer=${mainServerAfterFetch}`,
           {
             method: "GET",
             headers: {
@@ -51,7 +55,7 @@ export const Dropdown = ({ match }) => {
     };
 
     fetchTimeline();
-  }, [match.platformId, match.gameId]);
+  }, [match.platformId, match.gameId,mainServerAfterFetch]);
 
   return (
     <div className="">

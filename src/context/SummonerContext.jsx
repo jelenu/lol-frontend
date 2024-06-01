@@ -3,51 +3,51 @@ import React, { createContext, useState, useContext } from "react";
 const SummonerContext = createContext();
 
 export const SummonerProvider = ({ children }) => {
-
-    /*Params for fetchSearchAccount*/
+  /*Params for fetchSearchAccount*/
   const [searchParams, setSearchParams] = useState({
     gameName: "",
     tagLine: "",
     server: "",
   });
 
-    /*Copy of searchParams for SummonerProfile*/
-    const [searchParamsAfterFetch, setSearchParamsAfterFetch] = useState(null);
+  /*Copy of searchParams for SummonerProfile*/
+  const [searchParamsAfterFetch, setSearchParamsAfterFetch] = useState(null);
+  const [mainServerAfterFetch, setMainServerAfterFetch] = useState(null);
 
-    /*Data returned from fetchSearchAccount*/
-    const [searchResults, setSearchResults] = useState(null);
+  /*Data returned from fetchSearchAccount*/
+  const [searchResults, setSearchResults] = useState(null);
 
-    /* Loading state for profile search */
-    const [loadingProfile, setLoadingProfile] = useState(false);
+  /* Loading state for profile search */
+  const [loadingProfile, setLoadingProfile] = useState(false);
 
-    /* Array to hold match IDs */
-    const [matchesIds, setMatchesIds] = useState(null);
+  /* Array to hold match IDs */
+  const [matchesIds, setMatchesIds] = useState(null);
 
-    /* Loading state for match search */
-    const [loadingMatches, setLoadingMatches] = useState(false);
+  /* Loading state for match search */
+  const [loadingMatches, setLoadingMatches] = useState(false);
 
-    const [summonerId, setSummonerId] = useState(false);
+  const [summonerId, setSummonerId] = useState(false);
 
-    const servers = [
-        "BR1",
-        "EUN1",
-        "EUW1",
-        "JP1",
-        "KR",
-        "LA1",
-        "LA2",
-        "NA1",
-        "OC1",
-        "PH2",
-        "RU",
-        "SG2",
-        "TH2",
-        "TR1",
-        "TW2",
-        "VN2"
-      ];
-    
-   /**  
+  const servers = {
+    BR1: "americas",
+    EUN1: "europe",
+    EUW1: "europe",
+    JP1: "asia",
+    KR: "asia",
+    LA1: "americas",
+    LA2: "americas",
+    NA1: "americas",
+    OC1: "asia",
+    PH2: "asia",
+    RU: "europe",
+    SG2: "asia",
+    TH2: "asia",
+    TR1: "europe",
+    TW2: "asia",
+    VN2: "asia",
+  };
+
+  /**
    * Function to fetch account information based on search parameters.
    * Sets loading state to true while fetching.
    * Upon successful response, sets search results and updates search parameters after fetch.
@@ -57,12 +57,13 @@ export const SummonerProvider = ({ children }) => {
    * Handles network errors if any.
    * Sets loading state to false after completion.
    **/
-   const fetchSearchAccount = async (searchParams) => {
+  const fetchSearchAccount = async (searchParams) => {
     setLoadingProfile(true);
+    const mainServer = servers[searchParams.server];
 
     try {
       const response = await fetch(
-        `http://192.168.1.133:8000/api/summoners/info/?gameName=${searchParams.gameName}&tagLine=${searchParams.tagLine}&server=${searchParams.server}`,
+        `http://192.168.1.133:8000/api/summoners/info/?gameName=${searchParams.gameName}&tagLine=${searchParams.tagLine}&server=${searchParams.server}&mainServer=${mainServer}`,
         {
           method: "GET",
           headers: {
@@ -74,9 +75,10 @@ export const SummonerProvider = ({ children }) => {
       if (response.ok) {
         const data = await response.json();
         setSearchResults(data);
-        setSummonerId(data.id)
+        setSummonerId(data.id);
         setSearchParamsAfterFetch(searchParams);
-        fetchMatchesIds(data.puuid);
+        setMainServerAfterFetch(mainServer);
+        fetchMatchesIds(data.puuid, mainServer);
 
         setSearchParams({
           gameName: "",
@@ -100,12 +102,12 @@ export const SummonerProvider = ({ children }) => {
    * Sets loading state to false after completion.
    * @param {string} puuid - The PUUID of the account.
    **/
-  const fetchMatchesIds = async (puuid) => {
+  const fetchMatchesIds = async (puuid, mainServer) => {
     setLoadingMatches(true);
 
     try {
       const response = await fetch(
-        `http://192.168.1.133:8000/api/summoners/matches/id/?puuid=${puuid}`,
+        `http://192.168.1.133:8000/api/summoners/matches/id/?puuid=${puuid}&mainServer=${mainServer}`,
         {
           method: "GET",
           headers: {
@@ -117,8 +119,6 @@ export const SummonerProvider = ({ children }) => {
       if (response.ok) {
         const data = await response.json();
         setMatchesIds(data);
-
-
       } else {
         console.error("Error getting matches");
       }
@@ -129,7 +129,21 @@ export const SummonerProvider = ({ children }) => {
   };
 
   return (
-    <SummonerContext.Provider value={{ searchResults, fetchSearchAccount, searchParamsAfterFetch, loadingProfile, matchesIds, loadingMatches, servers, searchParams, setSearchParams, summonerId  }}>
+    <SummonerContext.Provider
+      value={{
+        searchResults,
+        fetchSearchAccount,
+        searchParamsAfterFetch,
+        mainServerAfterFetch,
+        loadingProfile,
+        matchesIds,
+        loadingMatches,
+        servers,
+        searchParams,
+        setSearchParams,
+        summonerId,
+      }}
+    >
       {children}
     </SummonerContext.Provider>
   );

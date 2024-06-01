@@ -8,7 +8,7 @@ import { Match } from "./matches/Match";
  */
 export const SummonerHistory = () => {
   // Access matchesIds from SummonerContext
-  const { matchesIds } = useSummonerContext();
+  const { matchesIds, mainServerAfterFetch } = useSummonerContext();
 
   // State to store loaded matches
   const [loadedMatches, setLoadedMatches] = useState([]);
@@ -61,7 +61,7 @@ export const SummonerHistory = () => {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ ids: idsToLoad }),
+          body: JSON.stringify({ ids: idsToLoad, mainServer: mainServerAfterFetch }),
         }
       );
 

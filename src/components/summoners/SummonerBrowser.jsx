@@ -55,11 +55,11 @@ const {isLogged, logout} = useUserContext();
           className="p-2 max-sm:p-1 mr-2 max-sm:mr-1  border border-gray-300 rounded-md max-sm:text-xs"
         >
           <option value="">Server</option>
-          {servers.map((serverOption, index) => (
-            <option key={index} value={serverOption}>
-              {serverOption}
-            </option>
-          ))}
+          {Object.keys(servers).map((serverKey, index) => (
+      <option key={index} value={serverKey}>
+        {serverKey}
+      </option>
+    ))}
         </select>
         {/* Tag Line input */}
         <input
