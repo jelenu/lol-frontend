@@ -1,21 +1,14 @@
-import React, {useState} from "react";
+import React from "react";
 import { SummonerProfile } from "./SummonerProfile";
 import { SummonerHistory } from "./SummonerHistory";
 import { useSummonerContext } from "../../context/SummonerContext";
 import { FaSearch } from "react-icons/fa";
-import { LoginRegister } from "../auth/LoginRegister";
-import { useUserContext } from "../../context/UserContext";
+
 /**
  * Component to browse summoner profiles and history.
  * @returns {JSX.Element} - SummonerBrowser component JSX.
  */
 export const SummonerBrowser = () => {
-
-// State to toggle loginRegister active
-const [activeLoginRegister, setActiveLoginRegister] = useState(false);  
-
-// Destructure "isLogged" from UserContext
-const {isLogged, logout} = useUserContext();
 
   // Destructure required variables and functions from SummonerContext
   const {
@@ -46,13 +39,13 @@ const {isLogged, logout} = useUserContext();
   return (
     <div>
       {/* Search bar */}
-      <div className="flex items-center justify-center w-full py-4 bg-blue-400 mx-auto ">
+      <div className="flex items-center justify-center w-full py-3 bg-blue-400 mx-auto ">
         {/* Server select */}
         <select
           name="server"
           value={searchParams.server}
           onChange={handleInputChange}
-          className="p-2 max-sm:p-1 mr-2 max-sm:mr-1  border border-gray-300 rounded-md max-sm:text-xs"
+          className="p-1.5 max-sm:p-1 mr-2 max-sm:mr-1  border border-gray-300 rounded-md max-sm:text-xs"
         >
           <option value="">Server</option>
           {Object.keys(servers).map((serverKey, index) => (
@@ -68,7 +61,7 @@ const {isLogged, logout} = useUserContext();
           value={searchParams.tagLine}
           onChange={handleInputChange}
           placeholder="Tag Line"
-          className="p-2 mr-2  border border-gray-300 rounded-md max-sm:w-16  max-sm:text-xs"
+          className="p-1.5 mr-2  border border-gray-300 rounded-md max-sm:w-16  max-sm:text-xs"
         />
 
         {/* Game Name input */}
@@ -78,7 +71,7 @@ const {isLogged, logout} = useUserContext();
           value={searchParams.gameName}
           onChange={handleInputChange}
           placeholder="Game Name"
-          className="p-2 mr-2  border border-gray-300 rounded-md max-sm:w-28 max-sm:text-xs"
+          className="p-1.5 mr-2  border border-gray-300 rounded-md max-sm:w-28 max-sm:text-xs"
         />
 
         {/* Search button */}
@@ -89,23 +82,6 @@ const {isLogged, logout} = useUserContext();
         >
           {loadingProfile ? "..." : <FaSearch />}
         </button>
-
-        {/* LoginRegister button */}
-        {isLogged ? (
-        <button
-          onClick={logout}
-          className="ml-2 p-2 bg-gray-400 items-center justify-center flex text-white rounded-md cursor-pointer transition-colors duration-300 hover:bg-gray-600 max-sm:p-2"
-        >
-          Logout
-        </button>
-      ) : (
-        <button
-          onClick={() => setActiveLoginRegister(true)}
-          className="ml-2 p-2 bg-gray-400 items-center justify-center flex text-white rounded-md cursor-pointer transition-colors duration-300 hover:bg-gray-600 max-sm:p-2"
-        >
-          Login/Register
-        </button>
-      )}
       </div>
 
       {/* Render SummonerProfile component if search results exist */}
@@ -118,7 +94,6 @@ const {isLogged, logout} = useUserContext();
           summonerName={searchResults.name}
         />
       )}
-      {activeLoginRegister && <LoginRegister setActiveLoginRegister={setActiveLoginRegister} />}
 
     </div>
   );

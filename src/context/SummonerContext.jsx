@@ -79,6 +79,7 @@ export const SummonerProvider = ({ children }) => {
         setSearchParamsAfterFetch(searchParams);
         setMainServerAfterFetch(mainServer);
         fetchMatchesIds(data.puuid, mainServer);
+        console.log(data)
 
         setSearchParams({
           gameName: "",
