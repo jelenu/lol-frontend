@@ -29,7 +29,7 @@ export const LoginRegister = ({ setActiveLoginRegister }) => {
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-      <div className=" w-2/5 bg-white rounded-lg p-8">
+      <div className="w-80 max-sm:text-sm bg-white rounded-lg p-8">
         <div className="justify-end items-start  flex  ">
           {/* Close button */}
           <button onClick={() => setActiveLoginRegister(false)} className="">
