@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import useTokenVerifyRefresh from '../hooks/useTokenVerifyRefresh';
+import TokenVerifyRefreshHook from '../hooks/TokenVerifyRefreshHook';
 
 // Create context for user data
 const UserContext = createContext();
@@ -7,7 +7,7 @@ const UserContext = createContext();
 // UserProvider component to provide user data to the application
 export const UserProvider = ({ children }) => {
   const [isLogged, setIsLogged] = useState(false);
-  const { verifyToken } = useTokenVerifyRefresh(); // Custom hook to verify token validity
+  const { verifyToken } = TokenVerifyRefreshHook(); // Custom hook to verify token validity
 
   // Function to check login status when component mounts
   const checkLoginStatus = async () => {

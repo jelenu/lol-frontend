@@ -32,7 +32,7 @@ export const SideBar = ({ setActiveLoginRegister }) => {
   };
 
   return (
-    <div className="fixed inset-0 mt-16 w-64 flex justify-center bg-gray-800 text-white">
+    <div className="fixed inset-0 mt-16 w-64 flex justify-center bg-gray-800 text-white z-50">
       <div className="w-full h-full px-10">
         <ul>
           {/* Dropdown item for My Accounts */}

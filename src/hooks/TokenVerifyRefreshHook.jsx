@@ -1,9 +1,8 @@
 import { useState } from 'react';
 
 // Custom hook to verify and refresh tokens
-const useTokenVerifyRefresh = () => {
+const TokenVerifyRefreshHook = () => {
   // State variables for token, refresh token, and refresh attempt status
-  const [token, setToken] = useState(localStorage.getItem('token') || null);
   const [refresh, setRefresh] = useState(localStorage.getItem('refresh-token') || null);
   const [refreshAttempted, setRefreshAttempted] = useState(false);
 
@@ -16,27 +15,31 @@ const useTokenVerifyRefresh = () => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ token: token }),
+        body: JSON.stringify({ token: localStorage.getItem('token') }),
       });
 
       // If token is valid, return true
       if (verifyResponse.ok) {
+        console.log("tokencorrecto")
         return true;
       } 
       // If token is invalid and refresh hasn't been attempted yet, attempt refresh
       else if (!refreshAttempted) {
+
         setRefreshAttempted(true); // Set refresh attempt status to true
         const refreshSuccess = await refreshToken(); // Attempt token refresh
         // If refresh is successful, return true
         if (refreshSuccess) {
+          console.log("refrescado")
           return true;
         } 
         // If refresh fails, clear tokens and return false
         else {
-          setToken(null);
+          console.log("no refrescado")
           setRefresh(null);
           localStorage.removeItem('token');
           localStorage.removeItem('refresh-token');
+          
         }
       }
     } catch (error) {
@@ -61,7 +64,6 @@ const useTokenVerifyRefresh = () => {
       // If token refresh is successful, update token and local storage
       if (refreshResponse.ok) {
         const newToken = await refreshResponse.json();
-        setToken(newToken.access);
         localStorage.setItem('token', newToken.access);
         return true; // Return true to indicate successful token refresh
       }
@@ -76,4 +78,4 @@ const useTokenVerifyRefresh = () => {
   return { verifyToken, refreshToken };
 };
 
-export default useTokenVerifyRefresh; // Export the custom hook
+export default TokenVerifyRefreshHook; // Export the custom hook
