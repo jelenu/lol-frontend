@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { FaChevronDown } from "react-icons/fa";
 import { UserAccounts } from "./userAccounts/UserAccounts";
-import { useUserContext } from "../../context/UserContext";
+import { useUserContext } from "../context/UserContext";
 /**
  * SideBar component to display a sidebar with dropdown items.
  * @returns {JSX.Element} - SideBar component JSX.

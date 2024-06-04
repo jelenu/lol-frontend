@@ -3,7 +3,7 @@ import { SummonerBrowser } from "./summoners/SummonerBrowser";
 import { LoginRegister } from "./auth/LoginRegister";
 import { useUserContext } from "../context/UserContext";
 import { IoIosMenu } from "react-icons/io";
-import { SideBar } from "./sideBar/SideBar";
+import { SideBar } from "./SideBar";
 
 /**
  * MainBar component that displays the navigation bar and main content area.

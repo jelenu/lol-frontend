@@ -40,29 +40,46 @@ export const UserProvider = ({ children }) => {
   const fetchUserData = async () => {
     checkLoginStatus();
 
-    const token = localStorage.getItem('token');
+    const makeApiCall = async (token) => {
+        const response = await fetch('http://localhost:8000/auth/users/me/', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `JWT ${token}`,
+            }
+        });
+        return response;
+    };
 
     try {
-      const response = await fetch('http://localhost:8000/auth/users/me/', {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `JWT ${token}`,
-        }
-      });
+        let token = localStorage.getItem('token');
+        let response = await makeApiCall(token);
 
-      if (response.ok) {
-        // Handle successful response, e.g., update user data
-        const userData = await response.json();
-        console.log(userData); // Do something with the user data
-      } else {
-        // Handle error response
-        console.error('Failed to fetch user data');
-      }
+        if (response.ok) {
+            // Handle successful response, e.g., update user data
+            const userData = await response.json();
+            console.log(userData); // Do something with the user data
+        } else if (response.status === 401) {
+            await verifyToken();
+            token = localStorage.getItem('token');
+            response = await makeApiCall(token);
+
+            if (response.ok) {
+                // Handle successful response after token refresh
+                const userData = await response.json();
+                console.log(userData); // Do something with the user data
+            } else {
+                // Handle error response after token refresh attempt
+                console.error('Failed to fetch user data after token refresh');
+            }
+        } else {
+            // Handle other error responses
+            console.error('Failed to fetch user data');
+        }
     } catch (error) {
-      console.error('Error fetching user data:', error);
+        console.error('Error fetching user data:', error);
     }
-  };
+};
 
 
   return (

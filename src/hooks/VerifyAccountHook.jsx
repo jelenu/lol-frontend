@@ -5,67 +5,55 @@ const VerifyAccountHook = () => {
   const { servers } = useSummonerContext();
   const {verifyToken} = TokenVerifyRefreshHook();
 
-  const fetchLinkAccount = async (searchParams) => {
-    const token = localStorage.getItem("token");
-    const mainServer = servers[searchParams.server];
+  const makeApiCallWithRetry = async (url, method = 'GET') => {
+    const makeApiCall = async (token) => {
+        const response = await fetch(url, {
+            method: method,
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `JWT ${token}`,
+            },
+        });
+        return response;
+    };
 
     try {
-      const response = await fetch(
-        `http://localhost:8000/api/users/linkAccount/?gameName=${searchParams.gameName}&tagLine=${searchParams.tagLine}&server=${searchParams.server}&mainServer=${mainServer}`,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `JWT ${token}`,
-          },
+        let token = localStorage.getItem('token');
+        let response = await makeApiCall(token);
+        let data = await response.json();
+
+        if (response.ok) {
+            return data;
+        } else if (response.status === 401) {
+            await verifyToken();
+            token = localStorage.getItem('token');
+            response = await makeApiCall(token);
+            data = await response.json();
+
+            if (response.ok) {
+                return data;
+            } else {
+                return { error: data.error || 'Unknown error occurred' };
+            }
+        } else {
+            return { error: data.error || 'Unknown error occurred' };
         }
-      );
-
-      const data = await response.json();
-
-      if (response.ok) {
-        return data;
-      } else if (response.status === 401) {
-        verifyToken();
-        return { error: "Unauthorized" };
-      } else {
-        return { error: data.error || "Unknown error occurred" };
-      }
     } catch (error) {
-      return { error: error.message };
+        return { error: error.message };
     }
-  };
+};
 
-  const fetchVerifyAccount = async (searchParams) => {
-    const token = localStorage.getItem("token");
+const fetchLinkAccount = async (searchParams) => {
     const mainServer = servers[searchParams.server];
+    const url = `http://localhost:8000/api/users/linkAccount/?gameName=${searchParams.gameName}&tagLine=${searchParams.tagLine}&server=${searchParams.server}&mainServer=${mainServer}`;
+    return await makeApiCallWithRetry(url);
+};
 
-    try {
-      const response = await fetch(
-        `http://localhost:8000/api/users/verifyAccount/?gameName=${searchParams.gameName}&tagLine=${searchParams.tagLine}&server=${searchParams.server}&mainServer=${mainServer}`,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `JWT ${token}`,
-          },
-        }
-      );
-
-      const data = await response.json();
-
-      if (response.ok) {
-        return data;
-      } else if (response.status === 401) {
-        verifyToken();
-        return { error: "Unauthorized" };
-      } else {
-        return { error: data.error || "Unknown error occurred" };
-      }
-    } catch (error) {
-      return { error: error.message };
-    }
-  };
+const fetchVerifyAccount = async (searchParams) => {
+    const mainServer = servers[searchParams.server];
+    const url = `http://localhost:8000/api/users/verifyAccount/?gameName=${searchParams.gameName}&tagLine=${searchParams.tagLine}&server=${searchParams.server}&mainServer=${mainServer}`;
+    return await makeApiCallWithRetry(url);
+};
 
   return { fetchLinkAccount, fetchVerifyAccount };
 };
