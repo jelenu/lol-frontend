@@ -4,22 +4,31 @@ import VerifyAccountHook from "../../../hooks/VerifyAccountHook";
 import { useSummonerContext } from "../../../context/SummonerContext";
 
 export const LinkNewAccount = ({ setActiveLinkNewAccount }) => {
+  // Accessing Summoner context
   const { servers } = useSummonerContext();
+  // State to manage search parameters for linking a new account
   const [searchParams, setSearchParams] = useState({
     server: "",
     tagLine: "",
     gameName: "",
   });
+  // State to manage loading state
   const [loadingProfile, setLoadingProfile] = useState(false);
+  // State to manage current step of the linking process
   const [step, setStep] = useState(1);
+  // Accessing functions for linking and verifying accounts
   const { fetchLinkAccount, fetchVerifyAccount } = VerifyAccountHook();
+  // State to manage profile icon ID
   const [profileIconId, setProfileIconId] = useState("");
+  // State to manage error message
   const [errorMessage, setErrorMessage] = useState("");
 
+  // Function to handle input changes
   const handleInputChange = (e) => {
     setSearchParams({ ...searchParams, [e.target.name]: e.target.value });
   };
 
+  // Function to link a new account
   const linkAccount = async (searchParams) => {
     setLoadingProfile(true);
     setErrorMessage("");
@@ -35,6 +44,7 @@ export const LinkNewAccount = ({ setActiveLinkNewAccount }) => {
     }
   };
 
+  // Function to verify the linked account
   const verifyAccount = async (searchParams) => {
     setLoadingProfile(true);
     setErrorMessage(""); 
@@ -96,6 +106,7 @@ export const LinkNewAccount = ({ setActiveLinkNewAccount }) => {
         {step === 2 && (
           <div className="flex flex-col space-y-4 mt-4">
             <div>
+              {/* Dropdown to select server */}
               <select
                 name="server"
                 value={searchParams.server}
@@ -111,6 +122,7 @@ export const LinkNewAccount = ({ setActiveLinkNewAccount }) => {
               </select>
             </div>
             <div>
+              {/* Input for tag line */}
               <input
                 type="text"
                 name="tagLine"
@@ -121,6 +133,7 @@ export const LinkNewAccount = ({ setActiveLinkNewAccount }) => {
               />
             </div>
             <div>
+              {/* Input for game name */}
               <input
                 type="text"
                 name="gameName"
@@ -131,6 +144,7 @@ export const LinkNewAccount = ({ setActiveLinkNewAccount }) => {
               />
             </div>
             <div>
+              {/* Button to link account */}
               <button
                 onClick={() => {
                   linkAccount(searchParams);
@@ -147,9 +161,11 @@ export const LinkNewAccount = ({ setActiveLinkNewAccount }) => {
           <div className="flex flex-col items-center space-y-4 mt-4">
             <nav>Change your profile icon to the next one, press continue when you have changed it</nav>
             <div>
+              {/* Display profile icon */}
               <img src={`http://localhost:8000/static/profileIcon/${profileIconId}.png`} alt="Profile Icon" />
             </div>
             <div>
+              {/* Button to verify account */}
               <button
                 onClick={() => {
                   verifyAccount(searchParams);

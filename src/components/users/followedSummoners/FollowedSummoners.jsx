@@ -1,35 +1,26 @@
 import React, { useEffect, useState } from "react";
-import { LinkNewAccount } from "./LinkNewAccount";
 import TokenVerifyRefreshHook from "../../../hooks/TokenVerifyRefreshHook";
 import { useSummonerContext } from "../../../context/SummonerContext";
 
-export const UserAccounts = () => {
-  // State to manage whether the link new account section is active
-  const [activeLinkNewAccount, setActiveLinkNewAccount] = useState(false);
+export const FollowedSummoners = () => {
   // Accessing token verification function
   const { verifyToken } = TokenVerifyRefreshHook();
-  // State to store verified accounts
-  const [verifiedAccounts, setVerifiedAccounts] = useState([]);
-
+  // State to store followed summoners
+  const [followedSummoners, setFollowedSummoners] = useState([]);
   // Accessing fetchSearchAccount function and loadingProfile state from SummonerContext
   const { fetchSearchAccount, loadingProfile } = useSummonerContext();
 
   useEffect(() => {
-    // Fetch verified accounts when component mounts
-    fetchGetVerifiedAccounts();
+    // Fetch followed summoners when component mounts
+    fetchGetFollowedSummoners();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []); // Empty dependency array ensures the effect runs only once after initial render
 
-  // Function to open link new account section
-  const openLinkNewAccount = () => {
-    setActiveLinkNewAccount(true);
-  };
-
-  // Function to fetch verified accounts from the API
-  const fetchGetVerifiedAccounts = async () => {
+  // Function to fetch followed summoners from the API
+  const fetchGetFollowedSummoners = async () => {
     const makeApiCall = async (token) => {
       const response = await fetch(
-        `http://localhost:8000/api/users/getVerifiedAccounts/`,
+        `http://localhost:8000/api/users/getfollowedSummoner/`,
         {
           method: "GET",
           headers: {
@@ -47,8 +38,8 @@ export const UserAccounts = () => {
       let data = await response.json();
 
       if (response.ok) {
-        // Update verified accounts state
-        setVerifiedAccounts(data);
+        // Update followed summoners state
+        setFollowedSummoners(data);
       } else if (response.status === 401) {
         // If unauthorized, try refreshing token and retrying the API call
         await verifyToken();
@@ -56,8 +47,8 @@ export const UserAccounts = () => {
         response = await makeApiCall(token);
         data = await response.json();
         if (response.ok) {
-          // Update verified accounts state
-          setVerifiedAccounts(data);
+          // Update followed summoners state
+          setFollowedSummoners(data);
         } else {
           return { error: data.error || "Unknown error occurred" };
         }
@@ -71,9 +62,9 @@ export const UserAccounts = () => {
 
   return (
     <div className="pl-4">
-      {verifiedAccounts.map((account, index) => (
+      {followedSummoners.map((account, index) => (
         <div key={index} className="py-2">
-          {/* Button to search for a verified account */}
+          {/* Button to search for a followed summoner */}
           <button
             onClick={() =>
               fetchSearchAccount({
@@ -89,14 +80,6 @@ export const UserAccounts = () => {
           </button>
         </div>
       ))}
-      {/* Button to open the link new account section */}
-      <button className="py-2" onClick={openLinkNewAccount}>
-        link new account
-      </button>
-      {/* Render the link new account section if active */}
-      {activeLinkNewAccount && (
-        <LinkNewAccount setActiveLinkNewAccount={setActiveLinkNewAccount} />
-      )}
     </div>
   );
 };

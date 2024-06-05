@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { FaChevronDown } from "react-icons/fa";
 import { UserAccounts } from "../users/userAccounts/UserAccounts";
 import { useUserContext } from "../../context/UserContext";
+import { FollowedSummoners } from "../users/followedSummoners/FollowedSummoners";
 /**
  * SideBar component to display a sidebar with dropdown items.
  * @returns {JSX.Element} - SideBar component JSX.
@@ -12,8 +13,7 @@ export const SideBar = ({ setActiveLoginRegister }) => {
   // State to manage the dropdown states
   const [dropdowns, setDropdowns] = useState({
     myAccounts: false,
-    item2: false,
-    item3: false,
+    myFollowedSummoners: false,
   });
 
   /**
@@ -37,7 +37,7 @@ export const SideBar = ({ setActiveLoginRegister }) => {
         <ul>
           {/* Dropdown item for My Accounts */}
           <li
-            className="py-2 cursor-pointer flex items-center justify-between"
+            className="py-2  cursor-pointer flex items-center justify-between"
             onClick={() => toggleDropdown("myAccounts")}
           >
             My accounts
@@ -52,50 +52,23 @@ export const SideBar = ({ setActiveLoginRegister }) => {
           {/* Conditional rendering for My Accounts dropdown content */}
           {dropdowns.myAccounts && <UserAccounts />}
 
-          {/* Dropdown item for Item 2 */}
+          {/* Dropdown item for Followed Summoners */}
           <li
-            className="py-2 cursor-pointer flex items-center justify-between"
-            onClick={() => toggleDropdown("item2")}
+            className="py-2 mt-8 cursor-pointer flex items-center justify-between truncate"
+            onClick={() => toggleDropdown("myFollowedSummoners")}
           >
-            Item 2
+            Followed Summoners
             <span
               className={`transform transition-transform ${
-                dropdowns.item2 ? "rotate-180" : ""
+                dropdowns.myFollowedSummoners ? "rotate-180" : ""
               }`}
             >
               <FaChevronDown />
             </span>
           </li>
-          {/* Conditional rendering for Item 2 dropdown content */}
-          {dropdowns.item2 && (
-            <ul className="pl-4">
-              <li className="py-2">Subitem 1</li>
-              <li className="py-2">Subitem 2</li>
-              <li className="py-2">Subitem 3</li>
-            </ul>
-          )}
-
-          {/* Dropdown item for Item 3 */}
-          <li
-            className="py-2 cursor-pointer flex items-center justify-between"
-            onClick={() => toggleDropdown("item3")}
-          >
-            Item 3
-            <span
-              className={`transform transition-transform ${
-                dropdowns.item3 ? "rotate-180" : ""
-              }`}
-            >
-              <FaChevronDown />
-            </span>
-          </li>
-          {/* Conditional rendering for Item 3 dropdown content */}
-          {dropdowns.item3 && (
-            <ul className="pl-4">
-              <li className="py-2">Subitem 1</li>
-              <li className="py-2">Subitem 2</li>
-              <li className="py-2">Subitem 3</li>
-            </ul>
+          {/* Conditional rendering for Followed summoners dropdown content */}
+          {dropdowns.myFollowedSummoners && (
+            <FollowedSummoners/>
           )}
         </ul>
       </div>
