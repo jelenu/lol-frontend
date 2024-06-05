@@ -22,7 +22,7 @@ export const SideBar = ({ setActiveLoginRegister }) => {
    */
   const toggleDropdown = (dropdown) => {
     if (!isLogged && dropdown === "myAccounts") {
-      setActiveLoginRegister(true); 
+      setActiveLoginRegister(true);
     } else {
       setDropdowns((prevState) => ({
         ...prevState,
@@ -50,7 +50,7 @@ export const SideBar = ({ setActiveLoginRegister }) => {
             </span>
           </li>
           {/* Conditional rendering for My Accounts dropdown content */}
-          {dropdowns.myAccounts && <UserAccounts />}
+          {dropdowns.myAccounts && <UserAccounts  />}
 
           {/* Dropdown item for Followed Summoners */}
           <li
@@ -67,9 +67,7 @@ export const SideBar = ({ setActiveLoginRegister }) => {
             </span>
           </li>
           {/* Conditional rendering for Followed summoners dropdown content */}
-          {dropdowns.myFollowedSummoners && (
-            <FollowedSummoners/>
-          )}
+          {dropdowns.myFollowedSummoners && <FollowedSummoners />}
         </ul>
       </div>
     </div>

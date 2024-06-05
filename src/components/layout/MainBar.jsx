@@ -4,23 +4,29 @@ import { LoginRegister } from "../auth/LoginRegister";
 import { useUserContext } from "../../context/UserContext";
 import { IoIosMenu } from "react-icons/io";
 import { SideBar } from "./SideBar";
+import { Users } from "../users/Users";
+import { useTabContext } from "../../context/TabContext";
 
 /**
  * MainBar component that displays the navigation bar and main content area.
  * @returns {JSX.Element} - MainBar component JSX.
  */
 export const MainBar = () => {
-  // State to toggle loginRegister active
+  // State to toggle LoginRegister component
   const [activeLoginRegister, setActiveLoginRegister] = useState(false);
 
-  // State to toggle sidebar open
+
+  // State to toggle the sidebar
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   // Destructure "isLogged" and "logout" from UserContext
   const { isLogged, logout } = useUserContext();
 
+  const { activeTab, changeActiveTab } = useTabContext();
+
   return (
     <div className="mt-16">
+      {/* Navigation bar */}
       <nav className="bg-gray-800 p-3 fixed top-0 w-full z-50">
         <div className="flex justify-between items-center">
           <div className="flex items-center">
@@ -33,6 +39,28 @@ export const MainBar = () => {
             </button>
             {/* Site title */}
             <div className="text-white text-xl font-bold">LoL Stats</div>
+          </div>
+          <div className="flex items-center">
+            {/* Button Summoners */}
+            <button
+              onClick={() => changeActiveTab("summoners")}
+              className={`${
+                activeTab === "summoners"
+                  ? "bg-gray-700 text-white"
+                  : "text-white"
+              } px-4 py-2 mr-2 rounded hover:bg-gray-700`}
+            >
+              Summoners
+            </button>
+            {/* Button Users */}
+            <button
+              onClick={() => changeActiveTab("users")}
+              className={`${
+                activeTab === "users" ? "bg-gray-700 text-white" : "text-white"
+              } px-4 py-2 ml-r rounded hover:bg-gray-700`}
+            >
+              Users
+            </button>
           </div>
           <div className="flex items-center">
             {/* Conditional rendering based on login status */}
@@ -54,16 +82,22 @@ export const MainBar = () => {
           </div>
         </div>
       </nav>
-      {/* SummonerBrowser component */}
       <div className="">
-        <SummonerBrowser />
+        {/* Conditional rendering based on activeTab */}
+        {activeTab === "summoners" ? (
+          <SummonerBrowser />
+        ) : (
+          <Users/>
+        )}
       </div>
       {/* Conditional rendering of LoginRegister component */}
       {activeLoginRegister && (
         <LoginRegister setActiveLoginRegister={setActiveLoginRegister} />
       )}
       {/* Conditional rendering of SideBar component */}
-      {sidebarOpen && <SideBar setActiveLoginRegister={setActiveLoginRegister} />}
+      {sidebarOpen && (
+        <SideBar setActiveLoginRegister={setActiveLoginRegister} />
+      )}
     </div>
   );
 };

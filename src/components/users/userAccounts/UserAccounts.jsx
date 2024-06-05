@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { LinkNewAccount } from "./LinkNewAccount";
 import TokenVerifyRefreshHook from "../../../hooks/TokenVerifyRefreshHook";
 import { useSummonerContext } from "../../../context/SummonerContext";
+import { useTabContext } from "../../../context/TabContext";
+
 
 export const UserAccounts = () => {
   // State to manage whether the link new account section is active
@@ -13,6 +15,8 @@ export const UserAccounts = () => {
 
   // Accessing fetchSearchAccount function and loadingProfile state from SummonerContext
   const { fetchSearchAccount, loadingProfile } = useSummonerContext();
+
+  const { changeActiveTab } = useTabContext();
 
   useEffect(() => {
     // Fetch verified accounts when component mounts
@@ -75,13 +79,14 @@ export const UserAccounts = () => {
         <div key={index} className="py-2">
           {/* Button to search for a verified account */}
           <button
-            onClick={() =>
+            onClick={() => {
               fetchSearchAccount({
                 gameName: account.game_name,
                 tagLine: account.tagline,
                 server: account.server,
-              })
-            }
+              });
+              changeActiveTab("summoners");
+            }}
             disabled={loadingProfile}
             className="py-2"
           >

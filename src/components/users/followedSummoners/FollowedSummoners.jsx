@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import TokenVerifyRefreshHook from "../../../hooks/TokenVerifyRefreshHook";
 import { useSummonerContext } from "../../../context/SummonerContext";
-
+import { useTabContext } from "../../../context/TabContext";
 export const FollowedSummoners = () => {
   // Accessing token verification function
   const { verifyToken } = TokenVerifyRefreshHook();
@@ -9,6 +9,9 @@ export const FollowedSummoners = () => {
   const [followedSummoners, setFollowedSummoners] = useState([]);
   // Accessing fetchSearchAccount function and loadingProfile state from SummonerContext
   const { fetchSearchAccount, loadingProfile } = useSummonerContext();
+
+  const { changeActiveTab } = useTabContext();
+
 
   useEffect(() => {
     // Fetch followed summoners when component mounts
@@ -66,13 +69,14 @@ export const FollowedSummoners = () => {
         <div key={index} className="py-2">
           {/* Button to search for a followed summoner */}
           <button
-            onClick={() =>
+            onClick={() => {
               fetchSearchAccount({
                 gameName: account.game_name,
                 tagLine: account.tagline,
                 server: account.server,
-              })
-            }
+              });
+              changeActiveTab("summoners");
+            }}
             disabled={loadingProfile}
             className="py-2"
           >
