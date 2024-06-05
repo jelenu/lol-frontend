@@ -1,20 +1,27 @@
 import React, { createContext, useState, useContext } from "react";
+import { useUserContext } from "./UserContext";
+import TokenVerifyRefreshHook from "../hooks/TokenVerifyRefreshHook";
 
 const SummonerContext = createContext();
 
 export const SummonerProvider = ({ children }) => {
-  /*Params for fetchSearchAccount*/
+  /* Parameters for fetchSearchAccount */
   const [searchParams, setSearchParams] = useState({
     gameName: "",
     tagLine: "",
     server: "",
   });
 
-  /*Copy of searchParams for SummonerProfile*/
+  // Accessing user authentication state
+  const { isLogged } = useUserContext();
+
+  const { verifyToken } = TokenVerifyRefreshHook();
+
+  /* Copy of searchParams for SummonerProfile after fetching */
   const [searchParamsAfterFetch, setSearchParamsAfterFetch] = useState(null);
   const [mainServerAfterFetch, setMainServerAfterFetch] = useState(null);
 
-  /*Data returned from fetchSearchAccount*/
+  /* Data returned by fetchSearchAccount */
   const [searchResults, setSearchResults] = useState(null);
 
   /* Loading state for profile search */
@@ -26,8 +33,10 @@ export const SummonerProvider = ({ children }) => {
   /* Loading state for match search */
   const [loadingMatches, setLoadingMatches] = useState(false);
 
+  /* Summoner ID obtained from the search results */
   const [summonerId, setSummonerId] = useState(false);
 
+  // Mapping servers to their corresponding Riot API regions
   const servers = {
     BR1: "americas",
     EUN1: "europe",
@@ -58,17 +67,26 @@ export const SummonerProvider = ({ children }) => {
    * Sets loading state to false after completion.
    **/
   const fetchSearchAccount = async (searchParams) => {
+    // Retrieve JWT token from local storage
+    let token = localStorage.getItem("token");
     setLoadingProfile(true);
     const mainServer = servers[searchParams.server];
 
     try {
+      const headers = {
+        "Content-Type": "application/json",
+      };
+
+      // If user is logged in, include JWT token in headers
+      if (isLogged) {
+        headers["Authorization"] = `JWT ${token}`;
+      }
+
       const response = await fetch(
         `http://192.168.1.133:8000/api/summoners/info/?gameName=${searchParams.gameName}&tagLine=${searchParams.tagLine}&server=${searchParams.server}&mainServer=${mainServer}`,
         {
           method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
+          headers: headers,
         }
       );
 
@@ -79,8 +97,9 @@ export const SummonerProvider = ({ children }) => {
         setSearchParamsAfterFetch(searchParams);
         setMainServerAfterFetch(mainServer);
         fetchMatchesIds(data.puuid, mainServer);
-        console.log(data)
+        console.log(data);
 
+        // Reset search parameters after fetch
         setSearchParams({
           gameName: "",
           tagLine: "",
@@ -129,6 +148,47 @@ export const SummonerProvider = ({ children }) => {
     setLoadingMatches(false);
   };
 
+  const fetchToggleFollowSummoner = async (searchParams) => {
+    // Retrieve JWT token from local storage
+    const mainServer = servers[searchParams.server];
+
+    const makeApiCall = async (token) => {
+      const response = await fetch(
+        `http://192.168.1.133:8000/api/users/followSummoner/?gameName=${searchParams.gameName}&tagLine=${searchParams.tagLine}&server=${searchParams.server}&mainServer=${mainServer}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `JWT ${token}`,
+          },
+        }
+      );
+      return response;
+    };
+    try {
+      let token = localStorage.getItem("token");
+      let response = await makeApiCall(token);
+
+      if (response.ok) {
+        const data = await response.json();
+        return data.Follow;
+      } else if (response.status === 401) {
+        await verifyToken();
+        token = localStorage.getItem("token");
+        response = await makeApiCall(token);
+        if (response.ok) {
+          const data = await response.json();
+          return data.Follow;
+        } else {
+          console.error("Error follow");
+        }
+      } else {
+        console.error("Error follow");
+      }
+    } catch (error) {
+      console.error("Network error:", error);
+    }
+  };
   return (
     <SummonerContext.Provider
       value={{
@@ -143,6 +203,7 @@ export const SummonerProvider = ({ children }) => {
         searchParams,
         setSearchParams,
         summonerId,
+        fetchToggleFollowSummoner,
       }}
     >
       {children}

@@ -58,7 +58,7 @@ export const UserProvider = ({ children }) => {
         if (response.ok) {
             // Handle successful response, e.g., update user data
             const userData = await response.json();
-            console.log(userData); // Do something with the user data
+            console.log(userData);
         } else if (response.status === 401) {
             await verifyToken();
             token = localStorage.getItem('token');
@@ -67,7 +67,7 @@ export const UserProvider = ({ children }) => {
             if (response.ok) {
                 // Handle successful response after token refresh
                 const userData = await response.json();
-                console.log(userData); // Do something with the user data
+                console.log(userData);
             } else {
                 // Handle error response after token refresh attempt
                 console.error('Failed to fetch user data after token refresh');
