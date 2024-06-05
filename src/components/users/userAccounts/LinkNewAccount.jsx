@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { IoMdCloseCircleOutline } from "react-icons/io";
-import VerifyAccountHook from "../../hooks/VerifyAccountHook";
-import { useSummonerContext } from "../../context/SummonerContext";
+import VerifyAccountHook from "../../../hooks/VerifyAccountHook";
+import { useSummonerContext } from "../../../context/SummonerContext";
 
 export const LinkNewAccount = ({ setActiveLinkNewAccount }) => {
   const { servers } = useSummonerContext();

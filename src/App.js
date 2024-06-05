@@ -2,7 +2,7 @@ import './App.css';
 import { Routes, Route } from "react-router-dom"
 import { SummonerProvider } from './context/SummonerContext';
 import React from 'react';
-import { MainBar } from './components/MainBar';
+import { MainBar } from './components/layout/MainBar';
 
 
 function App() {

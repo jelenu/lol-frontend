@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { useUserContext } from "../../context/UserContext";
+import { useUserContext } from "../../../context/UserContext";
 import { LinkNewAccount } from "./LinkNewAccount";
-import TokenVerifyRefreshHook from "../../hooks/TokenVerifyRefreshHook";
-import { useSummonerContext } from "../../context/SummonerContext";
+import TokenVerifyRefreshHook from "../../../hooks/TokenVerifyRefreshHook";
+import { useSummonerContext } from "../../../context/SummonerContext";
 export const UserAccounts = () => {
   const { fetchUserData } = useUserContext();
   const [activeLinkNewAccount, setActiveLinkNewAccount] = useState(false);

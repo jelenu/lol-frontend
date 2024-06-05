@@ -2,38 +2,35 @@ import React, { createContext, useState, useContext } from "react";
 import { useUserContext } from "./UserContext";
 import TokenVerifyRefreshHook from "../hooks/TokenVerifyRefreshHook";
 
+// Creating a context for Summoner-related data
 const SummonerContext = createContext();
 
+// Provider component for managing Summoner-related state and functions
 export const SummonerProvider = ({ children }) => {
-  /* Parameters for fetchSearchAccount */
+  // State variables for managing Summoner data and loading states
+
+  // Parameters for searching Summoner profiles
   const [searchParams, setSearchParams] = useState({
     gameName: "",
     tagLine: "",
     server: "",
   });
 
-  // Accessing user authentication state
+  // Accessing user authentication state from UserContext
   const { isLogged } = useUserContext();
 
+  // Retrieving token verification function from hook
   const { verifyToken } = TokenVerifyRefreshHook();
 
-  /* Copy of searchParams for SummonerProfile after fetching */
+  // State variables for storing data after fetching Summoner profile
   const [searchParamsAfterFetch, setSearchParamsAfterFetch] = useState(null);
   const [mainServerAfterFetch, setMainServerAfterFetch] = useState(null);
-
-  /* Data returned by fetchSearchAccount */
   const [searchResults, setSearchResults] = useState(null);
-
-  /* Loading state for profile search */
   const [loadingProfile, setLoadingProfile] = useState(false);
 
-  /* Array to hold match IDs */
+  // State variables for managing match data
   const [matchesIds, setMatchesIds] = useState(null);
-
-  /* Loading state for match search */
   const [loadingMatches, setLoadingMatches] = useState(false);
-
-  /* Summoner ID obtained from the search results */
   const [summonerId, setSummonerId] = useState(false);
 
   // Mapping servers to their corresponding Riot API regions
@@ -148,6 +145,11 @@ export const SummonerProvider = ({ children }) => {
     setLoadingMatches(false);
   };
 
+  /**
+   * Function to toggle follow status for a summoner.
+   * @param {object} searchParams - The search parameters for the summoner.
+   * @returns {boolean} - Follow status.
+   **/
   const fetchToggleFollowSummoner = async (searchParams) => {
     // Retrieve JWT token from local storage
     const mainServer = servers[searchParams.server];
@@ -173,6 +175,7 @@ export const SummonerProvider = ({ children }) => {
         const data = await response.json();
         return data.Follow;
       } else if (response.status === 401) {
+        // If unauthorized, try refreshing token and retrying the API call
         await verifyToken();
         token = localStorage.getItem("token");
         response = await makeApiCall(token);
@@ -189,6 +192,8 @@ export const SummonerProvider = ({ children }) => {
       console.error("Network error:", error);
     }
   };
+
+  // Providing context values to children components
   return (
     <SummonerContext.Provider
       value={{
@@ -211,6 +216,7 @@ export const SummonerProvider = ({ children }) => {
   );
 };
 
+// Custom hook for accessing Summoner-related context
 export const useSummonerContext = () => {
   return useContext(SummonerContext);
 };
