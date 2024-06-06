@@ -3,6 +3,7 @@ import { FaChevronDown } from "react-icons/fa";
 import { UserAccounts } from "../users/userAccounts/UserAccounts";
 import { useUserContext } from "../../context/UserContext";
 import { FollowedSummoners } from "../users/followedSummoners/FollowedSummoners";
+import { Friends } from "../users/friends/Friends";
 /**
  * SideBar component to display a sidebar with dropdown items.
  * @returns {JSX.Element} - SideBar component JSX.
@@ -14,6 +15,8 @@ export const SideBar = ({ setActiveLoginRegister }) => {
   const [dropdowns, setDropdowns] = useState({
     myAccounts: false,
     myFollowedSummoners: false,
+    friends: false,
+
   });
 
   /**
@@ -68,6 +71,23 @@ export const SideBar = ({ setActiveLoginRegister }) => {
           </li>
           {/* Conditional rendering for Followed summoners dropdown content */}
           {dropdowns.myFollowedSummoners && <FollowedSummoners />}
+
+          {/* Dropdown item for friends*/}
+          <li
+            className="py-2 mt-8 cursor-pointer flex items-center justify-between truncate"
+            onClick={() => toggleDropdown("friends")}
+          >
+            Friends
+            <span
+              className={`transform transition-transform ${
+                dropdowns.friends ? "rotate-180" : ""
+              }`}
+            >
+              <FaChevronDown />
+            </span>
+          </li>
+          {/* Conditional rendering for Followed summoners dropdown content */}
+          {dropdowns.friends && <Friends />}
         </ul>
       </div>
     </div>
