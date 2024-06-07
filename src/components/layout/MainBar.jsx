@@ -22,7 +22,7 @@ export const MainBar = () => {
   // Destructure "isLogged" and "logout" from UserContext
   const { isLogged, logout } = useUserContext();
 
-  const { activeTab, changeActiveTab } = useTabContext();
+  const { activeTab } = useTabContext();
 
   return (
     <div className="mt-16">
@@ -40,28 +40,7 @@ export const MainBar = () => {
             {/* Site title */}
             <div className="text-white text-xl font-bold">LoL Stats</div>
           </div>
-          <div className="flex items-center">
-            {/* Button Summoners */}
-            <button
-              onClick={() => changeActiveTab("summoners")}
-              className={`${
-                activeTab === "summoners"
-                  ? "bg-gray-700 text-white"
-                  : "text-white"
-              } px-4 py-2 mr-2 rounded hover:bg-gray-700`}
-            >
-              Summoners
-            </button>
-            {/* Button Users */}
-            <button
-              onClick={() => changeActiveTab("users")}
-              className={`${
-                activeTab === "users" ? "bg-gray-700 text-white" : "text-white"
-              } px-4 py-2 ml-r rounded hover:bg-gray-700`}
-            >
-              Users
-            </button>
-          </div>
+          
           <div className="flex items-center">
             {/* Conditional rendering based on login status */}
             {isLogged ? (
