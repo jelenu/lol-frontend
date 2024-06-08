@@ -16,6 +16,9 @@ export const Login = ({ setActiveLoginRegister }) => {
     password: "",
   });
 
+  // State for error message
+  const [errorMessage, setErrorMessage] = useState("");
+
   // Function to handle changes in form inputs
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -41,6 +44,7 @@ export const Login = ({ setActiveLoginRegister }) => {
 
       // Handling response from server
       if (!response.ok) {
+        setErrorMessage("Username or password incorrect");
         console.error("Request error:", response.status);
         return;
       }
@@ -57,6 +61,7 @@ export const Login = ({ setActiveLoginRegister }) => {
       // Setting active state to false to close login/register modal
       setActiveLoginRegister(false);
     } catch (error) {
+      setErrorMessage("Error when making request");
       console.error("Error when making request", error);
     }
   };
@@ -65,6 +70,12 @@ export const Login = ({ setActiveLoginRegister }) => {
     <div className="">
       <div className="">
         <form className="space-y-6" onSubmit={handleSubmit}>
+          {/* Error message */}
+          {errorMessage && (
+            <div className="text-red-500">
+              {errorMessage}
+            </div>
+          )}
           {/* Username input field */}
           <div>
             <label

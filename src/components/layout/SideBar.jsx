@@ -24,8 +24,8 @@ export const SideBar = ({ setActiveLoginRegister }) => {
    * @param {string} dropdown - The key of the dropdown to toggle.
    */
   const toggleDropdown = (dropdown) => {
-    if (!isLogged && dropdown === "myAccounts") {
-      setActiveLoginRegister(true);
+    if (!isLogged) {
+        setActiveLoginRegister(true);
     } else {
       setDropdowns((prevState) => ({
         ...prevState,

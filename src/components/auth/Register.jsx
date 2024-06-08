@@ -18,8 +18,9 @@ export const Register = ({ setActiveLoginRegister }) => {
     email: "",
   });
 
-  // State for password error message
+  // State for error messages
   const [passwordError, setPasswordError] = useState("");
+  const [apiError, setApiError] = useState("");
 
   // Function to handle changes in form inputs
   const handleChange = (e) => {
@@ -33,12 +34,13 @@ export const Register = ({ setActiveLoginRegister }) => {
   // Function to handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    setPasswordError("")
+    setApiError("")
     const { username, password, re_password, email } = formData;
 
     // Checking if passwords match
     if (password !== re_password) {
-      setPasswordError("Las contraseñas no coinciden.");
+      setPasswordError("Passwords do not match.");
       return;
     }
 
@@ -57,10 +59,15 @@ export const Register = ({ setActiveLoginRegister }) => {
 
       // Handling registration response
       if (!registerResponse.ok) {
-        console.error(
-          "Registration request error:",
-          registerResponse.status
-        );
+        const errorData = await registerResponse.json();
+
+        if (errorData.username && errorData.username.includes("A user with that username already exists.")) {
+          setApiError("A user with that username already exists.");
+        } else if (errorData.password) {
+          setPasswordError(errorData.password.join(" "));
+        } else {
+        }
+        console.error("Registration request error:", registerResponse.status);
         return;
       }
 
@@ -70,7 +77,6 @@ export const Register = ({ setActiveLoginRegister }) => {
       try {
         // Sending login data to the server after registration
         const loginFormData = { username, password };
-        console.log(loginFormData);
         const loginResponse = await fetch(
           "http://localhost:8000/auth/jwt/create/",
           {
@@ -101,6 +107,7 @@ export const Register = ({ setActiveLoginRegister }) => {
         console.error("Error while making login request:", loginError);
       }
     } catch (error) {
+      setApiError("Error when making the request.");
       console.error("Error when making the request:", error);
     }
   };
@@ -204,6 +211,13 @@ export const Register = ({ setActiveLoginRegister }) => {
               <p className="text-red-500 text-sm mt-1">{passwordError}</p>
             )}
           </div>
+
+          {/* API error message */}
+          {apiError && (
+            <div className="text-red-500 text-sm mt-2">
+              {apiError}
+            </div>
+          )}
 
           {/* Submit button */}
           <div>

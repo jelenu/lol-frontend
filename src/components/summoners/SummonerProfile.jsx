@@ -78,7 +78,7 @@ export const SummonerProfile = () => {
               {/* Display ranked icon */}
               <img
                 className="w-16 h-auto ml-4"
-                src={`http://192.168.1.133:8000/static/RankedEmblems/Rank=${rankedSoloData.tier}.png`}
+                src={`http://192.168.1.133:8000/static/RankedEmblems/${rankedSoloData.tier}.png`}
                 alt={rankedSoloData.tier}
               />
             </div>
