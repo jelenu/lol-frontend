@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import TokenVerifyRefreshHook from "../../../hooks/TokenVerifyRefreshHook";
+import { useUserContext } from "../../../context/UserContext";
+import { useTabContext } from "../../../context/TabContext";
 
 export const ListFriends = ({ refreshKey }) => {
   // Accessing token verification function
@@ -7,6 +9,10 @@ export const ListFriends = ({ refreshKey }) => {
 
   // State to store the list of friends
   const [friends, setFriends] = useState([]);
+
+  const { setChatUsername } = useUserContext();
+  const { changeActiveTab } = useTabContext();
+
 
   // Function to fetch the list of friends from the API
   const fetchGetFriendRequests = async () => {
@@ -59,16 +65,19 @@ export const ListFriends = ({ refreshKey }) => {
   }, [refreshKey]);
 
   return (
-    <div className="font-bold">
+    <div className="font-bold ">
       <h2>Friends</h2>
       {friends.length > 0 ? (
         // Render the list of friends if there are any
-        <ul className="font-normal pl-4">
+        <div className="font-normal pl-4">
           {/* Map through the list of friends and display each one */}
           {friends.map((friend, index) => (
-            <li key={index}>{friend}</li>
+            <button className="block" key={index}  onClick={() => {
+              setChatUsername(friend);
+              changeActiveTab("users");
+            }}>{friend}</button>
           ))}
-        </ul>
+        </div>
       ) : (
         // Render a message if there are no friends
         <p className="font-normal pl-4">No friends</p>

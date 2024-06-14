@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { SummonerBrowser } from "../summoners/SummonerBrowser";
 import { LoginRegister } from "../auth/LoginRegister";
 import { useUserContext } from "../../context/UserContext";
@@ -15,7 +15,6 @@ export const MainBar = () => {
   // State to toggle LoginRegister component
   const [activeLoginRegister, setActiveLoginRegister] = useState(false);
 
-
   // State to toggle the sidebar
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
@@ -23,6 +22,12 @@ export const MainBar = () => {
   const { isLogged, logout } = useUserContext();
 
   const { activeTab, changeActiveTab } = useTabContext();
+
+  useEffect(() => {
+    if (activeTab === "users" && !isLogged) {
+      setActiveLoginRegister(true);
+    }
+  }, [activeTab, isLogged]);
 
   return (
     <div className="mt-16">
@@ -38,13 +43,14 @@ export const MainBar = () => {
               <IoIosMenu className=" text-white text-3xl" />
             </button>
             {/* Site title */}
-            <div className="text-white text-xl font-bold">LoL Stats</div>
+            <div className="text-white text-xl max-md:text-lg max-sm:text-base font-bold">
+              LoL Stats
+            </div>
           </div>
           <div className="flex items-center">
-            {/* Botones para cambiar entre SummonerBrowser y Users */}
             <button
               onClick={() => changeActiveTab("summoners")}
-              className={`text-white px-4 py-2 rounded hover:bg-gray-700 ${
+              className={`text-white px-4 py-2 rounded hover:bg-gray-700 max-md:text-xs max-md:px-2 max-md:py-2  ${
                 activeTab === "summoners" ? "bg-gray-700" : ""
               }`}
             >
@@ -52,7 +58,7 @@ export const MainBar = () => {
             </button>
             <button
               onClick={() => changeActiveTab("users")}
-              className={`text-white px-4 py-2 rounded hover:bg-gray-700 ${
+              className={`text-white px-4 py-2 rounded hover:bg-gray-700 max-md:text-xs max-md:px-2 max-md:py-2 ${
                 activeTab === "users" ? "bg-gray-700" : ""
               }`}
             >
@@ -84,9 +90,9 @@ export const MainBar = () => {
         {/* Conditional rendering based on activeTab */}
         {activeTab === "summoners" ? (
           <SummonerBrowser />
-        ) : (
-          <Users/>
-        )}
+        ) : 
+          <Users />
+       }
       </div>
       {/* Conditional rendering of LoginRegister component */}
       {activeLoginRegister && (
