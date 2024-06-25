@@ -33,7 +33,7 @@ export const UserAccounts = () => {
   const fetchGetVerifiedAccounts = async () => {
     const makeApiCall = async (token) => {
       const response = await fetch(
-        `http://localhost:8000/api/users/getVerifiedAccounts/`,
+        `http://127.0.0.1:8000/api/users/getVerifiedAccounts/`,
         {
           method: "GET",
           headers: {

@@ -34,7 +34,7 @@ export const Login = ({ setActiveLoginRegister }) => {
 
     try {
       // Sending login credentials to the server
-      const response = await fetch("http://localhost:8000/auth/jwt/create/", {
+      const response = await fetch("http://127.0.0.1:8000/auth/jwt/create/", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

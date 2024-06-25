@@ -162,7 +162,7 @@ export const LinkNewAccount = ({ setActiveLinkNewAccount }) => {
             <nav>Change your profile icon to the next one, press continue when you have changed it</nav>
             <div>
               {/* Display profile icon */}
-              <img src={`http://localhost:8000/static/profileIcon/${profileIconId}.png`} alt="Profile Icon" />
+              <img src={`http://127.0.0.1:8000/static/profileIcon/${profileIconId}.png`} alt="Profile Icon" />
             </div>
             <div>
               {/* Button to verify account */}

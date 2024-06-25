@@ -18,7 +18,7 @@ export const ListFriends = ({ refreshKey }) => {
   const fetchGetFriendRequests = async () => {
     const makeApiCall = async (token) => {
       const response = await fetch(
-        `http://localhost:8000/api/users/friendsList/`,
+        `http://127.0.0.1:8000/api/users/friendsList/`,
         {
           method: "GET",
           headers: {

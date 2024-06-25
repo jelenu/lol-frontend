@@ -36,7 +36,7 @@ export const SummonerProfile = () => {
         {/* Summoner profile icon */}
         <img
           className="w-24 max-sm:w-20 rounded-full"
-          src={`http://192.168.1.133:8000/${searchResults.profileIconUrl}`}
+          src={`http://127.0.0.1:8000/${searchResults.profileIconUrl}`}
           alt={searchResults.profileIconId}
         />
       </div>
@@ -78,7 +78,7 @@ export const SummonerProfile = () => {
               {/* Display ranked icon */}
               <img
                 className="w-16 h-auto ml-4"
-                src={`http://192.168.1.133:8000/static/RankedEmblems/${rankedSoloData.tier}.png`}
+                src={`http://127.0.0.1:8000/static/RankedEmblems/${rankedSoloData.tier}.png`}
                 alt={rankedSoloData.tier}
               />
             </div>

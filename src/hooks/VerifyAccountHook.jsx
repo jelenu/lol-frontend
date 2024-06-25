@@ -50,14 +50,14 @@ const VerifyAccountHook = () => {
 // Function to fetch link account API endpoint
 const fetchLinkAccount = async (searchParams) => {
     const mainServer = servers[searchParams.server];
-    const url = `http://localhost:8000/api/users/linkAccount/?gameName=${searchParams.gameName}&tagLine=${searchParams.tagLine}&server=${searchParams.server}&mainServer=${mainServer}`;
+    const url = `http://127.0.0.1:8000/api/users/linkAccount/?gameName=${searchParams.gameName}&tagLine=${searchParams.tagLine}&server=${searchParams.server}&mainServer=${mainServer}`;
     return await makeApiCallWithRetry(url);
 };
 
 // Function to fetch verify account API endpoint
 const fetchVerifyAccount = async (searchParams) => {
     const mainServer = servers[searchParams.server];
-    const url = `http://localhost:8000/api/users/verifyAccount/?gameName=${searchParams.gameName}&tagLine=${searchParams.tagLine}&server=${searchParams.server}&mainServer=${mainServer}`;
+    const url = `http://127.0.0.1:8000/api/users/verifyAccount/?gameName=${searchParams.gameName}&tagLine=${searchParams.tagLine}&server=${searchParams.server}&mainServer=${mainServer}`;
     return await makeApiCallWithRetry(url);
 };
 

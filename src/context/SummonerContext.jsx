@@ -80,7 +80,7 @@ export const SummonerProvider = ({ children }) => {
       }
 
       const response = await fetch(
-        `http://192.168.1.133:8000/api/summoners/info/?gameName=${searchParams.gameName}&tagLine=${searchParams.tagLine}&server=${searchParams.server}&mainServer=${mainServer}`,
+        `http://127.0.0.1:8000/api/summoners/info/?gameName=${searchParams.gameName}&tagLine=${searchParams.tagLine}&server=${searchParams.server}&mainServer=${mainServer}`,
         {
           method: "GET",
           headers: headers,
@@ -124,7 +124,7 @@ export const SummonerProvider = ({ children }) => {
 
     try {
       const response = await fetch(
-        `http://192.168.1.133:8000/api/summoners/matches/id/?puuid=${puuid}&mainServer=${mainServer}`,
+        `http://127.0.0.1:8000/api/summoners/matches/id/?puuid=${puuid}&mainServer=${mainServer}`,
         {
           method: "GET",
           headers: {
@@ -156,7 +156,7 @@ export const SummonerProvider = ({ children }) => {
 
     const makeApiCall = async (token) => {
       const response = await fetch(
-        `http://192.168.1.133:8000/api/users/followSummoner/?gameName=${searchParams.gameName}&tagLine=${searchParams.tagLine}&server=${searchParams.server}&mainServer=${mainServer}`,
+        `http://127.0.0.1:8000/api/users/followSummoner/?gameName=${searchParams.gameName}&tagLine=${searchParams.tagLine}&server=${searchParams.server}&mainServer=${mainServer}`,
         {
           method: "GET",
           headers: {

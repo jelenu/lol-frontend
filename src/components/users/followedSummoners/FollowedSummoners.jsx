@@ -23,7 +23,7 @@ export const FollowedSummoners = () => {
   const fetchGetFollowedSummoners = async () => {
     const makeApiCall = async (token) => {
       const response = await fetch(
-        `http://localhost:8000/api/users/getfollowedSummoner/`,
+        `http://127.0.0.1:8000/api/users/getfollowedSummoner/`,
         {
           method: "GET",
           headers: {

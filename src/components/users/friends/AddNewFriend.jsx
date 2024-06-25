@@ -14,7 +14,7 @@ export const AddNewFriend = ({ refreshFriendRequests }) => {
     // Function to make API call
     const makeApiCall = async (token) => {
       const response = await fetch(
-        `http://localhost:8000/api/users/friendRequest/`,
+        `http://127.0.0.1:8000/api/users/friendRequest/`,
         {
           method: "POST",
           headers: {

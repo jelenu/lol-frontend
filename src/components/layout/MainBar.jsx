@@ -29,6 +29,15 @@ export const MainBar = () => {
     }
   }, [activeTab, isLogged]);
 
+  const changeActiveTabIfLogged = (activeTab) => {
+    if(isLogged){
+      changeActiveTab(activeTab);
+
+    }else{
+      setActiveLoginRegister(true);
+    }
+  };
+
   return (
     <div className="mt-16">
       {/* Navigation bar */}
@@ -57,7 +66,7 @@ export const MainBar = () => {
               Summoners
             </button>
             <button
-              onClick={() => changeActiveTab("users")}
+              onClick={() => changeActiveTabIfLogged("users")}
               className={`text-white px-4 py-2 rounded hover:bg-gray-700 max-md:text-xs max-md:px-2 max-md:py-2 ${
                 activeTab === "users" ? "bg-gray-700" : ""
               }`}

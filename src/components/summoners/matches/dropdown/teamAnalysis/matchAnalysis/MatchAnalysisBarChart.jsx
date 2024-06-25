@@ -16,7 +16,7 @@ export const MatchAnalysisBarChart = ({ max, participantsData, team }) => {
           <div className="mr-2">
             {/* Render champion icon */}
             <img
-              src={`http://192.168.1.133:8000/static/champion/icon/${participant.championName}.png`}
+              src={`http://127.0.0.1:8000/static/champion/icon/${participant.championName}.png`}
               alt={participant.championName}
               className="w-6 h-auto"
             />

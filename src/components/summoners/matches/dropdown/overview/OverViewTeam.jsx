@@ -55,7 +55,7 @@ export const OverViewTeam = ({ participants, team }) => {
               <td>
                 <div className="flex items-center my-0.5  ml-7 max-lg:ml-4 max-md:ml-1">
                   <img
-                    src={`http://192.168.1.133:8000/static/champion/icon/${participant.championName}.png`}
+                    src={`http://127.0.0.1:8000/static/champion/icon/${participant.championName}.png`}
                     alt={participant.championName}
                     className="h-9 rounded-full mr-2 max-md:mr-1 max-sm:h-7 max-sm:mr-0.5"
                   />
@@ -63,7 +63,7 @@ export const OverViewTeam = ({ participants, team }) => {
                     {[1, 2].map((spellSlot) => (
                       <img
                         key={spellSlot}
-                        src={`http://192.168.1.133:8000/static/summonerSpell/${
+                        src={`http://127.0.0.1:8000/static/summonerSpell/${
                           participant[`summoner${spellSlot}Id`]
                         }.png`}
                         alt={`Summoner Spell ${spellSlot}`}
@@ -73,14 +73,14 @@ export const OverViewTeam = ({ participants, team }) => {
                   </div>
                   <div className="flex flex-col items-center">
                     <img
-                      src={`http://localhost:8000/static/perks/${participant.perks.styles[0].selections[0].icon
+                      src={`http://127.0.0.1:8000/static/perks/${participant.perks.styles[0].selections[0].icon
                         .split("/")
                         .pop()}`}
                       alt={`Primary Rune`}
                       className="h-5"
                     />
                     <img
-                      src={`http://localhost:8000/static/perks/${participant.perks.styles[1].selections[0].rune_path.icon
+                      src={`http://127.0.0.1:8000/static/perks/${participant.perks.styles[1].selections[0].rune_path.icon
                         .split("/")
                         .pop()}`}
                       alt={`Primary Rune`}
@@ -150,10 +150,10 @@ export const OverViewTeam = ({ participants, team }) => {
                       key={itemSlot}
                       src={
                         participant[`item${itemSlot}`]
-                          ? `http://192.168.1.133:8000/static/item/${
+                          ? `http://127.0.0.1:8000/static/item/${
                               participant[`item${itemSlot}`]
                             }.png`
-                          : "http://192.168.1.133:8000/static/item/noItem.png"
+                          : "http://127.0.0.1:8000/static/item/noItem.png"
                       }
                       alt={
                         participant[`item${itemSlot}`]

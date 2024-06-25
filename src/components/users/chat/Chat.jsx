@@ -22,7 +22,7 @@ export const Chat = () => {
     // Generate room name based on the sorted usernames
     const newRoomName = `${[username1, username2].sort().join("_")}`;
     // Initialize WebSocket connection
-    const ws = new WebSocket(`ws://localhost:8000/ws/chat/${newRoomName}/`);
+    const ws = new WebSocket(`wss://127.0.0.1:8000/ws/chat/${newRoomName}/`);
     setChatSocket(ws); // Update WebSocket state
 
     // WebSocket event listeners

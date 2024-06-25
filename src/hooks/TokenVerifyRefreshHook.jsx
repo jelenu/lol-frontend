@@ -10,7 +10,7 @@ const TokenVerifyRefreshHook = () => {
   const verifyToken = async () => {
     try {
       // Verifying token with server
-      const verifyResponse = await fetch('http://localhost:8000/auth/jwt/verify/', {
+      const verifyResponse = await fetch('http://127.0.0.1:8000/auth/jwt/verify/', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -53,7 +53,7 @@ const TokenVerifyRefreshHook = () => {
   const refreshToken = async () => {
     try {
       // Requesting token refresh from server
-      const refreshResponse = await fetch('http://localhost:8000/auth/jwt/refresh/', {
+      const refreshResponse = await fetch('http://127.0.0.1:8000/auth/jwt/refresh/', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

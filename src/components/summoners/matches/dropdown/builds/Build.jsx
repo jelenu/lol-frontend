@@ -85,7 +85,7 @@ export const Build = ({ match, timeLine }) => {
             onClick={() => handleSelectedChampion(index)}
           >
             <img
-              src={`http://192.168.1.133:8000/static/champion/icon/${participant.championName}.png`}
+              src={`http://127.0.0.1:8000/static/champion/icon/${participant.championName}.png`}
               alt={participant.championName}
               className="w-9"
             />
@@ -109,7 +109,7 @@ export const Build = ({ match, timeLine }) => {
                         className="bg-gray-200 p-2 max-md:p-1"
                       >
                         <img
-                          src={`http://192.168.1.133:8000/static/item/${item.itemId}.png`}
+                          src={`http://127.0.0.1:8000/static/item/${item.itemId}.png`}
                           alt={`${item.itemId}`}
                           className=" h-10 max-lg:h-9 max-md:h-7 max-sm:h-6"
                         />
@@ -155,7 +155,7 @@ export const Build = ({ match, timeLine }) => {
           <div>
             <div className="flex items-center">
               <img
-                src={`http://localhost:8000/static/perks/${match.participants[
+                src={`http://127.0.0.1:8000/static/perks/${match.participants[
                   selectedChampion
                 ].perks.styles[0].selections[0].icon
                   .split("/")
@@ -164,7 +164,7 @@ export const Build = ({ match, timeLine }) => {
                 className=" h-12"
               />
               <img
-                src={`http://localhost:8000/static/perks/${match.participants[
+                src={`http://127.0.0.1:8000/static/perks/${match.participants[
                   selectedChampion
                 ].perks.styles[0].selections[1].icon
                   .split("/")
@@ -173,7 +173,7 @@ export const Build = ({ match, timeLine }) => {
                 className=" h-7 "
               />
               <img
-                src={`http://localhost:8000/static/perks/${match.participants[
+                src={`http://127.0.0.1:8000/static/perks/${match.participants[
                   selectedChampion
                 ].perks.styles[0].selections[2].icon
                   .split("/")
@@ -182,7 +182,7 @@ export const Build = ({ match, timeLine }) => {
                 className=" h-7 "
               />
               <img
-                src={`http://localhost:8000/static/perks/${match.participants[
+                src={`http://127.0.0.1:8000/static/perks/${match.participants[
                   selectedChampion
                 ].perks.styles[0].selections[3].icon
                   .split("/")
@@ -194,7 +194,7 @@ export const Build = ({ match, timeLine }) => {
 
             <div className="flex items-center">
               <img
-                src={`http://localhost:8000/static/perks/${match.participants[
+                src={`http://127.0.0.1:8000/static/perks/${match.participants[
                   selectedChampion
                 ].perks.styles[1].selections[0].rune_path.icon
                   .split("/")
@@ -203,7 +203,7 @@ export const Build = ({ match, timeLine }) => {
                 className=" h-8 mb-1"
               />
               <img
-                src={`http://localhost:8000/static/perks/${match.participants[
+                src={`http://127.0.0.1:8000/static/perks/${match.participants[
                   selectedChampion
                 ].perks.styles[1].selections[0].icon
                   .split("/")
@@ -212,7 +212,7 @@ export const Build = ({ match, timeLine }) => {
                 className=" h-7 "
               />
               <img
-                src={`http://localhost:8000/static/perks/${match.participants[
+                src={`http://127.0.0.1:8000/static/perks/${match.participants[
                   selectedChampion
                 ].perks.styles[1].selections[1].icon
                   .split("/")

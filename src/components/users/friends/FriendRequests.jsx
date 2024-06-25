@@ -19,7 +19,7 @@ export const FriendRequests = ({ refreshKey, refreshFriendRequests }) => {
     // Function to make API call
     const makeApiCall = async (token) => {
       const response = await fetch(
-        `http://localhost:8000/api/users/friendRequestList/`,
+        `http://127.0.0.1:8000/api/users/friendRequestList/`,
         {
           method: "GET",
           headers: {
@@ -72,7 +72,7 @@ export const FriendRequests = ({ refreshKey, refreshFriendRequests }) => {
     // Function to make API call
     const makeApiCall = async (token) => {
       const response = await fetch(
-        `http://localhost:8000/api/users/friendRequestRecived/`,
+        `http://127.0.0.1:8000/api/users/friendRequestRecived/`,
         {
           method: "POST",
           headers: {
@@ -118,7 +118,7 @@ export const FriendRequests = ({ refreshKey, refreshFriendRequests }) => {
     // Function to make API call
     const makeApiCall = async (token) => {
       const response = await fetch(
-        `http://localhost:8000/api/users/friendRequestRecived/`,
+        `http://127.0.0.1:8000/api/users/friendRequestRecived/`,
         {
           method: "DELETE",
           headers: {

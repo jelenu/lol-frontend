@@ -97,7 +97,7 @@ export const Match = ({ match }) => {
                         <div key={index} className="flex items-center ">
                           {/* Champion icon */}
                           <img
-                            src={`http://192.168.1.133:8000/static/champion/icon/${participant.championName}.png`}
+                            src={`http://127.0.0.1:8000/static/champion/icon/${participant.championName}.png`}
                             alt={participant.championName}
                             className="h-14 max-sm:h-8 rounded-full mr-4 max-sm:mr-1"
                           />
@@ -106,7 +106,7 @@ export const Match = ({ match }) => {
                             {[1, 2].map((spellSlot) => (
                               <img
                                 key={spellSlot}
-                                src={`http://192.168.1.133:8000/static/summonerSpell/${
+                                src={`http://127.0.0.1:8000/static/summonerSpell/${
                                   participant[`summoner${spellSlot}Id`]
                                 }.png`}
                                 alt={`Summoner Spell ${spellSlot}`}
@@ -117,14 +117,14 @@ export const Match = ({ match }) => {
                           {/* Runes */}
                           <div className="flex flex-col items-center ">
                             <img
-                              src={`http://localhost:8000/static/perks/${participant.perks.styles[0].selections[0].icon
+                              src={`http://127.0.0.1:8000/static/perks/${participant.perks.styles[0].selections[0].icon
                                 .split("/")
                                 .pop()}`}
                               alt={`Primary Rune`}
                               className=" h-8 "
                             />
                             <img
-                              src={`http://localhost:8000/static/perks/${participant.perks.styles[1].selections[0].rune_path.icon.split("/")
+                              src={`http://127.0.0.1:8000/static/perks/${participant.perks.styles[1].selections[0].rune_path.icon.split("/")
                               .pop()}`}
                               alt={`Primary Rune`}
                               className=" h-4 w-4 mb-1"
@@ -149,10 +149,10 @@ export const Match = ({ match }) => {
                               key={itemSlot}
                               src={
                                 participant[`item${itemSlot}`]
-                                  ? `http://192.168.1.133:8000/static/item/${
+                                  ? `http://127.0.0.1:8000/static/item/${
                                       participant[`item${itemSlot}`]
                                     }.png`
-                                  : "http://192.168.1.133:8000/static/item/noItem.png"
+                                  : "http://127.0.0.1:8000/static/item/noItem.png"
                               }
                               alt={
                                 participant[`item${itemSlot}`]

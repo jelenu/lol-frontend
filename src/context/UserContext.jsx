@@ -48,7 +48,7 @@ export const UserProvider = ({ children }) => {
   // Function to fetch user data from API
   const fetchUserData = async () => {
     const makeApiCall = async (token) => {
-      const response = await fetch('http://localhost:8000/auth/users/me/', {
+      const response = await fetch('http://127.0.0.1:8000/auth/users/me/', {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',

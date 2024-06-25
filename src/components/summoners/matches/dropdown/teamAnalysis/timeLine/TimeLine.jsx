@@ -9,7 +9,7 @@ import { FaCheck } from "react-icons/fa";
  * @returns {JSX.Element} - TimeLine component JSX.
  */
 export const TimeLine = ({ timeLine, match }) => {
-  const baseURL = "http://192.168.1.133:8000/static/";
+  const baseURL = "http://127.0.0.1:8000/static/";
 
   // Images for different types of wards
   const wardImages = {

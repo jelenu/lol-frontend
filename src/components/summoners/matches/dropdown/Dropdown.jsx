@@ -34,7 +34,7 @@ export const Dropdown = ({ match }) => {
     const fetchTimeline = async () => {
       try {
         const response = await fetch(
-          `http://192.168.1.133:8000/api/summoners/matches/timeline/?server=${match.platformId}&matchId=${match.gameId}&mainServer=${mainServerAfterFetch}`,
+          `http://127.0.0.1:8000/api/summoners/matches/timeline/?server=${match.platformId}&matchId=${match.gameId}&mainServer=${mainServerAfterFetch}`,
           {
             method: "GET",
             headers: {

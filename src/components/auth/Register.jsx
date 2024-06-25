@@ -47,7 +47,7 @@ export const Register = ({ setActiveLoginRegister }) => {
     try {
       // Sending registration data to the server
       const registerResponse = await fetch(
-        "http://localhost:8000/auth/users/",
+        "http://127.0.0.1:8000/auth/users/",
         {
           method: "POST",
           headers: {
@@ -78,7 +78,7 @@ export const Register = ({ setActiveLoginRegister }) => {
         // Sending login data to the server after registration
         const loginFormData = { username, password };
         const loginResponse = await fetch(
-          "http://localhost:8000/auth/jwt/create/",
+          "http://127.0.0.1:8000/auth/jwt/create/",
           {
             method: "POST",
             headers: {
